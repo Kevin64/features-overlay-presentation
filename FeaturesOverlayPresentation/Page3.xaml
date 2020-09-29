@@ -6,9 +6,9 @@
       xmlns:local="clr-namespace:FeaturesOverlayPresentation"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Page3">
+      Title="Page3" Width="1280" Height="720">
 
     <Grid>
-        <Image x:Name="feature3" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="800" RenderTransformOrigin="0.5,0.5"/>
+        <Image x:Name="feature3" HorizontalAlignment="Left" Height="720" VerticalAlignment="Top" Width="1280" RenderTransformOrigin="0.5,0.5" Source="img/logoUTI.png"/>
     </Grid>
 </Page>

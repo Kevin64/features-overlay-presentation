@@ -5,24 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeaturesOverlayPresentation"
         mc:Ignorable="d"
-        Title="FeatureOverlayPresentation" Height="450" Width="800" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False" AllowsTransparency="True" WindowStyle="None">
-    <Grid Background="#FF005387">
-        <Frame x:Name="Frame1" Margin="100,49,100,58" NavigationUIVisibility="Hidden" />
+        Title="FeatureOverlayPresentation" Height="1080" Width="1920" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False" AllowsTransparency="True" WindowStyle="None">
+    <Grid Background="#FF005387" Width="1920" Height="1080">
+        <Frame x:Name="Frame1" Margin="240,135" NavigationUIVisibility="Hidden" />
 
-        <Button x:Name="ButtonNext" Content="Próximo" Margin="0,10,0,397" FontSize="16" Click="ButtonNext_Click" Width="95" Height="43" VerticalAlignment="Top" HorizontalAlignment="Right" FontWeight="Bold" Background="White">
+        <Button x:Name="ButtonNext" Content="Próximo" Margin="0,10,0,0" FontSize="24" Click="ButtonNext_Click" Width="172" Height="78" VerticalAlignment="Top" HorizontalAlignment="Right" FontWeight="Bold" Background="White">
             <Button.Effect>
                 <DropShadowEffect/>
             </Button.Effect>
         </Button>
-        <Button x:Name="ButtonPrevious" Content="Anterior" Margin="0,10,0,397" FontSize="16" Click="ButtonPrevious_Click" Width="95" Height="43" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Background="White">
+        <Button x:Name="ButtonPrevious" Content="Anterior" Margin="0,10,0,0" FontSize="24" Click="ButtonPrevious_Click" Width="172" Height="78" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Background="White">
             <Button.Effect>
                 <DropShadowEffect/>
             </Button.Effect>
         </Button>
-        <Label x:Name="LabelPage" Content="" HorizontalAlignment="Center" Margin="407,15,321,0" VerticalAlignment="Top" Width="72" FontSize="18" Background="#FFA0D1FF"/>
-        <Label x:Name="LabelPage2" Content="Página:" HorizontalAlignment="Center" Margin="339,15,393,0" VerticalAlignment="Top" Width="68" Height="34" FontSize="18" Background="#FFA0D1FF"/>
-        <Label x:Name="LabelBrand" Content="Unidade de Tecnologia da Informação - CCSH" HorizontalAlignment="Left" Margin="268,404,0,0" VerticalAlignment="Top" Foreground="White" Height="36" FontSize="18"/>
-        <Image x:Name="brasaoUTI" HorizontalAlignment="Left" Height="58" Margin="204,392,0,0" VerticalAlignment="Top" Width="58" Source="brasaoUTI.png"/>
+        <Label x:Name="LabelPage" Content="" HorizontalAlignment="Center" Margin="967,15,839,0" VerticalAlignment="Top" Width="114" FontSize="18" Background="#FFA0D1FF" Height="54"/>
+        <Label x:Name="LabelPage2" Content="Página:" HorizontalAlignment="Center" Margin="859,15,953,0" VerticalAlignment="Top" Width="108" Height="54" FontSize="24" Background="#FFA0D1FF"/>
+        <Label x:Name="LabelBrand" Content="Unidade de Tecnologia da Informação - CCSH" Margin="662,977,522,41" Foreground="White" FontSize="36"/>
+        <Image x:Name="brasaoUTI" Margin="537,950,1263,10" Source="img/logoUTI.png" RenderTransformOrigin="0.5,0.5"/>
 
     </Grid>
 </Window>
