@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeaturesOverlayPresentation"
         mc:Ignorable="d"
-        Title="FeatureOverlayPresentation" Height="450" Width="800" Opacity="0.5" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False" AllowsTransparency="True" WindowStyle="None">
+        Title="FeatureOverlayPresentation" Height="450" Width="800" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False" AllowsTransparency="True" WindowStyle="None">
     <Grid Background="#FF005387">
-        <Frame x:Name="Frame1" Margin="100,49,100,0" NavigationUIVisibility="Hidden" />
+        <Frame x:Name="Frame1" Margin="100,49,100,58" NavigationUIVisibility="Hidden" />
 
         <Button x:Name="ButtonNext" Content="Próximo" Margin="0,10,0,397" FontSize="16" Click="ButtonNext_Click" Width="95" Height="43" VerticalAlignment="Top" HorizontalAlignment="Right" FontWeight="Bold" Background="White">
             <Button.Effect>
@@ -21,6 +21,8 @@
         </Button>
         <Label x:Name="LabelPage" Content="" HorizontalAlignment="Center" Margin="407,15,321,0" VerticalAlignment="Top" Width="72" FontSize="18" Background="#FFA0D1FF"/>
         <Label x:Name="LabelPage2" Content="Página:" HorizontalAlignment="Center" Margin="339,15,393,0" VerticalAlignment="Top" Width="68" Height="34" FontSize="18" Background="#FFA0D1FF"/>
+        <Label x:Name="LabelBrand" Content="Unidade de Tecnologia da Informação - CCSH" HorizontalAlignment="Left" Margin="268,404,0,0" VerticalAlignment="Top" Foreground="White" Height="36" FontSize="18"/>
+        <Image x:Name="brasaoUTI" HorizontalAlignment="Left" Height="58" Margin="204,392,0,0" VerticalAlignment="Top" Width="58" Source="brasaoUTI.png"/>
 
     </Grid>
 </Window>

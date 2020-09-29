@@ -135,5 +135,8 @@
   <ItemGroup>
     <Resource Include="toppng.com-arrow-600x398.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="brasaoUTI.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
