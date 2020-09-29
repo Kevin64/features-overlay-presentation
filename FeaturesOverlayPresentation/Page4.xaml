@@ -10,6 +10,17 @@
 
     <Grid>
         <Image x:Name="feature4" HorizontalAlignment="Left" Height="720" VerticalAlignment="Top" Width="1280" Source="img/desktop.png"/>
+        <Image x:Name="arrow4" HorizontalAlignment="Left" Height="68" Margin="1046,602,0,0" VerticalAlignment="Top" Width="100" Source="img/arrow.png" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="70.498"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Label x:Name="labelArrow4" Content="A UTI do CCSH já instalou&#xD;&#xA;um antivirus neste PC, não&#xD;&#xA;é necessário se preocupar" Margin="958,489,0,0" VerticalAlignment="Top" Foreground="#FFFFF300" Height="90" Width="237" HorizontalAlignment="Left" FontSize="18"/>
 
     </Grid>
 </Page>

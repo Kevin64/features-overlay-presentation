@@ -10,5 +10,16 @@
 
     <Grid x:Name="FirstPage">
         <Image x:Name="feature1" HorizontalAlignment="Left" Height="720" VerticalAlignment="Top" Width="1280" Source="img/desktop.png"/>
+        <Image x:Name="arrow1" HorizontalAlignment="Left" Height="69" Margin="71,335,0,0" VerticalAlignment="Top" Width="100" Source="img/arrow.png" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="180"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Label x:Name="labelArrow1" Content="Para resolver problemas &#xD;&#xA;rápidos, abra esta pasta &#xD;&#xA;e siga as instruções" Margin="190,344,0,0" VerticalAlignment="Top" Foreground="#FFFFF300" Height="90" Width="237" HorizontalAlignment="Left" FontSize="18"/>
     </Grid>
 </Page>

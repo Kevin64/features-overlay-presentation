@@ -10,5 +10,16 @@
 
     <Grid x:Name="SecondPage">
         <Image x:Name="feature2" HorizontalAlignment="Left" Height="720" VerticalAlignment="Top" Width="1280" Source="img/desktop.png"/>
+        <Image x:Name="arrow2" HorizontalAlignment="Left" Height="68" Margin="76,420,0,0" VerticalAlignment="Top" Width="100" Source="img/arrow.png" RenderTransformOrigin="0.5,0.5">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="180"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+        <Label x:Name="labelArrow2" Content="Para digitalizar documentos,&#xD;&#xA;com OCR, clique aqui" Margin="191,410,0,0" VerticalAlignment="Top" Foreground="#FFFFF300" Height="90" Width="237" HorizontalAlignment="Left" FontSize="18"/>
     </Grid>
 </Page>
