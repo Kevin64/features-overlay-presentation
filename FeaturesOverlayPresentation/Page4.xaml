@@ -9,6 +9,7 @@
       Title="Page4">
 
     <Grid>
-        
+        <Image x:Name="feature4" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="800"/>
+
     </Grid>
 </Page>

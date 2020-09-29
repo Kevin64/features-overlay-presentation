@@ -9,7 +9,6 @@
       Title="Page1">
 
     <Grid x:Name="FirstPage">
-        <ProgressBar HorizontalAlignment="Left" Height="10" Margin="272,203,0,0" VerticalAlignment="Top" Width="100"/>
-
+        <Image x:Name="feature1" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="800"/>
     </Grid>
 </Page>
