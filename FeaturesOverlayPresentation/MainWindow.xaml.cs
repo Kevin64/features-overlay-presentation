@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,9 +33,18 @@ namespace FeaturesOverlayPresentation
         public MainWindow()
         {            
             InitializeComponent();
+            this.KeyDown += OnPreviewKeyDown;
             TimerTickCreation();
             ButtonPrevious.IsEnabled = false;
             LabelPrint();
+        }
+
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.System && e.SystemKey == Key.F4)
+            {
+                e.Handled = true;
+            }
         }
 
         private void LabelPrint()
@@ -44,12 +54,12 @@ namespace FeaturesOverlayPresentation
 
         private void NextPrint()
         {
-            ButtonNext.Content = "Próximo";
+            nextBlock.Text = "Próximo";
         }
 
         private void FinishPrint()
         {
-            ButtonNext.Content = "Finalizar";
+            nextBlock.Text = "Finalizar";
         }
 
         private void TimerTickCreation()
@@ -65,7 +75,7 @@ namespace FeaturesOverlayPresentation
         private void TimerTickRun(object sender, EventArgs e)
         {
             DispatcherTimer timer = (DispatcherTimer)sender;
-            ButtonNext.Content = "Próximo (" + timerTickCount.ToString() + ")";
+            nextBlock.Text = "Próximo (" + timerTickCount.ToString() + ")";
             if (--timerTickCount == 0)
             {                
                 timer.Stop();
@@ -157,7 +167,7 @@ namespace FeaturesOverlayPresentation
                 Frame1.Content = new Page3();
                 counter--;
                 LabelPrint();
-                if (!ButtonNext.Content.Equals("Próximo"))
+                if (!nextBlock.Text.Equals("Próximo"))
                     NextPrint();
             }
         }

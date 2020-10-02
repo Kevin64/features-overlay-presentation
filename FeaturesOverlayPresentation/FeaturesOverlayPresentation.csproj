@@ -145,7 +145,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\arrow.png" />
     <Resource Include="img\desktop.png" />
     <Resource Include="img\logoUTI.png" />
   </ItemGroup>
@@ -160,6 +159,19 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\greenArrow.png" />
+    <Resource Include="img\redArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\logoUFSM.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\logoCCSH.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logoUTI.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

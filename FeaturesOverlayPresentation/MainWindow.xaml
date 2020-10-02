@@ -1,28 +1,41 @@
-﻿<Window x:Class="FeaturesOverlayPresentation.MainWindow"
+﻿<Window x:Name="MainWindow1" x:Class="FeaturesOverlayPresentation.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeaturesOverlayPresentation"
         mc:Ignorable="d"
-        Title="FeatureOverlayPresentation" Height="1080" Width="1920" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False" AllowsTransparency="True" WindowStyle="None">
-    <Grid Background="#FF005387" Width="1920" Height="1080">
+        Title="FeatureOverlayPresentation" Height="1080" Width="1920" Topmost="True" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" WindowState="Maximized">
+    <Grid Background="#FF0F364B" Width="1920" Height="1080">
         <Frame x:Name="Frame1" Margin="240,135" NavigationUIVisibility="Hidden" />
 
-        <Button x:Name="ButtonNext" Content="Próximo" Margin="0,10,0,0" FontSize="24" Click="ButtonNext_Click" Width="172" Height="78" VerticalAlignment="Top" HorizontalAlignment="Right" FontWeight="Bold" Background="White">
-            <Button.Effect>
-                <DropShadowEffect/>
-            </Button.Effect>
+        <Button x:Name="ButtonNext" Margin="0,10,31,0" FontSize="24" Click="ButtonNext_Click" FontWeight="Bold" Background="White" Height="78" HorizontalAlignment="Right" Width="172" VerticalAlignment="Center">
+            <StackPanel>
+                <Image Height="39" Width="38" Source="img/greenArrow.png" />
+                <TextBlock x:Name="nextBlock" Text="Próximo" />
+            </StackPanel>
         </Button>
-        <Button x:Name="ButtonPrevious" Content="Anterior" Margin="0,10,0,0" FontSize="24" Click="ButtonPrevious_Click" Width="172" Height="78" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" Background="White">
-            <Button.Effect>
-                <DropShadowEffect/>
-            </Button.Effect>
+        <Button x:Name="ButtonPrevious" Margin="31,10,0,0" FontSize="24" Click="ButtonPrevious_Click" Width="172" Height="78" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Background="White">
+            <StackPanel>
+                <Image Height="39" Width="38" Source="img/redArrow.png" RenderTransformOrigin="0.5,0.5" >
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleY="1" ScaleX="-1"/>
+                            <SkewTransform AngleY="0" AngleX="0"/>
+                            <RotateTransform Angle="0"/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <TextBlock x:Name="previousBlock" Text="Anterior" />
+            </StackPanel>
         </Button>
-        <Label x:Name="LabelPage" Content="" HorizontalAlignment="Center" Margin="967,15,839,0" VerticalAlignment="Top" Width="114" FontSize="18" Background="#FFA0D1FF" Height="54"/>
-        <Label x:Name="LabelPage2" Content="Página:" HorizontalAlignment="Center" Margin="859,15,953,0" VerticalAlignment="Top" Width="108" Height="54" FontSize="24" Background="#FFA0D1FF"/>
+        <Label x:Name="LabelPage" Content="" HorizontalAlignment="Center" Margin="1796,1016,10,0" VerticalAlignment="Top" Width="114" FontSize="30" Background="#FFA0D1FF" Height="54"/>
+        <Label x:Name="LabelPage2" Content="Página:" HorizontalAlignment="Center" Margin="1688,1016,124,0" VerticalAlignment="Top" Width="108" Height="54" FontSize="30" Background="#FFA0D1FF"/>
         <Label x:Name="LabelBrand" Content="Unidade de Tecnologia da Informação - CCSH" Margin="662,977,522,41" Foreground="White" FontSize="36"/>
-        <Image x:Name="brasaoUTI" Margin="537,950,1263,10" Source="img/logoUTI.png" RenderTransformOrigin="0.5,0.5"/>
+        <Image x:Name="brasaoUTI" Margin="529,945,1258,2" Source="logoUTI.png" RenderTransformOrigin="0.5,0.5"/>
+        <Image x:Name="brasaoUFSM" HorizontalAlignment="Left" Height="225" Margin="10,15,0,0" VerticalAlignment="Top" Width="225" RenderTransformOrigin="0.5,0.5" Source="img/logoUFSM.png"/>
+        <Image x:Name="brasaoCCSH" HorizontalAlignment="Left" Height="225" Margin="1686,15,0,0" VerticalAlignment="Top" Width="224" RenderTransformOrigin="0.5,0.5" Source="img/logoCCSH.png"/>
 
     </Grid>
 </Window>
