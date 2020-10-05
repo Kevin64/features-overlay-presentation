@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,15 +29,19 @@ namespace FeaturesOverlayPresentation
         private bool alreadyCount4 = false;
         private int timerTickCount;
         private DispatcherTimer timer;
-        private int counter = 0, maxCounter = 5;
-        
+        private int counter = 0;
+        private int finalCount;
+        List<string> imgList;
+
+
         public MainWindow()
-        {            
+        {
             InitializeComponent();
             this.KeyDown += OnPreviewKeyDown;
             TimerTickCreation();
             ButtonPrevious.IsEnabled = false;
             LabelPrint();
+            FindImages();
         }
 
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
@@ -49,7 +54,7 @@ namespace FeaturesOverlayPresentation
 
         private void LabelPrint()
         {
-            LabelPage.Content = counter + 1 + " de " + maxCounter;
+            LabelPage.Content = (counter + 1) + " de " + (finalCount + 1);
         }
 
         private void NextPrint()
@@ -77,9 +82,9 @@ namespace FeaturesOverlayPresentation
             DispatcherTimer timer = (DispatcherTimer)sender;
             nextBlock.Text = "Próximo (" + timerTickCount.ToString() + ")";
             if (--timerTickCount == 0)
-            {                
+            {
                 timer.Stop();
-                if (counter == 4)
+                if (counter == finalCount)
                     FinishPrint();
                 else
                     NextPrint();
@@ -87,55 +92,31 @@ namespace FeaturesOverlayPresentation
             }
         }
 
+        void FindImages()
+        {
+            List<string> filePathList = Directory.GetFiles(Directory.GetCurrentDirectory()).ToList();
+            imgList = new List<string>();
+            foreach (string filePath in filePathList)
+            {
+                if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".png"))
+                {
+                    imgList.Add(filePath);
+                    finalCount++;
+                }
+            }
+        }
+
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
-            if (counter == 0)
-            {
-                if (alreadyCount1 == false)
-                {
-                    TimerTickCreation();
-                    alreadyCount1 = true;
-                }
-                Frame1.Content = new Page1();
+            if (counter != finalCount)
+            {                
+                TimerTickCreation();
+                mainImage.Source = new BitmapImage(new Uri(imgList[counter]));
                 counter++;
                 ButtonPrevious.IsEnabled = true;
                 LabelPrint();
             }
-            else if (counter == 1)
-            {
-                if (alreadyCount2 == false)
-                {
-                    TimerTickCreation();
-                    alreadyCount2 = true;
-                }
-                Frame1.Content = new Page2();
-                counter++;
-                LabelPrint();
-            }
-            else if (counter == 2)
-            {
-                if (alreadyCount3 == false)
-                {
-                    TimerTickCreation();
-                    alreadyCount3 = true;
-                }
-                Frame1.Content = new Page3();
-                counter++;
-                LabelPrint();
-            }
-            else if (counter == 3)
-            {
-                if (alreadyCount4 == false)
-                {
-                    TimerTickCreation();
-                    alreadyCount4 = true;
-                }
-                Frame1.Content = new Page4();
-                counter++;
-                FinishPrint();
-                LabelPrint();
-            }
-            else if(counter == 4)
+            else
             {
                 Environment.Exit(0);
             }
@@ -143,32 +124,24 @@ namespace FeaturesOverlayPresentation
 
         private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
         {
-            if (counter == 1)
+            if (counter > 1)
             {
-                Frame1.Content = new Page0();
                 counter--;
-                ButtonPrevious.IsEnabled = false;
                 LabelPrint();
+                mainImage.Source = new BitmapImage(new Uri(imgList[counter-1]));
             }
-            else if (counter == 2)
+            else if (counter == finalCount)
             {
-                Frame1.Content = new Page1();
                 counter--;
                 LabelPrint();
-            }
-            else if (counter == 3)
-            {
-                Frame1.Content = new Page2();
-                counter--;
-                LabelPrint();
-            }
-            else if (counter == 4)
-            {
-                Frame1.Content = new Page3();
-                counter--;
-                LabelPrint();
+                mainImage.Source = new BitmapImage(new Uri(imgList[counter-1]));
                 if (!nextBlock.Text.Equals("Próximo"))
                     NextPrint();
+            }
+            else if(counter == 1)
+            {
+                ButtonPrevious.IsEnabled = false;
+                mainImage.Source = null;
             }
         }
     }
