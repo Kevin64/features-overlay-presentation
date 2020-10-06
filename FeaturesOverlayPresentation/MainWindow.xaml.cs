@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace FeaturesOverlayPresentation
@@ -39,6 +30,10 @@ namespace FeaturesOverlayPresentation
             this.KeyDown += OnPreviewKeyDown;
             TimerTickCreation();
             ButtonPrevious.Visibility = Visibility.Hidden;
+            frameIntro.Content = new Intro();
+            frameIntro.Visibility = Visibility.Visible;
+            frameEnd.Content = new Ending();
+            frameEnd.Visibility = Visibility.Hidden;
             FindImages();
             LabelPrint();
         }
@@ -111,6 +106,12 @@ namespace FeaturesOverlayPresentation
                         finalCount++;
                     }
                 }
+                if(finalCount == 0)
+                {
+                    e = new Error();
+                    e.Show();
+                    this.Hide();
+                }
             }
             catch
             {
@@ -118,25 +119,31 @@ namespace FeaturesOverlayPresentation
                 e.Show();
                 this.Hide();
             }
+            finalCount++;
         }
 
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
-            if (counter != finalCount)
+            if (counter == furthestCount)
             {
-                if (counter == furthestCount)
-                {
-                    TimerTickCreation();
-                    furthestCount++;
-                }                
+                TimerTickCreation();
+                furthestCount++;
+            }
+            frameIntro.Visibility = Visibility.Hidden;
+            if (counter < finalCount - 1)
+            {
                 mainImage.Source = new BitmapImage(new Uri(imgList[counter]));
                 counter++;
                 LabelPrint();
                 ButtonPrevious.Visibility = Visibility.Visible;
-                if (counter == finalCount)
-                {
-                    FinishPrint();
-                }
+            }
+            else if (counter + 1 == finalCount)
+            {
+                counter++;
+                frameEnd.Visibility = Visibility.Visible;
+                mainImage.Source = null;
+                LabelPrint();
+                FinishPrint();
             }
             else
             {
@@ -146,6 +153,7 @@ namespace FeaturesOverlayPresentation
 
         private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
         {
+            frameEnd.Visibility = Visibility.Hidden;
             if (counter > 1)
             {
                 counter--;
@@ -166,6 +174,7 @@ namespace FeaturesOverlayPresentation
                 counter--;
                 ButtonPrevious.Visibility = Visibility.Hidden;
                 mainImage.Source = null;
+                frameIntro.Visibility = Visibility.Visible;
                 LabelPrint();
                 NextPrint();
             }

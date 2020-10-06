@@ -1,0 +1,15 @@
+﻿<Page x:Class="FeaturesOverlayPresentation.Ending"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FeaturesOverlayPresentation"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Ending">
+
+    <Grid Background="#FF0F364B" Width="1366" Height="768" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock HorizontalAlignment="Center" Margin="336,194" TextWrapping="Wrap" VerticalAlignment="Center" Foreground="White" FontSize="26" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" TextAlignment="Center" Height="383" Width="698"><Run Text="Obrigado pela"/><Run Text=" paciência! Esperamos que fique"/><Run Text=" "/><Run Text="satisfeito com nosso serviço."/><LineBreak/><Run Text="Qualquer"/><Run Text=" "/><Run Text="dúvida,"/><Run Text=" "/><Run Text="problema, sugestão ou reclamação,"/><Run Text=" "/><Run Text="contate-nos:"/><LineBreak/><Run Text="-"/><Run Text=" Ramal: 9625"/><LineBreak/><Run Text="- E-mail: lab74cufsm@gmail.com"/><LineBreak/><Run Text="- Sala 4413, 4º andar do prédio 74C."/><LineBreak/><Run/><LineBreak/><Run Text="Mais"/><Run Text=" detalhes, visite o site da UTI do CCSH:"/><LineBreak/><Hyperlink NavigateUri="https://www.ufsm.br/unidades-universitarias/ccsh/unidade-de-tecnologia-da-informacao/" RequestNavigate="Hyperlink_RequestNavigate"><Run Text="https://www.ufsm.br/unidades-universitarias/ccsh/unidade-de-tecnologia-da-informacao/"/></Hyperlink><Run Text=" (Ao clicar no link, o site "/><Run Text="será exibido "/><Run Text="após a finalização do tutorial)"/></TextBlock>
+
+    </Grid>
+</Page>

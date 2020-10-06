@@ -1,0 +1,16 @@
+﻿<Page x:Class="FeaturesOverlayPresentation.Intro"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FeaturesOverlayPresentation"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Intro" Width="1366" Height="768">
+
+    <Grid Background="#FF0F364B">
+        <Label x:Name="labelWelcome1" Content="Bem-vindo(a)!" Margin="0,50,0,0" VerticalAlignment="Top" Foreground="White" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" FontSize="72" HorizontalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,50,0,0" TextWrapping="Wrap" VerticalAlignment="Center" RenderTransformOrigin="-0.146,-18.625" Foreground="White" FontSize="48" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" TextAlignment="Center"><Run Text="Seu computador foi configurado pela Unidade de"/><LineBreak/><Run Text="Tecnologia da Informação do CCSH, e está pronto"/><LineBreak/><Run Text="para uso. A seguir, serão exibidas algumas informações"/><LineBreak/><Run Text="e dicas para melhorar a experiência e produtividade"/><LineBreak/><Run Text="no seu trabalho."/></TextBlock>
+
+    </Grid>
+</Page>
