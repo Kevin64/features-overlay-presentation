@@ -9,34 +9,97 @@
     <Grid Background="#FF0F364B" Width="1920" Height="1080">
 
 
-        <Button x:Name="ButtonNext" Margin="0,10,31,0" FontSize="24" Click="ButtonNext_Click" FontWeight="Bold" Background="White" Height="78" HorizontalAlignment="Right" Width="172" VerticalAlignment="Center">
+        <Button x:Name="ButtonNext" Margin="0,506,90,472" FontSize="24" Click="ButtonNext_Click" FontWeight="Bold" Height="102" HorizontalAlignment="Right" Width="225" VerticalAlignment="Center" BorderBrush="#00707070" Background="Transparent" Foreground="Black">
             <StackPanel>
-                <Image Height="39" Width="38" Source="img/greenArrow.png" />
-                <TextBlock x:Name="nextBlock" Text="Próximo" />
+                <Image Height="50" Width="50" Source="img/arrowNext.png" />
+                <TextBlock x:Name="nextBlock" Text="Próximo" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" />
             </StackPanel>
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="1">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value="1.0" />
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0.5"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.5" To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
         </Button>
-        <Button x:Name="ButtonPrevious" Margin="31,10,0,0" FontSize="24" Click="ButtonPrevious_Click" Width="172" Height="78" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Background="White">
+        <Button x:Name="ButtonPrevious" Margin="90,506,0,472" FontSize="24" Click="ButtonPrevious_Click" Width="225" Height="102" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Background="Transparent" BorderBrush="#00707070">
             <StackPanel>
-                <Image Height="39" Width="38" Source="img/redArrow.png" RenderTransformOrigin="0.5,0.5" >
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform ScaleY="1" ScaleX="-1"/>
-                            <SkewTransform AngleY="0" AngleX="0"/>
-                            <RotateTransform Angle="0"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-                <TextBlock x:Name="previousBlock" Text="Anterior" />
+                <Image Height="50" Width="50" Source="img/arrowPrevious.png" RenderTransformOrigin="0.5,0.5" />
+                <TextBlock x:Name="previousBlock" Text="Anterior" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" />
             </StackPanel>
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="1">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Opacity" Value="1.0" />
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0.5"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.5" To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
         </Button>
-        <Label x:Name="LabelPage" Content="" HorizontalAlignment="Center" Margin="1796,1016,10,0" VerticalAlignment="Top" Width="114" FontSize="30" Background="#FFA0D1FF" Height="54"/>
-        <Label x:Name="LabelPage2" Content="Página:" HorizontalAlignment="Center" Margin="1688,1016,124,0" VerticalAlignment="Top" Width="108" Height="54" FontSize="30" Background="#FFA0D1FF"/>
-        <Label x:Name="LabelBrand" Content="Unidade de Tecnologia da Informação - CCSH" Margin="662,977,522,41" Foreground="White" FontSize="36"/>
-        <Image x:Name="brasaoUTI" Margin="529,945,1258,2" Source="logoUTI.png" RenderTransformOrigin="0.5,0.5"/>
-        <Image x:Name="brasaoUFSM" HorizontalAlignment="Left" Height="225" Margin="10,15,0,0" VerticalAlignment="Top" Width="225" RenderTransformOrigin="0.5,0.5" Source="img/logoUFSM.png"/>
-        <Image x:Name="brasaoCCSH" HorizontalAlignment="Left" Height="225" Margin="1686,15,0,0" VerticalAlignment="Top" Width="224" RenderTransformOrigin="0.5,0.5" Source="img/logoCCSH.png"/>
+        <Label x:Name="LabelPage" Content="" HorizontalAlignment="Center" Margin="1796,1016,10,0" VerticalAlignment="Top" Width="114" FontSize="30" Background="#7FA0D1FF" Height="54"/>
+        <Label x:Name="LabelPage2" Content="Página:" HorizontalAlignment="Center" Margin="1688,1016,124,0" VerticalAlignment="Top" Width="108" Height="54" FontSize="30" Background="#7FA0D1FF"/>
+        <Image x:Name="brasaoUTI" Margin="636,10,636,0" Source="img/logoUTI.png" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" Width="648" Height="267" VerticalAlignment="Top"/>
+        <Image x:Name="brasaoUFSM" HorizontalAlignment="Left" Height="210" Margin="10,15,0,0" VerticalAlignment="Top" Width="210" RenderTransformOrigin="0.5,0.5" Source="img/logoUFSM.png"/>
+        <Image x:Name="brasaoCCSH" HorizontalAlignment="Right" Height="337" Margin="0,15,15,0" VerticalAlignment="Top" Width="345" RenderTransformOrigin="0.5,0.5" Source="img/logoCCSH.png"/>
         <Image Margin="320,225,320,135" Name="mainImage"/>
+        <Label x:Name="LabelStandBy" Content="" HorizontalAlignment="Left" Margin="1605,506,0,0" VerticalAlignment="Top" Height="102" Width="225" FontSize="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="White" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT"/>
 
     </Grid>
 </Window>

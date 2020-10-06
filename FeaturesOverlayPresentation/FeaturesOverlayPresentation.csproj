@@ -73,6 +73,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Error.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -80,6 +84,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Error.xaml.cs">
+      <DependentUpon>Error.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -104,6 +111,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="fonts\ZHU601BI.TTF" />
+    <Resource Include="fonts\ZHU601DI.TTF" />
+    <Resource Include="fonts\ZHU601UI.TTF" />
+    <Resource Include="fonts\ZHUM601B.TTF" />
+    <Resource Include="fonts\ZHUM601D.TTF" />
+    <Resource Include="fonts\ZHUM601I.TTF" />
+    <Resource Include="fonts\ZHUM601N.TTF" />
+    <Resource Include="fonts\ZHUM601U.TTF" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -113,8 +128,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\desktop.png" />
-    <Resource Include="img\logoUTI.png" />
+    <Resource Include="img\logoCCSH.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -130,19 +144,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\greenArrow.png" />
+    <Resource Include="img\logoUTI.png" />
     <Resource Include="img\redArrow.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\logoUFSM.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\logoCCSH.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="logoUTI.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="img\IconGroup103.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\arrowNext.png" />
+    <Resource Include="img\arrowPrevious.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

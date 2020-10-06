@@ -23,15 +23,14 @@ namespace FeaturesOverlayPresentation
     /// </summary>
     public partial class MainWindow : Window
     {
-        private bool alreadyCount1 = false;
-        private bool alreadyCount2 = false;
-        private bool alreadyCount3 = false;
-        private bool alreadyCount4 = false;
+        private int furthestCount = 0;
         private int timerTickCount;
+        private int tickSeconds = 3;
         private DispatcherTimer timer;
         private int counter = 0;
         private int finalCount;
         List<string> imgList;
+        Error e;
 
 
         public MainWindow()
@@ -39,9 +38,9 @@ namespace FeaturesOverlayPresentation
             InitializeComponent();
             this.KeyDown += OnPreviewKeyDown;
             TimerTickCreation();
-            ButtonPrevious.IsEnabled = false;
-            LabelPrint();
+            ButtonPrevious.Visibility = Visibility.Hidden;
             FindImages();
+            LabelPrint();
         }
 
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
@@ -69,52 +68,75 @@ namespace FeaturesOverlayPresentation
 
         private void TimerTickCreation()
         {
-            timerTickCount = 3;
+            timerTickCount = tickSeconds;
             timer = new DispatcherTimer();
             timer.Interval = new TimeSpan(0, 0, 1);
             timer.Tick += new EventHandler(TimerTickRun);
             timer.Start();
-            ButtonNext.IsEnabled = false;
+            ButtonNext.Visibility = Visibility.Hidden;
+            LabelStandBy.Visibility = Visibility.Visible;
         }
 
         private void TimerTickRun(object sender, EventArgs e)
         {
-            DispatcherTimer timer = (DispatcherTimer)sender;
-            nextBlock.Text = "Próximo (" + timerTickCount.ToString() + ")";
+            //DispatcherTimer timer = (DispatcherTimer)sender;
+            LabelStandBy.Content = "Aguarde " + "(" + timerTickCount.ToString() + ")";
+            ButtonNext.Visibility = Visibility.Hidden;
             if (--timerTickCount == 0)
             {
                 timer.Stop();
+                LabelStandBy.Content = "Aguarde " + "(" + (tickSeconds + 1) + ")";
                 if (counter == finalCount)
                     FinishPrint();
                 else
                     NextPrint();
-                ButtonNext.IsEnabled = true;
+                LabelStandBy.Visibility = Visibility.Hidden;
+                ButtonNext.Visibility = Visibility.Visible;
             }
         }
 
         void FindImages()
         {
-            List<string> filePathList = Directory.GetFiles(Directory.GetCurrentDirectory()).ToList();
-            imgList = new List<string>();
-            foreach (string filePath in filePathList)
+            string current = Directory.GetCurrentDirectory();
+            string imgDir = current + "\\img\\";
+            try
             {
-                if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".png"))
+                List<string> filePathList = Directory.GetFiles(imgDir).ToList();
+                imgList = new List<string>();
+                foreach (string filePath in filePathList)
                 {
-                    imgList.Add(filePath);
-                    finalCount++;
+                    if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".png"))
+                    {
+                        imgList.Add(filePath);
+                        finalCount++;
+                    }
                 }
+            }
+            catch
+            {
+                e = new Error();
+                e.Show();
+                this.Hide();
             }
         }
 
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
             if (counter != finalCount)
-            {                
-                TimerTickCreation();
+            {
+                if (counter == furthestCount)
+                {
+                    TimerTickCreation();
+                    furthestCount++;
+                }                
                 mainImage.Source = new BitmapImage(new Uri(imgList[counter]));
                 counter++;
-                ButtonPrevious.IsEnabled = true;
                 LabelPrint();
+                ButtonPrevious.Visibility = Visibility.Visible;
+                if (counter == finalCount)
+                {
+                    FinishPrint();
+                }
             }
             else
             {
@@ -128,6 +150,7 @@ namespace FeaturesOverlayPresentation
             {
                 counter--;
                 LabelPrint();
+                NextPrint();
                 mainImage.Source = new BitmapImage(new Uri(imgList[counter-1]));
             }
             else if (counter == finalCount)
@@ -140,8 +163,11 @@ namespace FeaturesOverlayPresentation
             }
             else if(counter == 1)
             {
-                ButtonPrevious.IsEnabled = false;
+                counter--;
+                ButtonPrevious.Visibility = Visibility.Hidden;
                 mainImage.Source = null;
+                LabelPrint();
+                NextPrint();
             }
         }
     }
