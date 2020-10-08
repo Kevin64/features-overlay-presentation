@@ -36,6 +36,15 @@ namespace FeaturesOverlayPresentation
             frameEnd.Visibility = Visibility.Hidden;
             FindImages();
             LabelPrint();
+            TextAppVersion.Text = Version + "-beta";
+        }
+
+        public string Version
+        {
+            get
+            {
+                return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            }
         }
 
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
@@ -69,23 +78,24 @@ namespace FeaturesOverlayPresentation
             timer.Tick += new EventHandler(TimerTickRun);
             timer.Start();
             ButtonNext.Visibility = Visibility.Hidden;
-            LabelStandBy.Visibility = Visibility.Visible;
+            TextStandBy.Visibility = Visibility.Visible;
         }
 
         private void TimerTickRun(object sender, EventArgs e)
         {
             //DispatcherTimer timer = (DispatcherTimer)sender;
-            LabelStandBy.Content = "Aguarde " + "(" + timerTickCount.ToString() + ")";
+            TextStandBy.Text = "Aguarde \n" + "(" + timerTickCount.ToString() + ")";
             ButtonNext.Visibility = Visibility.Hidden;
             if (--timerTickCount == 0)
             {
                 timer.Stop();
-                LabelStandBy.Content = "Aguarde " + "(" + (tickSeconds + 1) + ")";
+                TextStandBy.Text = "Aguarde \n" + "(" + (tickSeconds + 1) + ")";
+
                 if (counter == finalCount)
                     FinishPrint();
                 else
                     NextPrint();
-                LabelStandBy.Visibility = Visibility.Hidden;
+                TextStandBy.Visibility = Visibility.Hidden;
                 ButtonNext.Visibility = Visibility.Visible;
             }
         }

@@ -5,11 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeaturesOverlayPresentation"
         mc:Ignorable="d"
-        Title="FeatureOverlayPresentation" Height="1080" Width="1920" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" WindowState="Maximized" Topmost="True">
-    <Grid Background="#FF0F364B" Width="1920" Height="1080">
-
-
-        <Button x:Name="ButtonNext" Margin="0,506,90,472" FontSize="24" Click="ButtonNext_Click" FontWeight="Bold" Height="102" HorizontalAlignment="Right" Width="225" VerticalAlignment="Center" BorderBrush="#00707070" Background="Transparent" Foreground="Black">
+        Title="FeatureOverlayPresentation" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" WindowState="Maximized" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="1280" Height="1024" Topmost="True" ShowInTaskbar="False">
+    <Grid Background="#FF0F364B">
+        <Button x:Name="ButtonNext" Margin="0,0,20,0" FontSize="24" Click="ButtonNext_Click" FontWeight="Bold" BorderBrush="#00707070" Background="Transparent" Foreground="Black" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="0">
             <StackPanel>
                 <Image Height="50" Width="50" Source="img/arrowNext.png" />
                 <TextBlock x:Name="nextBlock" Text="Próximo" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" />
@@ -51,8 +49,8 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Button x:Name="ButtonPrevious" Margin="90,506,0,472" FontSize="24" Click="ButtonPrevious_Click" Width="225" Height="102" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Background="Transparent" BorderBrush="#00707070">
-            <StackPanel>
+        <Button x:Name="ButtonPrevious" Margin="20,0,0,0" FontSize="24" Click="ButtonPrevious_Click" FontWeight="Bold" Background="Transparent" BorderBrush="#00707070" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.48" VerticalAlignment="Center" Padding="0" HorizontalAlignment="Left">
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Image Height="50" Width="50" Source="img/arrowPrevious.png" RenderTransformOrigin="0.5,0.5" />
                 <TextBlock x:Name="previousBlock" Text="Anterior" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" />
             </StackPanel>
@@ -93,20 +91,20 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Label x:Name="LabelPage" Content="" HorizontalAlignment="Center" Margin="1776,1016,10,0" VerticalAlignment="Top" Width="134" FontSize="30" Background="#7FA0D1FF" Height="54"/>
-        <Label x:Name="LabelPage2" Content="Página:" HorizontalAlignment="Center" Margin="1668,1016,144,0" VerticalAlignment="Top" Width="108" Height="54" FontSize="30" Background="#7FA0D1FF"/>
-        <Image x:Name="brasaoUTI" Margin="0" Source="img/logoUTI.png" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" Width="565" Height="220" VerticalAlignment="Top"/>
-        <Image x:Name="brasaoUFSM" HorizontalAlignment="Left" Height="220" VerticalAlignment="Top" Width="220" RenderTransformOrigin="0.5,0.5" Source="img/logoUFSM.png"/>
-        <Image x:Name="brasaoCCSH" HorizontalAlignment="Right" Height="298" Margin="0" VerticalAlignment="Top" Width="305" RenderTransformOrigin="0.5,0.5" Source="img/logoCCSH.png"/>
-        <Image Margin="320,225,320,135" Name="mainImage"/>
-        <Label x:Name="LabelStandBy" Content="" HorizontalAlignment="Left" Margin="1605,506,0,0" VerticalAlignment="Top" Height="102" Width="225" FontSize="36" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="#7FFFFFFF" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT">
-            <Label.Background>
+        <Label x:Name="LabelPage" Content="" Margin="0,0,10,10" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="137" Padding="0"/>
+        <Label x:Name="LabelPage2" Content=" Página: " Margin="0,0,147,10" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="0"/>
+        <Image x:Name="brasaoUTI" Margin="398,0" Source="img/logoUTI.png" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top" Height="154"/>
+        <Image x:Name="brasaoUFSM" RenderTransformOrigin="0.5,0.5" Source="img/logoUFSM.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="154" Width="154"/>
+        <Image x:Name="brasaoCCSH" RenderTransformOrigin="0.5,0.5" Source="img/logoCCSH.png" HorizontalAlignment="Right" VerticalAlignment="Top" Height="154" Width="218"/>
+        <Image Margin="0" Name="mainImage" Width="980" Height="560"/>
+        <TextBlock x:Name="TextStandBy" Margin="0" FontSize="36" Foreground="#7FFFFFFF" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" HorizontalAlignment="Right" VerticalAlignment="Center" Width="150" Height="96" Padding="0" TextAlignment="Center">
+            <TextBlock.Background>
                 <SolidColorBrush Color="Transparent"/>
-            </Label.Background>
-        </Label>
-        <Label x:Name="labelAppVersion" Content="v0.6-beta" HorizontalAlignment="Left" Margin="0,1054,0,0" VerticalAlignment="Top" Foreground="White"/>
-        <Frame x:Name="frameIntro" NavigationUIVisibility="Hidden" HorizontalAlignment="Left" Height="720" Margin="320,225,0,0" VerticalAlignment="Top" Width="1285"/>
-        <Frame x:Name="frameEnd" NavigationUIVisibility="Hidden" HorizontalAlignment="Left" Height="720" Margin="320,225,0,0" VerticalAlignment="Top" Width="1285"/>
+            </TextBlock.Background>
+        </TextBlock>
+        <TextBlock x:Name="TextAppVersion" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="100" Height="15"/>
+        <Frame x:Name="frameIntro" NavigationUIVisibility="Hidden" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="980" Height="551"/>
+        <Frame x:Name="frameEnd" NavigationUIVisibility="Hidden" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Center" Width="980" Height="551" HorizontalAlignment="Center"/>
 
     </Grid>
 </Window>
