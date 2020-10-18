@@ -96,7 +96,6 @@
         <Image x:Name="brasaoUTI" Margin="398,0" Source="img/logoUTI.png" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top" Height="154"/>
         <Image x:Name="brasaoUFSM" RenderTransformOrigin="0.5,0.5" Source="img/logoUFSM.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="154" Width="154"/>
         <Image x:Name="brasaoCCSH" RenderTransformOrigin="0.5,0.5" Source="img/logoCCSH.png" HorizontalAlignment="Right" VerticalAlignment="Top" Height="154" Width="218"/>
-        <Image Margin="0" Name="mainImage" Width="980" Height="560"/>
         <TextBlock x:Name="TextStandBy" Margin="0" FontSize="36" Foreground="#7FFFFFFF" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" HorizontalAlignment="Right" VerticalAlignment="Center" Width="150" Height="96" Padding="0" TextAlignment="Center">
             <TextBlock.Background>
                 <SolidColorBrush Color="Transparent"/>
@@ -104,7 +103,7 @@
         </TextBlock>
         <TextBlock x:Name="TextAppVersion" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="100" Height="15"/>
         <Frame x:Name="frameIntro" NavigationUIVisibility="Hidden" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="980" Height="551"/>
-        <Frame x:Name="frameEnd" NavigationUIVisibility="Hidden" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Center" Width="980" Height="551" HorizontalAlignment="Center"/>
-
+        <TextBlock x:Name="txtBlockFrame" Margin="0" TextWrapping="Wrap" Height="552" Width="983" RenderTransformOrigin="-0.146,-18.625" Foreground="White" FontSize="32" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Frame x:Name="frameEnd" NavigationUIVisibility="Hidden" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="980" Height="551"/>
     </Grid>
 </Window>

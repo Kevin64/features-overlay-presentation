@@ -16,11 +16,11 @@ namespace FeaturesOverlayPresentation
     {
         private int furthestCount = 0;
         private int timerTickCount;
-        private int tickSeconds = 3;
+        private int tickSeconds = 9;
         private DispatcherTimer timer;
         private int counter = 0;
         private int finalCount;
-        List<string> imgList;
+        List<string> txtList;
         Error e;
 
 
@@ -34,7 +34,7 @@ namespace FeaturesOverlayPresentation
             frameIntro.Visibility = Visibility.Visible;
             frameEnd.Content = new Ending();
             frameEnd.Visibility = Visibility.Hidden;
-            FindImages();
+            FindText();
             LabelPrint();
             TextAppVersion.Text = Version + "-beta";
         }
@@ -100,23 +100,23 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        void FindImages()
+        private void FindText()
         {
             string current = Directory.GetCurrentDirectory();
-            string imgDir = current + "\\img\\";
+            string txtDir = current + "\\txt\\";
             try
             {
-                List<string> filePathList = Directory.GetFiles(imgDir).ToList();
-                imgList = new List<string>();
+                List<string> filePathList = Directory.GetFiles(txtDir).ToList();
+                txtList = new List<string>();
                 foreach (string filePath in filePathList)
                 {
-                    if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".png"))
+                    if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".txt"))
                     {
-                        imgList.Add(filePath);
+                        txtList.Add(filePath);
                         finalCount++;
                     }
                 }
-                if(finalCount == 0)
+                if (finalCount == 0)
                 {
                     e = new Error();
                     e.Show();
@@ -142,7 +142,7 @@ namespace FeaturesOverlayPresentation
             frameIntro.Visibility = Visibility.Hidden;
             if (counter < finalCount - 1)
             {
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter]));
+                txtBlockFrame.Text = File.ReadAllText(txtList[counter]);
                 counter++;
                 LabelPrint();
                 ButtonPrevious.Visibility = Visibility.Visible;
@@ -151,7 +151,7 @@ namespace FeaturesOverlayPresentation
             {
                 counter++;
                 frameEnd.Visibility = Visibility.Visible;
-                mainImage.Source = null;
+                txtBlockFrame.Text = null;
                 LabelPrint();
                 FinishPrint();
             }
@@ -169,13 +169,13 @@ namespace FeaturesOverlayPresentation
                 counter--;
                 LabelPrint();
                 NextPrint();
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter-1]));
+                txtBlockFrame.Text = File.ReadAllText(txtList[counter-1]);
             }
             else if (counter == finalCount)
             {
                 counter--;
                 LabelPrint();
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter-1]));
+                txtBlockFrame.Text = File.ReadAllText(txtList[counter-1]);
                 if (!nextBlock.Text.Equals("Próximo"))
                     NextPrint();
             }
@@ -183,7 +183,7 @@ namespace FeaturesOverlayPresentation
             {
                 counter--;
                 ButtonPrevious.Visibility = Visibility.Hidden;
-                mainImage.Source = null;
+                txtBlockFrame.Text = null;
                 frameIntro.Visibility = Visibility.Visible;
                 LabelPrint();
                 NextPrint();
