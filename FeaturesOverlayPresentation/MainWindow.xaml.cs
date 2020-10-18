@@ -36,7 +36,7 @@ namespace FeaturesOverlayPresentation
             frameEnd.Visibility = Visibility.Hidden;
             FindText();
             LabelPrint();
-            TextAppVersion.Text = Version + "-beta";
+            TextAppVersion.Text = Version + "-cov-beta";
         }
 
         public string Version
