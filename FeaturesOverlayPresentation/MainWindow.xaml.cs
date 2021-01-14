@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,7 +24,6 @@ namespace FeaturesOverlayPresentation
         List<string> imgList;
         Error e;
 
-
         public MainWindow()
         {
             InitializeComponent();
@@ -36,7 +36,7 @@ namespace FeaturesOverlayPresentation
             frameEnd.Visibility = Visibility.Hidden;
             FindImages();
             LabelPrint();
-            TextAppVersion.Text = Version + "-beta";
+            TextAppVersion.Text = "v" + Version;
         }
 
         public string Version
@@ -49,10 +49,7 @@ namespace FeaturesOverlayPresentation
 
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.System && e.SystemKey == Key.F4)
-            {
-                e.Handled = true;
-            }
+            
         }
 
         private void LabelPrint()
@@ -157,6 +154,8 @@ namespace FeaturesOverlayPresentation
             }
             else
             {
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\FOP");
+                key.SetValue("DidItRunAlready", 1);
                 Environment.Exit(0);
             }
         }
