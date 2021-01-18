@@ -166,7 +166,6 @@
     <Resource Include="fonts\ZHUM601I.TTF" />
     <Resource Include="fonts\ZHUM601N.TTF" />
     <Resource Include="fonts\ZHUM601U.TTF" />
-    <None Include="FeaturesOverlayPresentation_TemporaryKey.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
