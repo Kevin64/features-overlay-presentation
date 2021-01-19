@@ -203,5 +203,9 @@
     <Resource Include="img\arrowNext.png" />
     <Resource Include="img\arrowPrevious.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="installer\installerInno-Win10.iss" />
+    <Content Include="installer\installerInno-Win7.iss" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

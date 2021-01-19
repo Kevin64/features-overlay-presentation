@@ -38,7 +38,14 @@ namespace FeaturesOverlayPresentation
         private void YesLaterButton_Click(object sender, RoutedEventArgs e)
         {
             RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce");
-            key.SetValue("FOP", "C:\\Program Files (x86)\\FOP\\Rever tutorial de uso do computador.lnk");
+            if(Environment.Is64BitOperatingSystem)
+            {
+                key.SetValue("FOP", "C:\\Program Files (x86)\\FOP\\Rever tutorial de uso do computador.lnk");
+            }
+            else
+            {
+                key.SetValue("FOP", "C:\\Program Files\\FOP\\Rever tutorial de uso do computador.lnk");
+            }            
             RegistryKey key2 = Registry.CurrentUser.CreateSubKey(@"Software\FOP");
             key2.SetValue("DidItRunAlready", 0, RegistryValueKind.DWord);
             Environment.Exit(0);
