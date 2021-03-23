@@ -18,9 +18,9 @@ namespace FeaturesOverlayPresentation
         private int furthestCount = 0;
         private int timerTickCount;
         private int tickSeconds = 3;
-        private DispatcherTimer timer;
         private int counter = 0;
         private int finalCount;
+        private DispatcherTimer timer;
         List<string> imgList;
         Error e;
 
@@ -50,9 +50,7 @@ namespace FeaturesOverlayPresentation
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.System && e.SystemKey == Key.F4)
-            {
                 e.Handled = true;
-            }
         }
 
         private void LabelPrint()
@@ -90,7 +88,6 @@ namespace FeaturesOverlayPresentation
             {
                 timer.Stop();
                 TextStandBy.Text = "Aguarde \n" + "(" + (tickSeconds + 1) + ")";
-
                 if (counter == finalCount)
                     FinishPrint();
                 else
