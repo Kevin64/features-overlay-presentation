@@ -3,9 +3,6 @@ using System.Windows;
 
 namespace FeaturesOverlayPresentation
 {
-    /// <summary>
-    /// Lógica interna para Error.xaml
-    /// </summary>
     public partial class Error : Window
     {
         public Error()
