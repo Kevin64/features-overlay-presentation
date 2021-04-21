@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeaturesOverlayPresentation"
         mc:Ignorable="d"
-        Title="FeatureOverlayPresentation" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" WindowState="Maximized" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="1280" Height="1024" Topmost="True" ShowInTaskbar="False">
+        Title="FeatureOverlayPresentation" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowState="Maximized" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="1280" Height="1024" Topmost="True" ShowInTaskbar="False" WindowStyle="None" Loaded="FormLoaded">
     <Grid Background="#FF0F364B">
         <Button x:Name="ButtonNext" Margin="0,0,20,0" FontSize="24" Click="ButtonNext_Click" FontWeight="Bold" BorderBrush="#00707070" Background="Transparent" Foreground="Black" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="0">
             <StackPanel>

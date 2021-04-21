@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeaturesOverlayPresentation"
         mc:Ignorable="d"
-        Title="Assistir novamente?" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
+        Title="Assistir novamente?" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Visibility="Hidden">
     <Grid Height="Auto">
         <Label Content="Deseja visualizar o tutorial novamente?" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,8,10,0" Width="216"/>
         <Button x:Name="YesButton" Content="Sim" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Width="98" Click="YesButton_Click" TabIndex="0"/>

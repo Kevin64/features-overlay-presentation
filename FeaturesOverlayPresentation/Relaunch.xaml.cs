@@ -20,7 +20,10 @@ namespace FeaturesOverlayPresentation
                 m.Show();
             }
             else
+            {
                 InitializeComponent();
+                this.Visibility = Visibility.Visible;
+            }            
         }
 
         private void YesButton_Click(object sender, RoutedEventArgs e)

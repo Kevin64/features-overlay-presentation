@@ -144,15 +144,16 @@ begin
 
     // install = 1 if framework is installed
     // 461808 -> .NET 4.7.2 461814 before Win10 April 2018 Update
+    // 528040 -> .NET 4.8 528040
     // see https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed
     // for details
-    result := success and (install = 1) and (release >= 461808);
+    result := success and (install = 1) and (release >= 528040);
 end;
 
 function InitializeSetup(): Boolean;
 begin
     if not IsDotNetDetected() then begin
-        MsgBox('Este programa requer o Microsoft .NET Framework 4.7.2 ou superior.'#13#13
+        MsgBox('Este programa requer o Microsoft .NET Framework 4.8 ou superior.'#13#13
             'Por favor, instale-o e execute este programa novamente.', mbInformation, MB_OK);
         result := false;
     end else
