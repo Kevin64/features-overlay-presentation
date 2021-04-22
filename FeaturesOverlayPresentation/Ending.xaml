@@ -9,7 +9,7 @@
       Title="Ending" Width="800" Height="480">
 
     <Grid Background="#FF0F364B">
-        <TextBlock Margin="0" TextWrapping="Wrap" Foreground="White" FontSize="30" FontFamily="/FOP-covid19;component/fonts/#ZapfHumnst BT" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Obrigado pela"/><Run Text=" paciência!"/><LineBreak/><Run Text="Qualquer"/><Run Text=" "/><Run Text="dúvida,"/><Run Text=" "/><Run Text="problema, sugestão ou reclamação,"/><Run Text=" "/><Run Text="contate-nos:"/><LineBreak/><Run Text="-"/><Run Text=" Ramal: 9625"/><LineBreak/><Run Text="- E-mail: lab74cufsm@gmail.com"/><LineBreak/><Run Text="- Sala 4413, 4º andar do prédio 74C."/><LineBreak/><Run/><LineBreak/></TextBlock>
+        <TextBlock Margin="0" TextWrapping="Wrap" Foreground="White" FontSize="30" FontFamily="/COP;component/fonts/#ZapfHumnst BT" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Obrigado pela"/><Run Text=" paciência!"/><LineBreak/><Run Text="Qualquer"/><Run Text=" "/><Run Text="dúvida,"/><Run Text=" "/><Run Text="problema, sugestão ou reclamação,"/><Run Text=" "/><Run Text="contate-nos:"/><LineBreak/><Run Text="-"/><Run Text=" Ramal: 9625"/><LineBreak/><Run Text="- E-mail: lab74cufsm@gmail.com"/><LineBreak/><Run Text="- Sala 4413, 4º andar do prédio 74C."/><LineBreak/><Run/><LineBreak/></TextBlock>
 
     </Grid>
 </Page>
