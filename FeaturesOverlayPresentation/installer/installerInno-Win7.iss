@@ -42,6 +42,10 @@ Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortugue
 Name: "{app}\img"
 
 [Files]
+Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\FOP.pdb"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
+Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\FOP.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
 Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\FOP.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\img\*"; DestDir: "{commonpf32}\{#MyAppName}\img"; Flags: ignoreversion recursesubdirs createallsubdirs

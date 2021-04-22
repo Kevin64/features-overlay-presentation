@@ -10,7 +10,7 @@
         <Button x:Name="ButtonNext" Margin="0,0,20,0" FontSize="24" Click="ButtonNext_Click" FontWeight="Bold" BorderBrush="#00707070" Background="Transparent" Foreground="Black" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="0">
             <StackPanel>
                 <Image Height="50" Width="50" Source="img/arrowNext.png" />
-                <TextBlock x:Name="nextBlock" Text="Próximo" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" />
+                <TextBlock x:Name="nextBlock" Text="Próximo" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="/FOP;component/fonts/#ZapfHumnst BT" />
             </StackPanel>
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
@@ -52,7 +52,7 @@
         <Button x:Name="ButtonPrevious" Margin="20,0,0,0" FontSize="24" Click="ButtonPrevious_Click" FontWeight="Bold" Background="Transparent" BorderBrush="#00707070" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.48" VerticalAlignment="Center" Padding="0" HorizontalAlignment="Left">
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Image Height="50" Width="50" Source="img/arrowPrevious.png" RenderTransformOrigin="0.5,0.5" />
-                <TextBlock x:Name="previousBlock" Text="Anterior" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" />
+                <TextBlock x:Name="previousBlock" Text="Anterior" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="/FOP;component/fonts/#ZapfHumnst BT" />
             </StackPanel>
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
@@ -91,13 +91,13 @@
                 </Style>
             </Button.Style>
         </Button>
-        <Label x:Name="LabelPage" Content="" Margin="0,0,10,10" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="137" Padding="0"/>
-        <Label x:Name="LabelPage2" Content=" Página: " Margin="0,0,147,10" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="0"/>
+        <Label x:Name="LabelPage" Content="" Margin="0,0,10,10" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="137" Padding="0" FontFamily="/FOP;component/fonts/#ZapfHumnst BT"/>
+        <Label x:Name="LabelPage2" Content=" Página: " Margin="0,0,147,10" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="0" FontFamily="/FOP;component/fonts/#ZapfHumnst BT"/>
         <Image x:Name="brasaoUTI" Margin="398,0" Source="img/logoUTI.png" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top" Height="154"/>
         <Image x:Name="brasaoUFSM" RenderTransformOrigin="0.5,0.5" Source="img/logoUFSM.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="154" Width="154"/>
         <Image x:Name="brasaoCCSH" RenderTransformOrigin="0.5,0.5" Source="img/logoCCSH.png" HorizontalAlignment="Right" VerticalAlignment="Top" Height="154" Width="218"/>
         <Image Margin="0" Name="mainImage" Width="980" Height="560"/>
-        <TextBlock x:Name="TextStandBy" Margin="0" FontSize="36" Foreground="#7FFFFFFF" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" HorizontalAlignment="Right" VerticalAlignment="Center" Width="150" Height="96" Padding="0" TextAlignment="Center">
+        <TextBlock x:Name="TextStandBy" Margin="0" FontSize="36" Foreground="#7FFFFFFF" FontFamily="/FOP;component/fonts/#ZapfHumnst BT" HorizontalAlignment="Right" VerticalAlignment="Center" Width="150" Height="96" Padding="0" TextAlignment="Center">
             <TextBlock.Background>
                 <SolidColorBrush Color="Transparent"/>
             </TextBlock.Background>
