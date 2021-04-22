@@ -9,8 +9,8 @@
       Title="Intro" Width="800" Height="480">
 
     <Grid Background="#FF0F364B">
-        <Label x:Name="labelWelcome1" Content="Bem-vindo(a)!" Margin="0" Foreground="White" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" FontSize="72" Width="446" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalAlignment="Top"/>
-        <TextBlock Margin="6,161,6,83" TextWrapping="Wrap" RenderTransformOrigin="-0.146,-18.625" Foreground="White" FontSize="32" FontFamily="/FeaturesOverlayPresentation;component/fonts/#ZapfHumnst BT" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Height="236"><Run Text="Devido à pandemia de COVID-19, pedimos que siga as seguintes orientações para que o uso das dependências do laboratório de informática do CCSH seja "/><Run Text="o mais "/><Run Text="seguro"/><Run Text=" "/><Run Text="e eficiente "/><Run Text="possível"/><Run Text=" nesse momento de calamidade pública. Agradecemos a sua compreensão"/><Run Text=" e colaboração"/><Run Text="."/></TextBlock>
+        <Label x:Name="labelWelcome1" Content="Bem-vindo(a)!" Margin="0" Foreground="White" FontFamily="/FOP-covid19;component/fonts/#ZapfHumnst BT" FontSize="72" Width="446" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+        <TextBlock Margin="6,161,6,83" TextWrapping="Wrap" RenderTransformOrigin="-0.146,-18.625" Foreground="White" FontSize="32" FontFamily="/FOP-covid19;component/fonts/#ZapfHumnst BT" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Height="236"><Run Text="Devido à pandemia de COVID-19, pedimos que siga as seguintes orientações para que o uso das dependências do laboratório de informática do CCSH seja "/><Run Text="o mais "/><Run Text="seguro"/><Run Text=" "/><Run Text="e eficiente "/><Run Text="possível"/><Run Text=" nesse momento de calamidade pública. Agradecemos a sua compreensão"/><Run Text=" e colaboração"/><Run Text="."/></TextBlock>
 
     </Grid>
 </Page>
