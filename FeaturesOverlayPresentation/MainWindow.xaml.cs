@@ -32,7 +32,7 @@ namespace FeaturesOverlayPresentation
         static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
         private const int GWL_EX_STYLE = -20;
         private const int WS_EX_APPWINDOW = 0x00040000, WS_EX_TOOLWINDOW = 0x00000080;
-
+        
         public MainWindow()
         {
             InitializeComponent();
