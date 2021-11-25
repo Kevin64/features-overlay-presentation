@@ -54,11 +54,11 @@ Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\Feature
 Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Rever tutorial de uso do computador.lnk"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
-[Registry]
-Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\RunOnce"; ValueType: string; ValueName: FOP; ValueData: "{commonpf32}\{#MyAppName}\Rever tutorial de uso do computador.lnk"; Flags: uninsdeletekeyifempty
+;[Registry]
+;Root: HKCU; Subkey: "Software\Microsoft\Windows\CurrentVersion\RunOnce"; ValueType: string; ValueName: FOP; ValueData: "{commonpf32}\{#MyAppName}\Rever tutorial de uso do computador.lnk"; Flags: uninsdeletekeyifempty
 
 [Registry]
-Root: HKCU; Subkey: "Software\FOP"; ValueType: DWORD; ValueName: DidItRunAlready; ValueData: "0"; Flags: uninsdeletekeyifempty
+Root: HKCU; Subkey: "Software\FOP"; ValueType: DWORD; ValueName: DidItRunAlready; ValueData: "1"; Flags: uninsdeletekeyifempty
 
 [UninstallDelete]
 Type: filesandordirs; Name: "{commonpf32}\{#MyAppName}"

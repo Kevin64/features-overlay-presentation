@@ -57,7 +57,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>img\IconGroup103.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>EF733400ABC4FC93BEF8A0A0DDB932BEC1C08338</ManifestCertificateThumbprint>
@@ -69,7 +70,7 @@
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
@@ -100,6 +101,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ReinstallError.xaml.cs">
+      <DependentUpon>ReinstallError.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Relaunch.xaml.cs">
       <DependentUpon>Relaunch.xaml</DependentUpon>
     </Compile>
@@ -136,6 +140,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ReinstallError.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Relaunch.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,6 +213,8 @@
     <Resource Include="img\arrowPrevious.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="img\background.png" />
+    <Resource Include="img\ico-256.ico" />
     <Content Include="installer\installerInno-Win10.iss" />
     <Content Include="installer\installerInno-Win7.iss" />
   </ItemGroup>

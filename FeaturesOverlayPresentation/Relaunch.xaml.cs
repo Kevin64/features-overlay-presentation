@@ -13,17 +13,26 @@ namespace FeaturesOverlayPresentation
 
         public Relaunch()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\FOP");
-            if (int.Parse(key.GetValue("DidItRunAlready").ToString()).Equals(0))
+            try
             {
-                MainWindow m = new MainWindow();
-                m.Show();
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\FOP");
+                if (int.Parse(key.GetValue("DidItRunAlready").ToString()).Equals(0))
+                {
+                    MainWindow m = new MainWindow();
+                    m.Show();
+                }
+                else
+                {
+                    InitializeComponent();
+                    this.Visibility = Visibility.Visible;
+                }
             }
-            else
+            catch
             {
-                InitializeComponent();
-                this.Visibility = Visibility.Visible;
-            }            
+                ReinstallError r = new ReinstallError();
+                r.Show();
+            }
+            
         }
 
         private void YesButton_Click(object sender, RoutedEventArgs e)

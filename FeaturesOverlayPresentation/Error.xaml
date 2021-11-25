@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Arquivos ausentes" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closed="Window_Closed" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="116" Width="352">
     <Grid>
-        <Button x:Name="closeAppButton" Content="Fechar programa" VerticalAlignment="Bottom" Click="closeAppButton_Click" Margin="0,0,0,10" Padding="0" HorizontalAlignment="Center" Width="105"/>
-        <Label x:Name="labelExplanation" Content="Não existem arquivos de imagem PNG na pasta 'img' para &#xD;&#xA;utilização. O programa será fechado." HorizontalAlignment="Left" Margin="10,10,10,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0"/>
+        <Button x:Name="closeAppButton" Content="Fechar programa" VerticalAlignment="Bottom" Click="closeAppButton_Click" Margin="116,0,120,10" Padding="0" HorizontalAlignment="Center" Width="110"/>
+        <Label x:Name="labelExplanation" Content="Não existem arquivos de imagem PNG na pasta 'img' para &#xD;&#xA;utilização. Reinstale o programa para corrigir." HorizontalAlignment="Left" Margin="10,10,10,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0"/>
     </Grid>
 </Window>

@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
@@ -46,6 +47,8 @@ namespace FeaturesOverlayPresentation
             FindImages();
             LabelPrint();
             TextAppVersion.Text = "v" + Version;
+            AnimateFrame();
+            regRecreate();
         }
 
         //Form loaded event handler
@@ -55,7 +58,6 @@ namespace FeaturesOverlayPresentation
             var helper = new WindowInteropHelper(this).Handle;
             //Performing some magic to hide the form from Alt+Tab
             SetWindowLong(helper, GWL_EX_STYLE, (GetWindowLong(helper, GWL_EX_STYLE) | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW);
-
         }
 
         public string Version
@@ -148,8 +150,23 @@ namespace FeaturesOverlayPresentation
             finalCount++;
         }
 
+        void AnimateFrame()
+        {
+            DoubleAnimation da = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = new Duration(TimeSpan.FromSeconds(1)),
+                AutoReverse = false
+            };
+            frameIntro.BeginAnimation(OpacityProperty, da);
+            frameEnd.BeginAnimation(OpacityProperty, da);
+            mainImage.BeginAnimation(OpacityProperty, da);
+        }
+
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
+            AnimateFrame();
             if (counter == furthestCount)
             {
                 TimerTickCreation();
@@ -173,6 +190,7 @@ namespace FeaturesOverlayPresentation
             }
             else
             {
+                regDelete();
                 RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\FOP");
                 key.SetValue("DidItRunAlready", 1);
                 Environment.Exit(0);
@@ -181,6 +199,7 @@ namespace FeaturesOverlayPresentation
 
         private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
         {
+            AnimateFrame();
             frameEnd.Visibility = Visibility.Hidden;
             if (counter > 1)
             {
@@ -206,6 +225,25 @@ namespace FeaturesOverlayPresentation
                 LabelPrint();
                 NextPrint();
             }
+        }
+
+        private void regRecreate()
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce", true);
+            if (!key.GetValueNames().Contains("FOP"))
+            {
+                if(Environment.Is64BitOperatingSystem == true)
+                    key.SetValue("FOP", Environment.ExpandEnvironmentVariables("%ProgramFiles(x86)%") + "\\FOP" + "\\Rever tutorial de uso do computador.lnk", RegistryValueKind.String);
+                else
+                    key.SetValue("FOP", Environment.ExpandEnvironmentVariables("%ProgramFiles%") + "\\FOP" + "\\Rever tutorial de uso do computador.lnk", RegistryValueKind.String);
+            }
+        }
+
+        private void regDelete()
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce", true);
+            if (key.GetValueNames().Contains("FOP"))
+                key.DeleteValue("FOP");
         }
     }
 }
