@@ -6,13 +6,13 @@
       xmlns:local="clr-namespace:FeaturesOverlayPresentation"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Erro de instalação"  ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closed="Window_Closed" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="116" Width="352">
-    <Grid x:Name="reinstallWindow">
+      Title="Erro de instalação"  ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closed="Window_Closed" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="116" Width="352" Foreground="Black">
+    <Grid x:Name="reinstallWindow" Background="#FF555555">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="85*"/>
             <ColumnDefinition Width="267*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="closeAppButton" Content="Fechar programa" VerticalAlignment="Bottom" Click="closeAppButton_Click" Margin="32,0,120,10" Padding="0" HorizontalAlignment="Center" Width="110" Grid.Column="1"/>
-        <Label x:Name="labelExplanation" Content="Foi detectado uma corrupção na instalação do programa.&#xD;&#xA;Por favor, reinstale o FOP e o execute novamente." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0" Grid.ColumnSpan="2"/>
+        <Button x:Name="closeAppButton" Content="Fechar programa" VerticalAlignment="Bottom" Click="closeAppButton_Click" Margin="32,0,120,10" Padding="0" HorizontalAlignment="Center" Width="110" Grid.Column="1" Background="#FF7E7E7E" Foreground="White"/>
+        <Label x:Name="labelExplanation" Content="Foi detectado uma corrupção na instalação do programa.&#xD;&#xA;Por favor, reinstale o FOP e o execute novamente." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0" Grid.ColumnSpan="2" Background="#00000000" Foreground="White"/>
     </Grid>
 </Window>

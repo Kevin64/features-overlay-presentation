@@ -23,9 +23,10 @@ namespace FeaturesOverlayPresentation
         private int tickSeconds = 3;
         private int counter = 0;
         private int finalCount;
+        private bool empty = false;
         private DispatcherTimer timer;
         List<string> imgList;
-        Error e;
+        ReinstallError e;
 
         [DllImport("user32.dll", SetLastError = true)]
         static extern int GetWindowLong(IntPtr hWnd, int nIndex);
@@ -118,7 +119,7 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        void FindImages()
+        public void FindImages()
         {
             string current = Directory.GetCurrentDirectory();
             string imgDir = current + "\\img\\";
@@ -136,16 +137,18 @@ namespace FeaturesOverlayPresentation
                 }
                 if(finalCount == 0)
                 {
-                    e = new Error();
+                    e = new ReinstallError();
                     e.Show();
-                    this.Hide();
+                    this.Close();
+                    empty = true;
                 }
             }
             catch
             {
-                e = new Error();
+                e = new ReinstallError();
                 e.Show();
-                this.Hide();
+                this.Close();
+                empty = true;
             }
             finalCount++;
         }
@@ -229,14 +232,17 @@ namespace FeaturesOverlayPresentation
 
         private void regRecreate()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce", true);
-            if (!key.GetValueNames().Contains("FOP"))
+            if(!empty)
             {
-                if(Environment.Is64BitOperatingSystem == true)
-                    key.SetValue("FOP", Environment.ExpandEnvironmentVariables("%ProgramFiles(x86)%") + "\\FOP" + "\\Rever tutorial de uso do computador.lnk", RegistryValueKind.String);
-                else
-                    key.SetValue("FOP", Environment.ExpandEnvironmentVariables("%ProgramFiles%") + "\\FOP" + "\\Rever tutorial de uso do computador.lnk", RegistryValueKind.String);
-            }
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce", true);
+                if (!key.GetValueNames().Contains("FOP"))
+                {
+                    if (Environment.Is64BitOperatingSystem == true)
+                        key.SetValue("FOP", Environment.ExpandEnvironmentVariables("%ProgramFiles(x86)%") + "\\FOP" + "\\Rever tutorial de uso do computador.lnk", RegistryValueKind.String);
+                    else
+                        key.SetValue("FOP", Environment.ExpandEnvironmentVariables("%ProgramFiles%") + "\\FOP" + "\\Rever tutorial de uso do computador.lnk", RegistryValueKind.String);
+                }
+            }            
         }
 
         private void regDelete()

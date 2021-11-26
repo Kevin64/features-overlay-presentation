@@ -1,5 +1,8 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -10,36 +13,64 @@ namespace FeaturesOverlayPresentation
     public partial class Relaunch : Window
     {
         private bool pressed = false;
+        MainWindow m;
 
         public Relaunch()
         {
+            InitializeComponent();
             try
-            {
+            {                               
+                if (!FindFolder())
+                    throw new Exception();
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\FOP");
                 if (int.Parse(key.GetValue("DidItRunAlready").ToString()).Equals(0))
                 {
-                    MainWindow m = new MainWindow();
-                    m.Show();
-                }
+                    m = new MainWindow();
+                    m.Show();                    
+                }      
                 else
                 {
-                    InitializeComponent();
-                    this.Visibility = Visibility.Visible;
+                    this.Show();
                 }
             }
             catch
             {
+                this.Hide();
                 ReinstallError r = new ReinstallError();
-                r.Show();
+                r.Show();                
             }
             
         }
 
+        public bool FindFolder()
+        {
+            string current = Directory.GetCurrentDirectory();
+            string imgDir = current + "\\img\\";
+            try
+            {
+                List<string> filePathList = Directory.GetFiles(imgDir).ToList();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow m = new MainWindow();
-            m.Show();
-            this.Close();
+            try
+            {
+                m = new MainWindow();
+                m.Show();
+                this.Close();
+            }
+            catch
+            {
+                this.Close();
+                m.Close();
+            }
+            
         }
 
         private void NoButton_Click(object sender, RoutedEventArgs e)
@@ -51,18 +82,26 @@ namespace FeaturesOverlayPresentation
         {
             DateTime dateAndTime = DateTime.Today;
             bool check = false;
-            if (PingHost(serverDropDown.Text) == true && portDropDown.Text != "")
+            if(patrimTextBox.Text != "")
             {
-                if(pressed == false)
-                    webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString());
+                if (PingHost(serverDropDown.Text) == true && portDropDown.Text != "")
+                {
+                    if (pressed == false)
+                        webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
+                    + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString());
+                    else
+                        webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
+                    + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null);
+                    check = true;
+                }
                 else
-                    webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null);
-                check = true;
-            }            
+                    MessageBox.Show("Servidor não encontrado. Selecione um servidor válido!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             else
-                MessageBox.Show("Servidor não encontrado. Selecione um servidor válido!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            {
+                MessageBox.Show("Preencha os campos necessários!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
 
             if(check == true)
             {
@@ -81,10 +120,7 @@ namespace FeaturesOverlayPresentation
                 else
                 {
                     RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce");
-                    if (Environment.Is64BitOperatingSystem)
-                        key.DeleteValue("FOP");
-                    else
-                        key.DeleteValue("FOP");
+                    key.DeleteValue("FOP");
                     RegistryKey key2 = Registry.CurrentUser.CreateSubKey(@"Software\FOP");
                     key2.SetValue("DidItRunAlready", 1, RegistryValueKind.DWord);
                     YesLaterButton.Content = "Executar no próximo boot";
