@@ -24,8 +24,9 @@ namespace FeaturesOverlayPresentation
         private int counter = 0;
         private int finalCount;
         private bool empty = false;
+        private string k, newFilePath;
         private DispatcherTimer timer;
-        List<string> imgList;
+        List<string> imgList, labelList;
         ReinstallError e;
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -39,17 +40,36 @@ namespace FeaturesOverlayPresentation
         {
             InitializeComponent();
             this.KeyDown += OnPreviewKeyDown;
-            TimerTickCreation();
+            
             ButtonPrevious.Visibility = Visibility.Hidden;
             frameIntro.Content = new Intro();
             frameIntro.Visibility = Visibility.Visible;
             frameEnd.Content = new Ending();
             frameEnd.Visibility = Visibility.Hidden;
             FindImages();
+            FindLabels();
             LabelPrint();
             TextAppVersion.Text = "v" + Version;
             AnimateFrame();
+
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey(@"Software\FOP");
+            k = rk.GetValue("DidItRunAlready").ToString();
             regRecreate();
+            if(k.Equals("1"))
+            {
+                TextStandBy.Visibility = Visibility.Hidden;
+                ComboBoxNavigate.Visibility = Visibility.Visible;
+                ComboBoxNavigate.Items.Add("Introdução");
+                foreach (string item in labelList)
+                    ComboBoxNavigate.Items.Add(item);
+                ComboBoxNavigate.Items.Add("Finalização");
+                ComboBoxNavigate.SelectedIndex = ComboBoxNavigate.Items.IndexOf("Introdução");
+            }
+            else
+            {
+                TimerTickCreation();
+                ComboBoxNavigate.Visibility = Visibility.Hidden;
+            }
         }
 
         //Form loaded event handler
@@ -78,6 +98,18 @@ namespace FeaturesOverlayPresentation
         private void LabelPrint()
         {
             LabelPage.Content = (counter + 1) + " de " + (finalCount + 1);
+        }
+
+        private void SlideSubTitlePrint(int counter, bool flag)
+        {
+            string str;
+            if(flag)
+            {
+                str = ComboBoxNavigate.Items.GetItemAt(counter).ToString().Remove(0, 5);
+                LabelSlideSubtitle.Content = str;
+            }                
+            else
+                LabelSlideSubtitle.Content = "";
         }
 
         private void NextPrint()
@@ -119,8 +151,45 @@ namespace FeaturesOverlayPresentation
             }
         }
 
+        public void FindLabels()
+        {
+            finalCount = 0;
+            string current = Directory.GetCurrentDirectory();
+            string imgDir = current + "\\img\\";
+            try
+            {
+                List<string> filePathList = Directory.GetFiles(imgDir).ToList();
+                labelList = new List<string>();
+                foreach (string filePath in filePathList)
+                {
+                    if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".png"))
+                    {
+                        newFilePath = filePath.Replace(".png", "");
+                        labelList.Add(Path.GetFileName(newFilePath));
+                        finalCount++;
+                    }
+                }
+                if (finalCount == 0)
+                {
+                    e = new ReinstallError();
+                    e.Show();
+                    this.Close();
+                    empty = true;
+                }
+            }
+            catch
+            {
+                e = new ReinstallError();
+                e.Show();
+                this.Close();
+                empty = true;
+            }
+            finalCount++;
+        }
+
         public void FindImages()
         {
+            finalCount = 0;
             string current = Directory.GetCurrentDirectory();
             string imgDir = current + "\\img\\";
             try
@@ -170,7 +239,7 @@ namespace FeaturesOverlayPresentation
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
             AnimateFrame();
-            if (counter == furthestCount)
+            if (counter == furthestCount && k.Equals("0"))
             {
                 TimerTickCreation();
                 furthestCount++;
@@ -182,6 +251,8 @@ namespace FeaturesOverlayPresentation
                 counter++;
                 LabelPrint();
                 ButtonPrevious.Visibility = Visibility.Visible;
+                ComboBoxNavigate.SelectedIndex = counter;
+                SlideSubTitlePrint(counter, true);
             }
             else if (counter + 1 == finalCount)
             {
@@ -190,6 +261,8 @@ namespace FeaturesOverlayPresentation
                 mainImage.Source = null;
                 LabelPrint();
                 FinishPrint();
+                ComboBoxNavigate.SelectedIndex = counter;
+                SlideSubTitlePrint(counter, false);
             }
             else
             {
@@ -209,13 +282,15 @@ namespace FeaturesOverlayPresentation
                 counter--;
                 LabelPrint();
                 NextPrint();
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter-1]));
+                mainImage.Source = new BitmapImage(new Uri(imgList[counter - 1]));
+                ComboBoxNavigate.SelectedIndex = counter;
+                SlideSubTitlePrint(counter, true);
             }
             else if (counter == finalCount)
             {
                 counter--;
                 LabelPrint();
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter-1]));
+                mainImage.Source = new BitmapImage(new Uri(imgList[counter - 1]));
                 if (!nextBlock.Text.Equals("Próximo"))
                     NextPrint();
             }
@@ -227,12 +302,49 @@ namespace FeaturesOverlayPresentation
                 frameIntro.Visibility = Visibility.Visible;
                 LabelPrint();
                 NextPrint();
+                ComboBoxNavigate.SelectedIndex = counter;
+                SlideSubTitlePrint(counter, false);
             }
+        }
+
+        private void ComboBoxNavigate_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            AnimateFrame();            
+            counter = ComboBoxNavigate.SelectedIndex;
+            LabelPrint();
+            if (counter > 0 && counter < finalCount)
+            {
+                frameEnd.Visibility = Visibility.Hidden;
+                frameIntro.Visibility = Visibility.Hidden;
+                ButtonPrevious.Visibility = Visibility.Visible;
+                mainImage.Source = new BitmapImage(new Uri(imgList[counter - 1]));
+                SlideSubTitlePrint(counter, true);
+                NextPrint();
+            }
+            else if (counter == 0)
+            {
+                frameIntro.Visibility = Visibility.Visible;
+                frameEnd.Visibility = Visibility.Hidden;
+                ButtonPrevious.Visibility = Visibility.Hidden;
+                mainImage.Source = null;
+                SlideSubTitlePrint(counter, false);
+                NextPrint();
+            }
+            else if (counter == finalCount)
+            {
+                frameIntro.Visibility = Visibility.Hidden;
+                frameEnd.Visibility = Visibility.Visible;
+                ButtonPrevious.Visibility = Visibility.Visible;
+                mainImage.Source = null;
+                SlideSubTitlePrint(counter, false);
+                FinishPrint();
+            }
+
         }
 
         private void regRecreate()
         {
-            if(!empty)
+            if (!empty && k.Equals("0"))
             {
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce", true);
                 if (!key.GetValueNames().Contains("FOP"))
