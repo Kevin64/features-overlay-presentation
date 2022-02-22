@@ -55,19 +55,33 @@ namespace FeaturesOverlayPresentation
             RegistryKey rk = Registry.CurrentUser.OpenSubKey(@"Software\FOP");
             k = rk.GetValue("DidItRunAlready").ToString();
             regRecreate();
-            if(k.Equals("1"))
+
+            try
             {
-                TextStandBy.Visibility = Visibility.Hidden;
-                ComboBoxNavigate.Visibility = Visibility.Visible;
                 ComboBoxNavigate.Items.Add("Introdução");
                 foreach (string item in labelList)
-                    ComboBoxNavigate.Items.Add(item);
+                    ComboBoxNavigate.Items.Add(item.Remove(0, 5));
                 ComboBoxNavigate.Items.Add("Finalização");
                 ComboBoxNavigate.SelectedIndex = ComboBoxNavigate.Items.IndexOf("Introdução");
+            }
+            catch
+            {
+                e = new ReinstallError();
+                e.Show();
+                this.Close();
+                empty = true;
+            }
+            
+            if (k.Equals("1"))
+            {
+                ExitButtonPresentation.Visibility = Visibility.Visible;
+                TextStandBy.Visibility = Visibility.Hidden;
+                ComboBoxNavigate.Visibility = Visibility.Visible;                    
             }
             else
             {
                 TimerTickCreation();
+                ExitButtonPresentation.Visibility = Visibility.Hidden;
                 ComboBoxNavigate.Visibility = Visibility.Hidden;
             }
         }
@@ -105,7 +119,7 @@ namespace FeaturesOverlayPresentation
             string str;
             if(flag)
             {
-                str = ComboBoxNavigate.Items.GetItemAt(counter).ToString().Remove(0, 5);
+                str = ComboBoxNavigate.Items.GetItemAt(counter).ToString();
                 LabelSlideSubtitle.Content = str;
             }                
             else
@@ -155,7 +169,11 @@ namespace FeaturesOverlayPresentation
         {
             finalCount = 0;
             string current = Directory.GetCurrentDirectory();
-            string imgDir = current + "\\img\\";
+            string imgDir;
+            if(Environment.OSVersion.Version.ToString().Contains("6.1"))
+                imgDir = current + "\\img-windows7\\";
+            else
+                imgDir = current + "\\img-windows10\\";
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
@@ -191,7 +209,11 @@ namespace FeaturesOverlayPresentation
         {
             finalCount = 0;
             string current = Directory.GetCurrentDirectory();
-            string imgDir = current + "\\img\\";
+            string imgDir;
+            if (Environment.OSVersion.Version.ToString().Contains("6.1"))
+                imgDir = current + "\\img-windows7\\";
+            else
+                imgDir = current + "\\img-windows10\\";
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
@@ -305,6 +327,11 @@ namespace FeaturesOverlayPresentation
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, false);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
         }
 
         private void ComboBoxNavigate_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)

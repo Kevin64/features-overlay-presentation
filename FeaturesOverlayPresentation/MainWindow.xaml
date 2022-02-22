@@ -7,7 +7,7 @@
         xmlns:Collections="clr-namespace:System.Collections;assembly=mscorlib" x:Name="MainWindow1" x:Class="FeaturesOverlayPresentation.MainWindow"
         mc:Ignorable="d"
         Title="FeatureOverlayPresentation" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowState="Maximized" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="1280" Height="1024" Topmost="True" ShowInTaskbar="False" WindowStyle="None" Loaded="FormLoaded"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -86,7 +86,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <Border x:Name="templateRoot" Background="#FF7E7E7E" BorderBrush="{StaticResource ComboBox.Static.Border}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                        <Border x:Name="templateRoot" Background="#FF2F2F2F" BorderBrush="{StaticResource ComboBox.Static.Border}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
                             <Border x:Name="splitBorder" BorderBrush="Transparent" BorderThickness="1" HorizontalAlignment="Right" Margin="0" SnapsToDevicePixels="true" Width="{DynamicResource {x:Static SystemParameters.VerticalScrollBarWidthKey}}">
                                 <Path x:Name="arrow" Data="F1 M 0,0 L 2.667,2.66665 L 5.3334,0 L 5.3334,-1.78168 L 2.6667,0.88501 L0,-1.78168 L0,0 Z" Fill="{StaticResource ComboBox.Static.Glyph}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
                             </Border>
@@ -289,6 +289,61 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="FocusVisual1">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual1}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#F54242"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#F54242"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="#6b0000"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="#6b0000"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="#FF2F2F2F"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.Background>
@@ -333,7 +388,7 @@
             </Button.Style>
             <StackPanel>
                 <Image Height="50" Width="50" Source="img/arrowNext.png" RenderOptions.BitmapScalingMode="HighQuality" />
-                <TextBlock x:Name="nextBlock" Text="Próximo" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="/FOP;component/fonts/#ZapfHumnst BT" />
+                <TextBlock x:Name="nextBlock" Text="Próximo" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="ZapfHumnst BT" />
             </StackPanel>
         </Button>
         <Button x:Name="ButtonPrevious" Margin="20,0,0,0" FontSize="24" Click="ButtonPrevious_Click" FontWeight="Bold" Background="Transparent" BorderBrush="#00707070" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.48" VerticalAlignment="Center" Padding="0" HorizontalAlignment="Left">
@@ -375,25 +430,25 @@
             </Button.Style>
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
                 <Image Height="50" Width="50" Source="img/arrowPrevious.png" RenderTransformOrigin="0.5,0.5" RenderOptions.BitmapScalingMode="HighQuality" />
-                <TextBlock x:Name="previousBlock" Text="Anterior" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="/FOP;component/fonts/#ZapfHumnst BT" />
+                <TextBlock x:Name="previousBlock" Text="Anterior" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="ZapfHumnst BT" />
             </StackPanel>
         </Button>
-        <Label x:Name="LabelPage" Content="" Margin="0,0,10,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="137" Padding="0" FontFamily="/FOP;component/fonts/#ZapfHumnst BT"/>
-        <Label x:Name="LabelPage2" Content=" Página: " Margin="0,0,147,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="0" FontFamily="/FOP;component/fonts/#ZapfHumnst BT"/>
+        <Label x:Name="LabelPage" Content="" Margin="0,0,10,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="137" Padding="0" FontFamily="ZapfHumnst BT"/>
+        <Label x:Name="LabelPage2" Content=" Página: " Margin="0,0,147,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="0" FontFamily="ZapfHumnst BT"/>
         <Image x:Name="brasaoUTI" Margin="398,0" Source="img/logoUTI.png" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top" Height="154" RenderOptions.BitmapScalingMode="HighQuality"/>
         <Image x:Name="brasaoUFSM" RenderTransformOrigin="0.5,0.5" Source="img/logoUFSM.png" HorizontalAlignment="Left" VerticalAlignment="Top" Height="154" Width="154" RenderOptions.BitmapScalingMode="HighQuality"/>
         <Image x:Name="brasaoCCSH" RenderTransformOrigin="0.5,0.5" Source="img/logoCCSH.png" HorizontalAlignment="Right" VerticalAlignment="Top" Height="154" Width="218" RenderOptions.BitmapScalingMode="HighQuality"/>
         <Image Margin="0" x:Name="mainImage" Width="980" Height="560" />
-        <TextBlock x:Name="TextStandBy" Margin="0" FontSize="36" Foreground="#7FFFFFFF" FontFamily="/FOP;component/fonts/#ZapfHumnst BT" HorizontalAlignment="Right" VerticalAlignment="Center" Width="150" Height="96" Padding="0" TextAlignment="Center" Background="Transparent"/>
-        <TextBlock x:Name="TextAppVersion" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="100" Height="15" FontSize="10" FontFamily="/FOP;component/fonts/#ZapfHumnst BT"/>
+        <TextBlock x:Name="TextStandBy" Margin="0" FontSize="36" Foreground="#7FFFFFFF" FontFamily="ZapfHumnst BT" HorizontalAlignment="Right" VerticalAlignment="Center" Width="150" Height="96" Padding="0" TextAlignment="Center" Background="Transparent"/>
+        <TextBlock x:Name="TextAppVersion" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="60" Height="15" FontSize="10" FontFamily="ZapfHumnst BT"/>
         <Frame x:Name="frameIntro" NavigationUIVisibility="Hidden" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="980" Height="551"/>
         <Frame x:Name="frameEnd" NavigationUIVisibility="Hidden" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Center" Width="980" Height="551" HorizontalAlignment="Center"/>
-        <TextBlock x:Name="TextAppVersionAbout" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="681" Height="15" Margin="0" Text="Aplicação desenvolvida por Kevin Costa, SIAPE 1971957, com arte e auxílio de Matheus Smidt, SIAPE 3152380. Para uso nas estações de trabalho do CCSH." FontSize="10" FontFamily="/FOP;component/fonts/#ZapfHumnst BT"/>
-        <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="ComboBoxNavigate" HorizontalAlignment="Right" Margin="0,0,10,52" VerticalAlignment="Bottom" Width="246" RenderTransformOrigin="0.5,0.5" SelectionChanged="ComboBoxNavigate_SelectionChanged" Foreground="White">
+        <TextBlock x:Name="TextAppVersionAbout" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="681" Height="15" Margin="0" Text="Aplicação desenvolvida por Kevin Costa, SIAPE 1971957, com arte e auxílio de Matheus Smidt, SIAPE 3152380. Para uso nas estações de trabalho do CCSH." FontSize="10" FontFamily="ZapfHumnst BT"/>
+        <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="ComboBoxNavigate" HorizontalAlignment="Right" Margin="0,0,10,52" VerticalAlignment="Bottom" Width="246" RenderTransformOrigin="0.5,0.5" SelectionChanged="ComboBoxNavigate_SelectionChanged" Foreground="White" FontFamily="ZapfHumnst BT">
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="ComboBoxItem">
-                    <Setter Property="Background" Value="#FF7E7E7E"/>
-                    <Setter Property="BorderBrush" Value="#FF7E7E7E"/>
+                    <Setter Property="Background" Value="#FF2F2F2F"/>
+                    <Setter Property="BorderBrush" Value="#FF2F2F2F"/>
                 </Style>
             </ComboBox.ItemContainerStyle>
             <ComboBox.RenderTransform>
@@ -405,6 +460,7 @@
                 </TransformGroup>
             </ComboBox.RenderTransform>
         </ComboBox>
-        <Label x:Name="LabelSlideSubtitle" Content="" HorizontalAlignment="Center" Margin="0,180,0,0" VerticalAlignment="Top" Width="980" Height="52" Foreground="White" FontSize="36" FontFamily="ZapfHumnst BT" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="LabelSlideSubtitle" Content="" HorizontalAlignment="Center" Margin="0,620,0,0" VerticalAlignment="Center" Width="980" Height="65" Foreground="#FFFFD900" FontSize="36" FontFamily="ZapfHumnst BT" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Button Style="{DynamicResource ButtonStyle1}" x:Name="ExitButtonPresentation" Content="Sair" HorizontalAlignment="Left" Margin="14,0,0,14" VerticalAlignment="Bottom" FontFamily="ZapfHumnst BT" Width="67" Background="#FF2F2F2F" Foreground="White" Click="Button_Click" Height="37" RenderTransformOrigin="0.507,0.541" FontSize="18"/>
     </Grid>
 </Window>

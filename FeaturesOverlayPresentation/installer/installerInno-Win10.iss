@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "FOP"
-#define MyAppVersion GetFileVersion('D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\FOP.exe')
+#define MyAppVersion GetFileVersion('D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaçãoDeTrabalho.exe')
 #define MyAppPublisher "Unidade de Tecnologia da Informação - CCSH - UFSM"
 #define MyAppURL "https://www.ufsm.br/unidades-universitarias/ccsh/unidade-de-tecnologia-da-informacao/"
-#define MyAppExeName "FOP.exe"
+#define MyAppExeName "TutorialDeUsoDaEstaçãoDeTrabalho.exe"
 #define RegKey "Software\FOP"
 
 [Setup]
@@ -25,29 +25,32 @@ DisableDirPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 ;PrivilegesRequiredOverridesAllowed=dialog
-OutputBaseFilename=FOPsetupCCSH-{#MyAppVersion}-Win10
+OutputBaseFilename=FOPsetupCCSH-{#MyAppVersion}
 OutputDir=D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Output
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
 UninstallDisplayIcon={app}\{#MyAppExeName}
 VersionInfoVersion={#MyAppVersion}
-MinVersion=10
+MinVersion=6.1sp1
 
 [Languages]
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 
 [Dirs]
-Name: "{app}\img"
+Name: "{app}\img-windows10"
+Name: "{app}\img-windows7"
 
 [Files]
-Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\FOP.pdb"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaçãoDeTrabalho.pdb"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\FOP.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaçãoDeTrabalho.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\FOP.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaçãoDeTrabalho.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\img\*"; DestDir: "{commonpf32}\{#MyAppName}\img"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\img-windows10\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows10"; Flags: ignoreversion recursesubdirs createallsubdirs
+
+Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\img-windows7\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows7"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Rever tutorial de uso do computador.lnk"; DestDir: "{commondesktop}"; Flags: ignoreversion
 
@@ -155,7 +158,41 @@ begin
 end;
 
 function InitializeSetup(): Boolean;
+var
+    Version: TWindowsVersion;
+    S: String;
+
 begin
+    GetWindowsVersionEx(Version);
+
+    // Disallow installation on Home edition of Windows
+    if Version.SuiteMask and VER_SUITE_PERSONAL <> 0 then
+    begin
+      SuppressibleMsgBox('Este programa não pode ser instalado na versão Home do Windows',
+        mbCriticalError, MB_OK, IDOK);
+      result := False;
+      Exit;
+    end;
+
+    // Disallow installation on Windows 8.x
+    if Version.Major = 6 then
+    begin
+      if Version.Minor = 3 then
+      begin
+        SuppressibleMsgBox('Este programa não pode ser instalado no Windows 8.1',
+          mbCriticalError, MB_OK, IDOK);
+        result := False;
+        Exit;
+      end;
+      if Version.Minor = 2 then
+      begin
+        SuppressibleMsgBox('Este programa não pode ser instalado no Windows 8',
+          mbCriticalError, MB_OK, IDOK);
+        result := False;
+        Exit;
+      end
+    end;
+
     if not IsDotNetDetected() then begin
         MsgBox('Este programa requer o Microsoft .NET Framework 4.8 ou superior.'#13#13
             'Por favor, instale-o e execute este programa novamente.', mbInformation, MB_OK);

@@ -4,9 +4,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:FeaturesOverlayPresentation"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="Erro de instalação"  ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closed="Window_Closed" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="116" Width="352" Foreground="Black">
+      mc:Ignorable="d"
+      Title="Erro de instalação"  ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closed="Window_Closed" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="128" Width="331" Foreground="Black" FontFamily="ZapfHumnst BT">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -64,12 +63,11 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid x:Name="reinstallWindow" Background="#FF2F2F2F">
+    <Grid x:Name="reinstallWindow" Background="#FF2F2F2F" Margin="0,0,0,-6">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="85*"/>
-            <ColumnDefinition Width="267*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Style="{DynamicResource ButtonStyle1}" x:Name="closeAppButton" Content="Fechar programa" VerticalAlignment="Bottom" Click="closeAppButton_Click" Margin="32,0,120,10" Padding="0" HorizontalAlignment="Center" Width="110" Grid.Column="1" Background="#FF7E7E7E" Foreground="White"/>
-        <Label x:Name="labelExplanation" Content="Foi detectado uma corrupção na instalação do programa.&#xD;&#xA;Por favor, reinstale o FOP e o execute novamente." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0" Grid.ColumnSpan="2" Background="#00000000" Foreground="White"/>
+        <Button Style="{DynamicResource ButtonStyle1}" x:Name="closeAppButton" Content="Fechar programa" VerticalAlignment="Top" Click="closeAppButton_Click" Margin="0,53,0,0" Padding="0" HorizontalAlignment="Center" Width="110" Background="#FF7E7E7E" Foreground="White" Height="17"/>
+        <Label x:Name="labelExplanation" Content="Foi detectado uma corrupção na instalação do programa.&#xD;&#xA;Por favor, reinstale o programa e o execute novamente." HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0" Background="#00000000" Foreground="White" FontFamily="ZapfHumnst BT" Height="30" Width="309"/>
     </Grid>
 </Window>

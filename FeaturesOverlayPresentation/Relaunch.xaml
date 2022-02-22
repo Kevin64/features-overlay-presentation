@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FeaturesOverlayPresentation"
-        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="FeaturesOverlayPresentation.Relaunch"
+        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" x:Class="FeaturesOverlayPresentation.Relaunch"
         mc:Ignorable="d"
-        Title="Assistir novamente?" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
+        Title="Assistir novamente?" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" FontFamily="ZapfHumnst BT">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -408,7 +408,7 @@
         </Style>
     </Window.Resources>
     <Grid Height="Auto" Background="#FF2F2F2F">
-        <Label Content="Deseja visualizar o tutorial novamente?" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,8,10,0" Width="216" Foreground="White"/>
+        <Label Content="Deseja visualizar o tutorial novamente?" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,8,10,0" Width="216" Foreground="White" FontFamily="ZapfHumnst BT"/>
         <Button Style="{DynamicResource ButtonStyle1}" x:Name="YesButton" Content="Sim" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Width="98" Click="YesButton_Click" TabIndex="0" Background="#FF7E7E7E" Foreground="White"/>
         <Button Style="{DynamicResource ButtonStyle2}" x:Name="NoButton" Content="Não" HorizontalAlignment="Left" Margin="113,39,0,0" VerticalAlignment="Top" Width="101" Click="NoButton_Click" TabIndex="1" Background="#FF7E7E7E" Foreground="White"/>
         <Expander Header="Opções avançadas" HorizontalAlignment="Left" Height="Auto" Margin="10,64,0,0" VerticalAlignment="Top" Width="Auto" TabIndex="2" Foreground="White">

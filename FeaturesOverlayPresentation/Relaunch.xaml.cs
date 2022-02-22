@@ -17,7 +17,12 @@ namespace FeaturesOverlayPresentation
 
         public Relaunch()
         {
-            InitializeComponent();
+            if (SystemParameters.PrimaryScreenWidth < 1280 || SystemParameters.PrimaryScreenHeight < 720)
+            {
+                MessageBox.Show("Resolução insuficiente. Este programa suporta apenas resoluções iguais ou superiores a 1280x720.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                Environment.Exit(0);
+            }
+            InitializeComponent();            
             try
             {                               
                 if (!FindFolder())
@@ -45,7 +50,11 @@ namespace FeaturesOverlayPresentation
         public bool FindFolder()
         {
             string current = Directory.GetCurrentDirectory();
-            string imgDir = current + "\\img\\";
+            string imgDir;
+            if (Environment.OSVersion.Version.ToString().Contains("6.1"))
+                imgDir = current + "\\img-windows7\\";
+            else
+                imgDir = current + "\\img-windows10\\";
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();

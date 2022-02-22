@@ -7,10 +7,10 @@ using System.Windows;
 // As informações gerais sobre um assembly são controladas por
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associada a um assembly.
-[assembly: AssemblyTitle("FeaturesOverlayPresentation")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("TutorialDeUsoDaEstaçãoDeTrabalho")]
+[assembly: AssemblyDescription("Apresenta os recursos da estação de trabalho")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Unidade de Tecnologia da Informação - CCSH - UFSM")]
 [assembly: AssemblyProduct("FeaturesOverlayPresentation")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
