@@ -27,6 +27,7 @@ namespace FeaturesOverlayPresentation
                 {
                     m = new MainWindow();
                     m.Show();
+                    this.ShowInTaskbar = false;
                 }
                 else
                 {
