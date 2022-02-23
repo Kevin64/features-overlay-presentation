@@ -24,7 +24,7 @@ namespace FeaturesOverlayPresentation
         private int counter = 0;
         private int finalCount;
         private bool empty = false;
-        private string k, newFilePath;
+        private string newFilePath;
         private DispatcherTimer timer;
         List<string> imgList, labelList;
         ReinstallError e;
@@ -39,22 +39,17 @@ namespace FeaturesOverlayPresentation
         public MainWindow()
         {
             InitializeComponent();
-            this.KeyDown += OnPreviewKeyDown;
-            
             ButtonPrevious.Visibility = Visibility.Hidden;
             frameIntro.Content = new Intro();
             frameIntro.Visibility = Visibility.Visible;
             frameEnd.Content = new Ending();
             frameEnd.Visibility = Visibility.Hidden;
+            LabelPrint();
+            TextAppVersion.Text = "v" + Utils.Version;
+            AnimateFrame();            
             FindImages();
             FindLabels();
-            LabelPrint();
-            TextAppVersion.Text = "v" + Version;
-            AnimateFrame();
-
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey(@"Software\FOP");
-            k = rk.GetValue("DidItRunAlready").ToString();
-            regRecreate();
+            Utils.regRecreate(empty);
 
             try
             {
@@ -71,35 +66,37 @@ namespace FeaturesOverlayPresentation
                 this.Close();
                 empty = true;
             }
-            
-            if (k.Equals("1"))
-            {
-                ExitButtonPresentation.Visibility = Visibility.Visible;
-                TextStandBy.Visibility = Visibility.Hidden;
-                ComboBoxNavigate.Visibility = Visibility.Visible;                    
-            }
-            else
-            {
-                TimerTickCreation();
-                ExitButtonPresentation.Visibility = Visibility.Hidden;
-                ComboBoxNavigate.Visibility = Visibility.Hidden;
-            }
         }
 
         //Form loaded event handler
         void FormLoaded(object sender, RoutedEventArgs args)
         {
-            //Variable to hold the handle for the form
-            var helper = new WindowInteropHelper(this).Handle;
-            //Performing some magic to hide the form from Alt+Tab
-            SetWindowLong(helper, GWL_EX_STYLE, (GetWindowLong(helper, GWL_EX_STYLE) | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW);
-        }
-
-        public string Version
-        {
-            get
+            if(!Utils.regCheck())
             {
-                return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+                //Variable to hold the handle for the form
+                var helper = new WindowInteropHelper(this).Handle;
+                //Performing some magic to hide the form from Alt+Tab
+                SetWindowLong(helper, GWL_EX_STYLE, (GetWindowLong(helper, GWL_EX_STYLE) | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW);
+                this.Topmost = true;
+                this.ShowInTaskbar = false;
+            }      
+            else
+            {
+                this.Topmost = false;
+                this.ShowInTaskbar = true;
+            }
+            if (Utils.regCheck())
+            {
+                ExitButtonPresentation.Visibility = Visibility.Visible;
+                TextStandBy.Visibility = Visibility.Hidden;
+                ComboBoxNavigate.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.KeyDown += OnPreviewKeyDown;
+                TimerTickCreation();
+                ExitButtonPresentation.Visibility = Visibility.Hidden;
+                ComboBoxNavigate.Visibility = Visibility.Hidden;
             }
         }
 
@@ -112,6 +109,75 @@ namespace FeaturesOverlayPresentation
         private void LabelPrint()
         {
             LabelPage.Content = (counter + 1) + " de " + (finalCount + 1);
+        }
+
+        public void FindLabels()
+        {
+            finalCount = 0;
+            string imgDir = Utils.OSCheck();
+            try
+            {
+                List<string> filePathList = Directory.GetFiles(imgDir).ToList();
+                labelList = new List<string>();
+                foreach (string filePath in filePathList)
+                {
+                    if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".png"))
+                    {
+                        newFilePath = filePath.Replace(".png", "");
+                        labelList.Add(Path.GetFileName(newFilePath));
+                        finalCount++;
+                    }
+                }
+                if (finalCount == 0)
+                {
+                    e = new ReinstallError();
+                    e.Show();
+                    this.Close();
+                    empty = true;
+                }
+            }
+            catch
+            {
+                e = new ReinstallError();
+                e.Show();
+                this.Close();
+                empty = true;
+            }
+            finalCount++;
+        }
+
+        public void FindImages()
+        {
+            finalCount = 0;
+            string imgDir = Utils.OSCheck();
+            try
+            {
+                List<string> filePathList = Directory.GetFiles(imgDir).ToList();
+                imgList = new List<string>();
+                foreach (string filePath in filePathList)
+                {
+                    if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".png"))
+                    {
+                        imgList.Add(filePath);
+                        finalCount++;
+                    }
+                }
+                if (finalCount == 0)
+                {
+                    e = new ReinstallError();
+                    e.Show();
+                    this.Close();
+                    empty = true;
+                }
+            }
+            catch
+            {
+                e = new ReinstallError();
+                e.Show();
+                this.Close();
+                empty = true;
+            }
+            finalCount++;
         }
 
         private void SlideSubTitlePrint(int counter, bool flag)
@@ -165,84 +231,7 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        public void FindLabels()
-        {
-            finalCount = 0;
-            string current = Directory.GetCurrentDirectory();
-            string imgDir;
-            if(Environment.OSVersion.Version.ToString().Contains("6.1"))
-                imgDir = current + "\\img-windows7\\";
-            else
-                imgDir = current + "\\img-windows10\\";
-            try
-            {
-                List<string> filePathList = Directory.GetFiles(imgDir).ToList();
-                labelList = new List<string>();
-                foreach (string filePath in filePathList)
-                {
-                    if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".png"))
-                    {
-                        newFilePath = filePath.Replace(".png", "");
-                        labelList.Add(Path.GetFileName(newFilePath));
-                        finalCount++;
-                    }
-                }
-                if (finalCount == 0)
-                {
-                    e = new ReinstallError();
-                    e.Show();
-                    this.Close();
-                    empty = true;
-                }
-            }
-            catch
-            {
-                e = new ReinstallError();
-                e.Show();
-                this.Close();
-                empty = true;
-            }
-            finalCount++;
-        }
-
-        public void FindImages()
-        {
-            finalCount = 0;
-            string current = Directory.GetCurrentDirectory();
-            string imgDir;
-            if (Environment.OSVersion.Version.ToString().Contains("6.1"))
-                imgDir = current + "\\img-windows7\\";
-            else
-                imgDir = current + "\\img-windows10\\";
-            try
-            {
-                List<string> filePathList = Directory.GetFiles(imgDir).ToList();
-                imgList = new List<string>();
-                foreach (string filePath in filePathList)
-                {
-                    if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".png"))
-                    {
-                        imgList.Add(filePath);
-                        finalCount++;
-                    }
-                }
-                if(finalCount == 0)
-                {
-                    e = new ReinstallError();
-                    e.Show();
-                    this.Close();
-                    empty = true;
-                }
-            }
-            catch
-            {
-                e = new ReinstallError();
-                e.Show();
-                this.Close();
-                empty = true;
-            }
-            finalCount++;
-        }
+        
 
         void AnimateFrame()
         {
@@ -261,7 +250,7 @@ namespace FeaturesOverlayPresentation
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
             AnimateFrame();
-            if (counter == furthestCount && k.Equals("0"))
+            if (counter == furthestCount && !Utils.regCheck())
             {
                 TimerTickCreation();
                 furthestCount++;
@@ -288,7 +277,7 @@ namespace FeaturesOverlayPresentation
             }
             else
             {
-                regDelete();
+                Utils.regDelete();
                 RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\FOP");
                 key.SetValue("DidItRunAlready", 1);
                 Environment.Exit(0);
@@ -366,29 +355,6 @@ namespace FeaturesOverlayPresentation
                 SlideSubTitlePrint(counter, false);
                 FinishPrint();
             }
-
-        }
-
-        private void regRecreate()
-        {
-            if (!empty && k.Equals("0"))
-            {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce", true);
-                if (!key.GetValueNames().Contains("FOP"))
-                {
-                    if (Environment.Is64BitOperatingSystem == true)
-                        key.SetValue("FOP", Environment.ExpandEnvironmentVariables("%ProgramFiles(x86)%") + "\\FOP" + "\\Rever tutorial de uso do computador.lnk", RegistryValueKind.String);
-                    else
-                        key.SetValue("FOP", Environment.ExpandEnvironmentVariables("%ProgramFiles%") + "\\FOP" + "\\Rever tutorial de uso do computador.lnk", RegistryValueKind.String);
-                }
-            }            
-        }
-
-        private void regDelete()
-        {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce", true);
-            if (key.GetValueNames().Contains("FOP"))
-                key.DeleteValue("FOP");
         }
     }
 }

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -13,30 +12,24 @@ namespace FeaturesOverlayPresentation
     public partial class Relaunch : Window
     {
         private bool pressed = false;
+        private bool present;
         MainWindow m;
 
         public Relaunch()
         {
-            if (SystemParameters.PrimaryScreenWidth < 1280 || SystemParameters.PrimaryScreenHeight < 720)
-            {
-                MessageBox.Show("Resolução insuficiente. Este programa suporta apenas resoluções iguais ou superiores a 1280x720.", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-                Environment.Exit(0);
-            }
+            Utils.resolutionError();
             InitializeComponent();            
             try
             {                               
                 if (!FindFolder())
                     throw new Exception();
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\FOP");
-                if (int.Parse(key.GetValue("DidItRunAlready").ToString()).Equals(0))
+                if (!Utils.regCheck())
                 {
                     m = new MainWindow();
                     m.Show();                    
                 }      
                 else
-                {
                     this.Show();
-                }
             }
             catch
             {
@@ -49,12 +42,7 @@ namespace FeaturesOverlayPresentation
 
         public bool FindFolder()
         {
-            string current = Directory.GetCurrentDirectory();
-            string imgDir;
-            if (Environment.OSVersion.Version.ToString().Contains("6.1"))
-                imgDir = current + "\\img-windows7\\";
-            else
-                imgDir = current + "\\img-windows10\\";
+            string imgDir = Utils.OSCheck();            
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
@@ -93,24 +81,33 @@ namespace FeaturesOverlayPresentation
             bool check = false;
             if(patrimTextBox.Text != "")
             {
-                if (PingHost(serverDropDown.Text) == true && portDropDown.Text != "")
+                if (Utils.PingHost(serverDropDown.Text) == true && portDropDown.Text != "")
                 {
                     if (pressed == false)
-                        webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                    + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString());
+                    {
+                        if (present == false)
+                        {
+                            webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
+                        + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + "Ausente");
+                        }
+                        else
+                        {
+                            webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
+                        + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + SIAPETextBox.Text);
+                        }
+                    }
                     else
+                    {
                         webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                    + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null);
+                    + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null + "&siapeRecebedor=" + null);                        
+                    }
                     check = true;
                 }
                 else
                     MessageBox.Show("Servidor não encontrado. Selecione um servidor válido!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
-            {
-                MessageBox.Show("Preencha os campos necessários!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            
+                MessageBox.Show("Preencha os campos necessários!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);         
 
             if(check == true)
             {
@@ -135,30 +132,12 @@ namespace FeaturesOverlayPresentation
                     YesLaterButton.Content = "Executar no próximo boot";
                     pressed = false;
                 }
-                
             }
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
             Environment.Exit(0);
-        }
-
-        private static bool PingHost(string servidor_web)
-        {
-            bool pingable = false;
-            Ping pinger = new Ping();
-            if (servidor_web == "")
-                return false;
-            try
-            {
-                PingReply reply = pinger.Send(servidor_web);
-                pingable = reply.Status == IPStatus.Success;
-            }
-            catch (PingException)
-            {
-            }
-            return pingable;
         }
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)
@@ -171,12 +150,14 @@ namespace FeaturesOverlayPresentation
                 serverDropDown.IsEnabled = true;
                 portLabel.IsEnabled = true;
                 portDropDown.IsEnabled = true;
-                YesLaterButton.IsEnabled = true;
                 warningLabel.Visibility = Visibility.Hidden;
                 userLabel.IsEnabled = false;
                 userTextBox.IsEnabled = false;
                 passwordLabel.IsEnabled = false;
                 passwordBox.IsEnabled = false;
+                EmployeePresentLabel.IsEnabled = true;
+                EmployeePresentRadioYes.IsEnabled = true;
+                EmployeePresentRadioNo.IsEnabled = true;
                 AuthButton.IsEnabled = false;
             }
             else
@@ -197,6 +178,22 @@ namespace FeaturesOverlayPresentation
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void EmployeePresentRadioYes_Checked(object sender, RoutedEventArgs e)
+        {
+            SIAPELabel.IsEnabled = true;
+            SIAPETextBox.IsEnabled = true;
+            present = true;
+            YesLaterButton.IsEnabled = true;
+        }
+
+        private void EmployeePresentRadioNo_Checked(object sender, RoutedEventArgs e)
+        {
+            SIAPELabel.IsEnabled = false;
+            SIAPETextBox.IsEnabled = false;
+            present = false;
+            YesLaterButton.IsEnabled = true;
         }
     }
 }

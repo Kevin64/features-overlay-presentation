@@ -107,6 +107,7 @@
     <Compile Include="Relaunch.xaml.cs">
       <DependentUpon>Relaunch.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils.cs" />
     <Page Include="Ending.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
