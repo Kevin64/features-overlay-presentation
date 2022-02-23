@@ -26,10 +26,13 @@ namespace FeaturesOverlayPresentation
                 if (!Utils.regCheck())
                 {
                     m = new MainWindow();
-                    m.Show();                    
-                }      
+                    m.Show();
+                }
                 else
+                {
                     this.Show();
+                    this.ShowInTaskbar = true;
+                }
             }
             catch
             {
