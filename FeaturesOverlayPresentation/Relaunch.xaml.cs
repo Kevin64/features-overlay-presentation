@@ -93,19 +93,26 @@ namespace FeaturesOverlayPresentation
                         {
                             webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
                         + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + "Ausente");
+                            check = true;
                         }
-                        else
+                        else if (SIAPETextBox.Text != "")
                         {
                             webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
                         + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + SIAPETextBox.Text);
+                            check = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Preencha os campos necessários!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                            check = false;
                         }
                     }
                     else
                     {
                         webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                    + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null + "&siapeRecebedor=" + null);                        
-                    }
-                    check = true;
+                    + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null + "&siapeRecebedor=" + null);
+                        check = true;
+                    }                    
                 }
                 else
                     MessageBox.Show("Servidor não encontrado. Selecione um servidor válido!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -114,7 +121,7 @@ namespace FeaturesOverlayPresentation
                 MessageBox.Show("Preencha os campos necessários!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);         
 
             if(check == true)
-            {
+            {                
                 if(pressed == false)
                 {
                     RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce");
@@ -126,6 +133,12 @@ namespace FeaturesOverlayPresentation
                     key2.SetValue("DidItRunAlready", 0, RegistryValueKind.DWord);
                     YesLaterButton.Content = "Cancelar execução no próximo boot";
                     pressed = true;
+                    patrimTextBox.IsEnabled = false;
+                    serverDropDown.IsEnabled = false;
+                    portDropDown.IsEnabled = false;
+                    EmployeePresentRadioNo.IsEnabled = false;
+                    EmployeePresentRadioYes.IsEnabled = false;
+                    SIAPETextBox.IsEnabled = false;
                 }
                 else
                 {
@@ -135,6 +148,12 @@ namespace FeaturesOverlayPresentation
                     key2.SetValue("DidItRunAlready", 1, RegistryValueKind.DWord);
                     YesLaterButton.Content = "Executar no próximo boot";
                     pressed = false;
+                    patrimTextBox.IsEnabled = true;
+                    serverDropDown.IsEnabled = true;
+                    portDropDown.IsEnabled = true;
+                    EmployeePresentRadioNo.IsEnabled = true;
+                    EmployeePresentRadioYes.IsEnabled = true;
+                    SIAPETextBox.IsEnabled = true;
                 }
             }
         }
