@@ -17,13 +17,13 @@ namespace FeaturesOverlayPresentation
 
         public Relaunch()
         {
-            Utils.resolutionError();
-            InitializeComponent();            
+            MiscMethods.resolutionError();
+            InitializeComponent();
             try
-            {                               
+            {
                 if (!FindFolder())
                     throw new Exception();
-                if (!Utils.regCheck())
+                if (!MiscMethods.regCheck())
                 {
                     m = new MainWindow();
                     m.Show();
@@ -39,14 +39,13 @@ namespace FeaturesOverlayPresentation
             {
                 this.Hide();
                 ReinstallError r = new ReinstallError();
-                r.Show();                
+                r.Show();
             }
-            
         }
 
         public bool FindFolder()
         {
-            string imgDir = Utils.OSCheck();            
+            string imgDir = MiscMethods.OSCheck();
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
@@ -71,12 +70,12 @@ namespace FeaturesOverlayPresentation
                 this.Close();
                 m.Close();
             }
-            
         }
 
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
+            File.Delete(StringsAndConstants.fileLogin);
+            Application.Current.Shutdown();
         }
 
         private void YesLaterButton_Click(object sender, RoutedEventArgs e)
@@ -85,7 +84,7 @@ namespace FeaturesOverlayPresentation
             bool check = false;
             if(patrimTextBox.Text != "")
             {
-                if (Utils.PingHost(serverDropDown.Text) == true && portDropDown.Text != "")
+                if (LoginFileReader.checkHost(serverDropDown.Text, portDropDown.Text))
                 {
                     if (pressed == false)
                     {
@@ -103,7 +102,7 @@ namespace FeaturesOverlayPresentation
                         }
                         else
                         {
-                            MessageBox.Show("Preencha os campos necessários!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             check = false;
                         }
                     }
@@ -115,23 +114,23 @@ namespace FeaturesOverlayPresentation
                     }                    
                 }
                 else
-                    MessageBox.Show("Servidor não encontrado. Selecione um servidor válido!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(StringsAndConstants.serverNotFound, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
-                MessageBox.Show("Preencha os campos necessários!", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);         
+                MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);         
 
             if(check == true)
             {                
                 if(pressed == false)
                 {
-                    RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce");
+                    RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
                     if (Environment.Is64BitOperatingSystem)
-                        key.SetValue("FOP", "C:\\Program Files (x86)\\FOP\\Rever tutorial de uso do computador.lnk");
+                        key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86);
                     else
-                        key.SetValue("FOP", "C:\\Program Files\\FOP\\Rever tutorial de uso do computador.lnk");
-                    RegistryKey key2 = Registry.CurrentUser.CreateSubKey(@"Software\FOP");
-                    key2.SetValue("DidItRunAlready", 0, RegistryValueKind.DWord);
-                    YesLaterButton.Content = "Cancelar execução no próximo boot";
+                        key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64);
+                    RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
+                    key2.SetValue(StringsAndConstants.DidItRunAlready, 0, RegistryValueKind.DWord);
+                    YesLaterButton.Content = StringsAndConstants.cancelExecution;
                     pressed = true;
                     patrimTextBox.IsEnabled = false;
                     serverDropDown.IsEnabled = false;
@@ -142,11 +141,11 @@ namespace FeaturesOverlayPresentation
                 }
                 else
                 {
-                    RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\RunOnce");
-                    key.DeleteValue("FOP");
-                    RegistryKey key2 = Registry.CurrentUser.CreateSubKey(@"Software\FOP");
-                    key2.SetValue("DidItRunAlready", 1, RegistryValueKind.DWord);
-                    YesLaterButton.Content = "Executar no próximo boot";
+                    RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
+                    key.DeleteValue(StringsAndConstants.FOP);
+                    RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
+                    key2.SetValue(StringsAndConstants.DidItRunAlready, 1, RegistryValueKind.DWord);
+                    YesLaterButton.Content = StringsAndConstants.doExecution;
                     pressed = false;
                     patrimTextBox.IsEnabled = true;
                     serverDropDown.IsEnabled = true;
@@ -158,14 +157,25 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        private void Window_Closing(object sender, EventArgs e)
         {
-            Environment.Exit(0);
+            File.Delete(StringsAndConstants.fileLogin);
+            Application.Current.Shutdown();
         }
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            if (userTextBox.Text == "lab74c" && passwordBox.Password == "admccshlab74cadm")
+            string[] str = LoginFileReader.fetchInfo(userTextBox.Text, passwordBox.Password, serverDropDown.Text, portDropDown.Text);
+
+            if (str == null)
+                MessageBox.Show(StringsAndConstants.INTRANET_REQUIRED, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            else if (str[0] == "false")
+            {
+                warningLabel.Visibility = Visibility.Visible;
+                passwordBox.SelectAll();
+                passwordBox.Focus();
+            }
+            else
             {
                 patrimLabel.IsEnabled = true;
                 patrimTextBox.IsEnabled = true;
@@ -182,12 +192,6 @@ namespace FeaturesOverlayPresentation
                 EmployeePresentRadioYes.IsEnabled = true;
                 EmployeePresentRadioNo.IsEnabled = true;
                 AuthButton.IsEnabled = false;
-            }
-            else
-            {
-                warningLabel.Visibility = Visibility.Visible;
-                passwordBox.SelectAll();
-                passwordBox.Focus();
             }
         }
 

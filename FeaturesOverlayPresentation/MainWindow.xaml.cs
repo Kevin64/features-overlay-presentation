@@ -14,7 +14,7 @@ using System.Windows.Threading;
 namespace FeaturesOverlayPresentation
 {
     /// <summary>
-    /// Interação lógica para MainWindow.xam
+    /// Interação lógica para MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -40,24 +40,23 @@ namespace FeaturesOverlayPresentation
         {
             InitializeComponent();
             ButtonPrevious.Visibility = Visibility.Hidden;
-            frameIntro.Content = new Intro();
-            frameIntro.Visibility = Visibility.Visible;
             frameEnd.Content = new Ending();
             frameEnd.Visibility = Visibility.Hidden;
             LabelPrint();
-            TextAppVersion.Text = "v" + Utils.Version;
-            AnimateFrame();            
+            TextAppVersion.Text = "v" + MiscMethods.Version;
+            AnimateFrame();
             FindImages();
             FindLabels();
-            Utils.regRecreate(empty);
+            mainImage.Source = new BitmapImage(new Uri(imgList[counter]));
+            mainImage.Visibility = Visibility.Visible;
+            MiscMethods.regRecreate(empty);
 
             try
             {
-                ComboBoxNavigate.Items.Add("Introdução");
                 foreach (string item in labelList)
                     ComboBoxNavigate.Items.Add(item.Remove(0, 5));
-                ComboBoxNavigate.Items.Add("Finalização");
-                ComboBoxNavigate.SelectedIndex = ComboBoxNavigate.Items.IndexOf("Introdução");
+                ComboBoxNavigate.Items.Add(StringsAndConstants.finaleScreen);
+                ComboBoxNavigate.SelectedIndex = ComboBoxNavigate.Items.IndexOf(StringsAndConstants.introScreen);
             }
             catch
             {
@@ -71,7 +70,7 @@ namespace FeaturesOverlayPresentation
         //Form loaded event handler
         void FormLoaded(object sender, RoutedEventArgs args)
         {
-            if(!Utils.regCheck())
+            if(!MiscMethods.regCheck())
             {
                 //Variable to hold the handle for the form
                 var helper = new WindowInteropHelper(this).Handle;
@@ -79,25 +78,20 @@ namespace FeaturesOverlayPresentation
                 SetWindowLong(helper, GWL_EX_STYLE, (GetWindowLong(helper, GWL_EX_STYLE) | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW);
                 this.Topmost = true;
                 this.ShowInTaskbar = false;
+                this.KeyDown += OnPreviewKeyDown;
+                TimerTickCreation();
+                ExitButtonPresentation.Visibility = Visibility.Hidden;
+                ComboBoxNavigate.Visibility = Visibility.Hidden;
             }      
             else
             {
                 this.Topmost = false;
                 this.ShowInTaskbar = true;
-            }
-            if (Utils.regCheck())
-            {
                 ExitButtonPresentation.Visibility = Visibility.Visible;
                 TextStandBy.Visibility = Visibility.Hidden;
                 ComboBoxNavigate.Visibility = Visibility.Visible;
             }
-            else
-            {
-                this.KeyDown += OnPreviewKeyDown;
-                TimerTickCreation();
-                ExitButtonPresentation.Visibility = Visibility.Hidden;
-                ComboBoxNavigate.Visibility = Visibility.Hidden;
-            }
+            
         }
 
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
@@ -114,16 +108,16 @@ namespace FeaturesOverlayPresentation
         public void FindLabels()
         {
             finalCount = 0;
-            string imgDir = Utils.OSCheck();
+            string imgDir = MiscMethods.OSCheck();
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
                 labelList = new List<string>();
                 foreach (string filePath in filePathList)
                 {
-                    if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".png"))
+                    if (Path.GetFileName(filePath).ToLower().Contains(StringsAndConstants.imgExt))
                     {
-                        newFilePath = filePath.Replace(".png", "");
+                        newFilePath = filePath.Replace(StringsAndConstants.imgExt, "");
                         labelList.Add(Path.GetFileName(newFilePath));
                         finalCount++;
                     }
@@ -143,20 +137,19 @@ namespace FeaturesOverlayPresentation
                 this.Close();
                 empty = true;
             }
-            finalCount++;
         }
 
         public void FindImages()
         {
             finalCount = 0;
-            string imgDir = Utils.OSCheck();
+            string imgDir = MiscMethods.OSCheck();
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
                 imgList = new List<string>();
                 foreach (string filePath in filePathList)
                 {
-                    if (System.IO.Path.GetFileName(filePath).ToLower().Contains(".png"))
+                    if (Path.GetFileName(filePath).ToLower().Contains(StringsAndConstants.imgExt))
                     {
                         imgList.Add(filePath);
                         finalCount++;
@@ -177,7 +170,6 @@ namespace FeaturesOverlayPresentation
                 this.Close();
                 empty = true;
             }
-            finalCount++;
         }
 
         private void SlideSubTitlePrint(int counter, bool flag)
@@ -192,14 +184,14 @@ namespace FeaturesOverlayPresentation
                 LabelSlideSubtitle.Content = "";
         }
 
-        private void NextPrint()
+        private void nextTextPrint()
         {
-            nextBlock.Text = "Próximo";
+            nextBlock.Text = StringsAndConstants.nextText;
         }
 
-        private void FinishPrint()
+        private void finishTextPrint()
         {
-            nextBlock.Text = "Finalizar";
+            nextBlock.Text = StringsAndConstants.finishText;
         }
 
         private void TimerTickCreation()
@@ -215,23 +207,20 @@ namespace FeaturesOverlayPresentation
 
         private void TimerTickRun(object sender, EventArgs e)
         {
-            //DispatcherTimer timer = (DispatcherTimer)sender;
-            TextStandBy.Text = "Aguarde \n" + "(" + timerTickCount.ToString() + ")";
+            TextStandBy.Text = StringsAndConstants.waitText + "(" + timerTickCount.ToString() + ")";
             ButtonNext.Visibility = Visibility.Hidden;
             if (--timerTickCount == 0)
             {
                 timer.Stop();
-                TextStandBy.Text = "Aguarde \n" + "(" + (tickSeconds + 1) + ")";
+                TextStandBy.Text = StringsAndConstants.waitText + "(" + (tickSeconds + 1) + ")";
                 if (counter == finalCount)
-                    FinishPrint();
+                    finishTextPrint();
                 else
-                    NextPrint();
+                    nextTextPrint();
                 TextStandBy.Visibility = Visibility.Hidden;
                 ButtonNext.Visibility = Visibility.Visible;
             }
         }
-
-        
 
         void AnimateFrame()
         {
@@ -242,7 +231,6 @@ namespace FeaturesOverlayPresentation
                 Duration = new Duration(TimeSpan.FromSeconds(1)),
                 AutoReverse = false
             };
-            frameIntro.BeginAnimation(OpacityProperty, da);
             frameEnd.BeginAnimation(OpacityProperty, da);
             mainImage.BeginAnimation(OpacityProperty, da);
         }
@@ -250,16 +238,15 @@ namespace FeaturesOverlayPresentation
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
             AnimateFrame();
-            if (counter == furthestCount && !Utils.regCheck())
+            if (counter == furthestCount && !MiscMethods.regCheck())
             {
                 TimerTickCreation();
                 furthestCount++;
             }
-            frameIntro.Visibility = Visibility.Hidden;
             if (counter < finalCount - 1)
             {
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter]));
                 counter++;
+                mainImage.Source = new BitmapImage(new Uri(imgList[counter]));                
                 LabelPrint();
                 ButtonPrevious.Visibility = Visibility.Visible;
                 ComboBoxNavigate.SelectedIndex = counter;
@@ -271,16 +258,17 @@ namespace FeaturesOverlayPresentation
                 frameEnd.Visibility = Visibility.Visible;
                 mainImage.Source = null;
                 LabelPrint();
-                FinishPrint();
+                finishTextPrint();
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, false);
             }
             else
             {
-                Utils.regDelete();
-                RegistryKey key = Registry.CurrentUser.CreateSubKey(@"Software\FOP");
-                key.SetValue("DidItRunAlready", 1);
-                Environment.Exit(0);
+                MiscMethods.regDelete();
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
+                key.SetValue(StringsAndConstants.DidItRunAlready, 1);
+                File.Delete(StringsAndConstants.fileLogin);
+                Application.Current.Shutdown();
             }
         }
 
@@ -292,7 +280,7 @@ namespace FeaturesOverlayPresentation
             {
                 counter--;
                 LabelPrint();
-                NextPrint();
+                nextTextPrint();
                 mainImage.Source = new BitmapImage(new Uri(imgList[counter - 1]));
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, true);
@@ -302,17 +290,16 @@ namespace FeaturesOverlayPresentation
                 counter--;
                 LabelPrint();
                 mainImage.Source = new BitmapImage(new Uri(imgList[counter - 1]));
-                if (!nextBlock.Text.Equals("Próximo"))
-                    NextPrint();
+                if (!nextBlock.Text.Equals(StringsAndConstants.nextText))
+                    nextTextPrint();
             }
             else if(counter == 1)
             {
                 counter--;
                 ButtonPrevious.Visibility = Visibility.Hidden;
                 mainImage.Source = null;
-                frameIntro.Visibility = Visibility.Visible;
                 LabelPrint();
-                NextPrint();
+                nextTextPrint();
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, false);
             }
@@ -320,7 +307,8 @@ namespace FeaturesOverlayPresentation
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
+            File.Delete(StringsAndConstants.fileLogin);
+            Application.Current.Shutdown();
         }
 
         private void ComboBoxNavigate_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -331,29 +319,26 @@ namespace FeaturesOverlayPresentation
             if (counter > 0 && counter < finalCount)
             {
                 frameEnd.Visibility = Visibility.Hidden;
-                frameIntro.Visibility = Visibility.Hidden;
                 ButtonPrevious.Visibility = Visibility.Visible;
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter - 1]));
+                mainImage.Source = new BitmapImage(new Uri(imgList[counter]));
                 SlideSubTitlePrint(counter, true);
-                NextPrint();
+                nextTextPrint();
             }
             else if (counter == 0)
             {
-                frameIntro.Visibility = Visibility.Visible;
                 frameEnd.Visibility = Visibility.Hidden;
                 ButtonPrevious.Visibility = Visibility.Hidden;
-                mainImage.Source = null;
+                mainImage.Source = new BitmapImage(new Uri(imgList[counter]));
                 SlideSubTitlePrint(counter, false);
-                NextPrint();
+                nextTextPrint();
             }
             else if (counter == finalCount)
             {
-                frameIntro.Visibility = Visibility.Hidden;
                 frameEnd.Visibility = Visibility.Visible;
                 ButtonPrevious.Visibility = Visibility.Visible;
                 mainImage.Source = null;
                 SlideSubTitlePrint(counter, false);
-                FinishPrint();
+                finishTextPrint();
             }
         }
     }

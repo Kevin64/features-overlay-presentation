@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:FeaturesOverlayPresentation"
         xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" x:Class="FeaturesOverlayPresentation.Relaunch"
         mc:Ignorable="d"
+        Closing="Window_Closing" 
         Title="Assistir novamente?" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" FontFamily="ZapfHumnst BT">
     <Window.Resources>
         <Style x:Key="FocusVisual">

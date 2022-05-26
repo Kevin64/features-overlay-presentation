@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 
 namespace FeaturesOverlayPresentation
@@ -15,12 +16,14 @@ namespace FeaturesOverlayPresentation
 
         private void closeAppButton_Click(object sender, RoutedEventArgs e)
         {
-            Environment.Exit(0);
+            File.Delete(StringsAndConstants.fileLogin);
+            Application.Current.Shutdown();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            Environment.Exit(0);
+            File.Delete(StringsAndConstants.fileLogin);
+            Application.Current.Shutdown();
         }
     }
 }
