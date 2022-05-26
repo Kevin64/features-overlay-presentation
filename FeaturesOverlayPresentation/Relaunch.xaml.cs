@@ -63,7 +63,7 @@ namespace FeaturesOverlayPresentation
             {
                 m = new MainWindow();
                 m.Show();
-                this.Close();
+                this.Hide();
             }
             catch
             {

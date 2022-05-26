@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
@@ -69,23 +68,6 @@ namespace FeaturesOverlayPresentation
             {
                 return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             }
-        }
-
-        public static bool PingHost(string servidor_web)
-        {
-            bool pingable = false;
-            Ping pinger = new Ping();
-            if (servidor_web == "")
-                return false;
-            try
-            {
-                PingReply reply = pinger.Send(servidor_web);
-                pingable = reply.Status == IPStatus.Success;
-            }
-            catch (PingException)
-            {
-            }
-            return pingable;
         }
 
         public static void resolutionError()
