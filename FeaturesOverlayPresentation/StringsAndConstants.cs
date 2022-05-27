@@ -28,5 +28,7 @@
 
         internal const string INTRANET_REQUIRED = "É necessário conexão com a intranet.";
         internal const string ERROR_WINDOWTITLE = "Erro";
+        internal const string NO_AUTH = "Preencha suas credenciais.";
+        internal const string SERVER_NOT_FOUND_ERROR = "Servidor não encontrado. Selecione um servidor válido!";
     }
 }

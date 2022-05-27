@@ -133,8 +133,6 @@ namespace FeaturesOverlayPresentation
                     YesLaterButton.Content = StringsAndConstants.cancelExecution;
                     pressed = true;
                     patrimTextBox.IsEnabled = false;
-                    serverDropDown.IsEnabled = false;
-                    portDropDown.IsEnabled = false;
                     EmployeePresentRadioNo.IsEnabled = false;
                     EmployeePresentRadioYes.IsEnabled = false;
                     SIAPETextBox.IsEnabled = false;
@@ -148,8 +146,6 @@ namespace FeaturesOverlayPresentation
                     YesLaterButton.Content = StringsAndConstants.doExecution;
                     pressed = false;
                     patrimTextBox.IsEnabled = true;
-                    serverDropDown.IsEnabled = true;
-                    portDropDown.IsEnabled = true;
                     EmployeePresentRadioNo.IsEnabled = true;
                     EmployeePresentRadioYes.IsEnabled = true;
                     SIAPETextBox.IsEnabled = true;
@@ -165,33 +161,40 @@ namespace FeaturesOverlayPresentation
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            string[] str = LoginFileReader.fetchInfo(userTextBox.Text, passwordBox.Password, serverDropDown.Text, portDropDown.Text);
-
-            if (str == null)
-                MessageBox.Show(StringsAndConstants.INTRANET_REQUIRED, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-            else if (str[0] == "false")
-            {
-                warningLabel.Visibility = Visibility.Visible;
-                passwordBox.SelectAll();
-                passwordBox.Focus();
-            }
+            warningLabel.Visibility = Visibility.Hidden;
+            string[] str = { };
+            if (userTextBox.Text == "" || passwordBox.Password == "")
+                MessageBox.Show(StringsAndConstants.NO_AUTH, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             else
             {
-                patrimLabel.IsEnabled = true;
-                patrimTextBox.IsEnabled = true;
-                serverLabel.IsEnabled = true;
-                serverDropDown.IsEnabled = true;
-                portLabel.IsEnabled = true;
-                portDropDown.IsEnabled = true;
-                warningLabel.Visibility = Visibility.Hidden;
-                userLabel.IsEnabled = false;
-                userTextBox.IsEnabled = false;
-                passwordLabel.IsEnabled = false;
-                passwordBox.IsEnabled = false;
-                EmployeePresentLabel.IsEnabled = true;
-                EmployeePresentRadioYes.IsEnabled = true;
-                EmployeePresentRadioNo.IsEnabled = true;
-                AuthButton.IsEnabled = false;
+                str = LoginFileReader.fetchInfo(userTextBox.Text, passwordBox.Password, serverDropDown.Text, portDropDown.Text);
+
+                if (str == null)
+                    MessageBox.Show(StringsAndConstants.SERVER_NOT_FOUND_ERROR, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                else if (str[0] == "false")
+                {
+                    warningLabel.Visibility = Visibility.Visible;
+                    passwordBox.SelectAll();
+                    passwordBox.Focus();
+                }
+                else
+                {
+                    patrimLabel.IsEnabled = true;
+                    patrimTextBox.IsEnabled = true;
+                    serverLabel.IsEnabled = false;
+                    serverDropDown.IsEnabled = false;
+                    portLabel.IsEnabled = false;
+                    portDropDown.IsEnabled = false;
+                    warningLabel.Visibility = Visibility.Hidden;
+                    userLabel.IsEnabled = false;
+                    userTextBox.IsEnabled = false;
+                    passwordLabel.IsEnabled = false;
+                    passwordBox.IsEnabled = false;
+                    EmployeePresentLabel.IsEnabled = true;
+                    EmployeePresentRadioYes.IsEnabled = true;
+                    EmployeePresentRadioNo.IsEnabled = true;
+                    AuthButton.IsEnabled = false;
+                }
             }
         }
 
