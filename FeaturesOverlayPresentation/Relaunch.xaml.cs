@@ -161,7 +161,6 @@ namespace FeaturesOverlayPresentation
 
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            warningLabel.Visibility = Visibility.Hidden;
             string[] str = { };
             if (userTextBox.Text == "" || passwordBox.Password == "")
                 MessageBox.Show(StringsAndConstants.NO_AUTH, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
