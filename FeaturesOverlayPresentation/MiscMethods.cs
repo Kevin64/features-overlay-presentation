@@ -75,7 +75,7 @@ namespace FeaturesOverlayPresentation
             if (SystemParameters.PrimaryScreenWidth < 1280 || SystemParameters.PrimaryScreenHeight < 720)
             {
                 MessageBox.Show(StringsAndConstants.resolutionWarning, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                File.Delete(StringsAndConstants.fileLogin);
+                File.Delete(StringsAndConstants.loginPath);
                 Application.Current.Shutdown();
             }
         }

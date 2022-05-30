@@ -16,13 +16,13 @@ namespace FeaturesOverlayPresentation
 
         private void closeAppButton_Click(object sender, RoutedEventArgs e)
         {
-            File.Delete(StringsAndConstants.fileLogin);
+            File.Delete(StringsAndConstants.loginPath);
             Application.Current.Shutdown();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            File.Delete(StringsAndConstants.fileLogin);
+            File.Delete(StringsAndConstants.loginPath);
             Application.Current.Shutdown();
         }
     }

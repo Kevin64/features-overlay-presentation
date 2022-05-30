@@ -22,18 +22,19 @@ namespace FeaturesOverlayPresentation
 
 		public static bool checkHost(string ip, string port)
         {
+			
 			try
 			{
 				wc = new WebClient();
 				wc.DownloadString("http://" + ip + ":" + port + "/" + StringsAndConstants.supplyLoginData);
 				System.Threading.Thread.Sleep(300);
-				wc.DownloadFile("http://" + ip + ":" + port + "/" + StringsAndConstants.fileLogin, StringsAndConstants.fileLogin);
+				wc.DownloadFile("http://" + ip + ":" + port + "/" + StringsAndConstants.fileLogin, StringsAndConstants.loginPath);
 				System.Threading.Thread.Sleep(300);
 				sha1 = wc.DownloadString("http://" + ip + ":" + port + "/" + StringsAndConstants.fileShaLogin);
 				System.Threading.Thread.Sleep(300);
 				sha1 = sha1.ToUpper();
-				fileL = new StreamReader(StringsAndConstants.fileLogin);
-				aux = StringsAndConstants.fileLogin;
+				fileL = new StreamReader(StringsAndConstants.loginPath);
+				aux = StringsAndConstants.loginPath;
 				fileL.Close();
 			}
 			catch
@@ -51,7 +52,7 @@ namespace FeaturesOverlayPresentation
 				return null;
 
 			string[] arr;
-			fileL = new StreamReader(StringsAndConstants.fileLogin);
+			fileL = new StreamReader(StringsAndConstants.loginPath);
 			if (GetSha1Hash(aux).Equals(sha1))
 			{
 				jsonFile = fileL.ReadToEnd();

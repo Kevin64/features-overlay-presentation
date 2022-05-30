@@ -23,6 +23,7 @@
         internal const string fillForm = "Preencha os campos necessários!";
         internal const string win7nt = "6.1";
         internal const string fileLogin = "login.json";
+        internal static string loginPath = System.IO.Path.GetTempPath() + fileLogin;
         internal const string fileShaLogin = "login-checksum.txt";
         internal const string supplyLoginData = "forneceDadosUsuario.php";
 

@@ -74,7 +74,7 @@ namespace FeaturesOverlayPresentation
 
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
-            File.Delete(StringsAndConstants.fileLogin);
+            File.Delete(StringsAndConstants.loginPath);
             Application.Current.Shutdown();
         }
 
@@ -155,7 +155,7 @@ namespace FeaturesOverlayPresentation
 
         private void Window_Closing(object sender, EventArgs e)
         {
-            File.Delete(StringsAndConstants.fileLogin);
+            File.Delete(StringsAndConstants.loginPath);
             Application.Current.Shutdown();
         }
 

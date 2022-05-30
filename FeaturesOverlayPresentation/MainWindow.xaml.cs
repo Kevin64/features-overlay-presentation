@@ -267,7 +267,7 @@ namespace FeaturesOverlayPresentation
                 MiscMethods.regDelete();
                 RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
                 key.SetValue(StringsAndConstants.DidItRunAlready, 1);
-                File.Delete(StringsAndConstants.fileLogin);
+                File.Delete(StringsAndConstants.loginPath);
                 Application.Current.Shutdown();
             }
         }
@@ -307,7 +307,7 @@ namespace FeaturesOverlayPresentation
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            File.Delete(StringsAndConstants.fileLogin);
+            File.Delete(StringsAndConstants.loginPath);
             Application.Current.Shutdown();
         }
 
