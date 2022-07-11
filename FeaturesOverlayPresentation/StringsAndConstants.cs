@@ -16,7 +16,7 @@
         internal const string finishText = "Finalizar";
         internal const string introScreen = "Introdução";
         internal const string nextText = "Próximo";
-        internal const string waitText = "Aguarde \n";
+        internal const string waitText = "Aguarde ";
         internal const string cancelExecution = "Cancelar execução no próximo boot";
         internal const string doExecution = "Executar no próximo boot";
         internal const string serverNotFound = "Servidor não encontrado. Selecione um servidor válido!";

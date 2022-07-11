@@ -180,6 +180,8 @@
     <Resource Include="fonts\ZHUM601N.TTF" />
     <Resource Include="fonts\ZHUM601U.TTF" />
     <Resource Include="img\logoCCSH.png" />
+    <Resource Include="img\logoSTI.png" />
+    <Resource Include="img\logoUFSM.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -192,12 +194,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="img\logoUTI.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="img\logoUFSM.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\IconGroup103.ico" />
