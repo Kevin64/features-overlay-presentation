@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "FOP"
-#define MyAppVersion GetFileVersion('D:\kevin\OneDrive\Documentos\GitHub\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaçãoDeTrabalho.exe')
+#define MyAppVersion GetFileVersion('D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaçãoDeTrabalho.exe')
 #define MyAppPublisher "Unidade de Tecnologia da Informação - CCSH - UFSM"
 #define MyAppURL "https://www.ufsm.br/unidades-universitarias/ccsh/unidade-de-tecnologia-da-informacao/"
 #define MyAppExeName "TutorialDeUsoDaEstaçãoDeTrabalho.exe"
@@ -14,7 +14,7 @@
 AppId={{774C846A-339E-4668-9AB4-78D769F29CAB}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName} {#MyAppVersion}
+;AppVerName={#MyAppName}-{#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
