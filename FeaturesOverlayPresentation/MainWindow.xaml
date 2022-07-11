@@ -458,7 +458,7 @@
                 </TransformGroup>
             </ComboBox.RenderTransform>
         </ComboBox>
-        <Label x:Name="LabelSlideSubtitle" Content="" HorizontalAlignment="Center" Margin="0,0,0,620" VerticalAlignment="Center" Width="600" Height="52" Foreground="#FFFFD900" FontSize="36" FontFamily="ZapfHumnst BT" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="LabelSlideSubtitle" Content="" HorizontalAlignment="Center" Margin="0,0,0,620" VerticalAlignment="Center" Width="700" Height="52" Foreground="#FFFFD900" FontSize="36" FontFamily="ZapfHumnst BT" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         <Button Style="{DynamicResource ButtonStyle1}" x:Name="ExitButtonPresentation" Content="Sair" HorizontalAlignment="Left" Margin="14,0,0,14" VerticalAlignment="Bottom" FontFamily="ZapfHumnst BT" Width="67" Background="#FF2F2F2F" Foreground="White" Click="Button_Click" Height="37" RenderTransformOrigin="0.507,0.541" FontSize="18"/>
         <Image x:Name="brasaoSTI" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="50" Width="256" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,0,24" Source="/img/logoSTI.png"/>
 
