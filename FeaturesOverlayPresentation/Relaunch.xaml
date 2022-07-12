@@ -416,6 +416,7 @@
             <Grid HorizontalAlignment="Center" Height="303" VerticalAlignment="Top" Width="Auto">
                 <ComboBox x:Name="serverDropDown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="123" SelectedIndex="0" Margin="82,53,0,0" IsEnabled="True" TabIndex="8" CommandManager.PreviewExecuted="textBox_PreviewExecuted" ContextMenu="{x:Null}" Background="#FF7E7E7E" Foreground="White" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}" IsEditable="True">
                     <ComboBoxItem Content="192.168.76.103" HorizontalAlignment="Left" Width="150" Foreground="White" Background="#FF7E7E7E"/>
+                    <ComboBoxItem Content="localhost" HorizontalAlignment="Left" Width="150" Foreground="White" Background="#FF7E7E7E"/>
                 </ComboBox>
                 <ComboBox x:Name="portDropDown" HorizontalAlignment="Left" Margin="82,78,0,0" VerticalAlignment="Top" Width="123" IsEditable="True" SelectedIndex="0" IsEnabled="True" TabIndex="9" CommandManager.PreviewExecuted="textBox_PreviewExecuted" ContextMenu="{x:Null}" Background="#FF7E7E7E" Foreground="White" Style="{DynamicResource ComboBoxStyle1}">
                     <ComboBox.ItemContainerStyle>
@@ -425,6 +426,7 @@
                         </Style>
                     </ComboBox.ItemContainerStyle>
                     <ComboBoxItem Content="8081" HorizontalAlignment="Left" Width="150" Background="#FF7E7E7E" Foreground="White"/>
+                    <ComboBoxItem Content="80" HorizontalAlignment="Left" Width="150" Background="#FF7E7E7E" Foreground="White"/>
                 </ComboBox>
                 <Button Style="{DynamicResource ButtonStyle1}" x:Name="YesLaterButton" Content="Executar no próximo boot" HorizontalAlignment="Center" Margin="0,251,0,0" VerticalAlignment="Top" Width="204" Click="YesLaterButton_Click" IsEnabled="False" TabIndex="10" Background="#FF7E7E7E" Foreground="White"/>
                 <TextBox x:Name="patrimTextBox" HorizontalAlignment="Left" Height="22" Margin="82,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="123" IsEnabled="False" TabIndex="7" MaxLines="1" CommandManager.PreviewExecuted="textBox_PreviewExecuted" ContextMenu="{x:Null}" PreviewTextInput="textBox_PreviewTextInput" MaxLength="6" Background="#FF7E7E7E" Foreground="White"/>

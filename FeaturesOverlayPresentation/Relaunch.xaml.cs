@@ -91,13 +91,13 @@ namespace FeaturesOverlayPresentation
                         if (present == false)
                         {
                             webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                        + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + "Ausente");
+                        + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + "Ausente" + "&entregador=" + userTextBox.Text);
                             check = true;
                         }
                         else if (SIAPETextBox.Text != "")
                         {
                             webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                        + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + SIAPETextBox.Text);
+                        + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + SIAPETextBox.Text + "&entregador=" + userTextBox.Text);
                             check = true;
                         }
                         else
@@ -109,7 +109,7 @@ namespace FeaturesOverlayPresentation
                     else
                     {
                         webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                    + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null + "&siapeRecebedor=" + null);
+                    + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null + "&siapeRecebedor=" + null + "&entregador=" + null);
                         check = true;
                     }                    
                 }
