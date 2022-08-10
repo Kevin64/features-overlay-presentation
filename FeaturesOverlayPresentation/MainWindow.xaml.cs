@@ -10,6 +10,7 @@ using System.Windows.Interop;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using ConstantsDLL;
 
 namespace FeaturesOverlayPresentation
 {

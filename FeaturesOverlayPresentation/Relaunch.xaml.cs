@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using ConstantsDLL;
+using JsonFileReaderDLL;
 
 namespace FeaturesOverlayPresentation
 {
