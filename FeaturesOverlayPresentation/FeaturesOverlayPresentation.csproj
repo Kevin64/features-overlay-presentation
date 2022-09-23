@@ -78,12 +78,6 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ConstantsDLL">
-      <HintPath>..\..\Dependencies\ConstantsDLL\bin\Release\ConstantsDLL.dll</HintPath>
-    </Reference>
-    <Reference Include="JsonFileReaderDLL">
-      <HintPath>..\..\Dependencies\JsonFileReaderDLL\bin\Release\JsonFileReaderDLL.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -212,6 +206,15 @@
     <Content Include="installer\installerInno-Win10.iss" />
     <Content Include="installer\installerInno-Win7.iss" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Dependencies\ConstantsDLL\ConstantsDLL.csproj">
+      <Project>{b26141c5-c9a5-4729-9300-62c9af4777b0}</Project>
+      <Name>ConstantsDLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Dependencies\JsonFileReaderDLL\JsonFileReaderDLL.csproj">
+      <Project>{a325c892-1ffe-4102-bd42-e8f299af2710}</Project>
+      <Name>JsonFileReaderDLL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

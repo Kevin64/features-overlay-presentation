@@ -15,11 +15,11 @@ namespace FeaturesOverlayPresentation
     {
         private bool pressed = false;
         private bool present;
+        private bool resPass = true;
         MainWindow m;
 
         public Relaunch()
         {
-            MiscMethods.resolutionError();
             InitializeComponent();
             try
             {
@@ -27,12 +27,16 @@ namespace FeaturesOverlayPresentation
                     throw new Exception();
                 if (!MiscMethods.regCheck())
                 {
+                    resPass = MiscMethods.resolutionError(true);
                     m = new MainWindow();
                     m.Show();
                     this.ShowInTaskbar = false;
                 }
                 else
                 {
+                    resPass = MiscMethods.resolutionError(false);
+                    if (!resPass)
+                        YesButton.IsEnabled = false;
                     this.Show();
                     this.ShowInTaskbar = true;
                 }
@@ -122,17 +126,24 @@ namespace FeaturesOverlayPresentation
                 MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);         
 
             if(check == true)
-            {                
+            {
                 if(pressed == false)
                 {
-                    RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
-                    if (Environment.Is64BitOperatingSystem)
-                        key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86);
+                    if (resPass == true)
+                    {
+                        RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
+                        if (Environment.Is64BitOperatingSystem)
+                            key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86);
+                        else
+                            key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64);
+                        RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
+                        key2.SetValue(StringsAndConstants.DidItRunAlready, 0, RegistryValueKind.DWord);
+                        YesLaterButton.Content = StringsAndConstants.cancelExecution;
+                    }
                     else
-                        key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64);
-                    RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
-                    key2.SetValue(StringsAndConstants.DidItRunAlready, 0, RegistryValueKind.DWord);
-                    YesLaterButton.Content = StringsAndConstants.cancelExecution;
+                    {
+                        YesLaterButton.Content = StringsAndConstants.cancelExecutionResError;
+                    }
                     pressed = true;
                     patrimTextBox.IsEnabled = false;
                     EmployeePresentRadioNo.IsEnabled = false;
@@ -141,11 +152,18 @@ namespace FeaturesOverlayPresentation
                 }
                 else
                 {
-                    RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
-                    key.DeleteValue(StringsAndConstants.FOP);
-                    RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
-                    key2.SetValue(StringsAndConstants.DidItRunAlready, 1, RegistryValueKind.DWord);
-                    YesLaterButton.Content = StringsAndConstants.doExecution;
+                    if (resPass == true)
+                    {
+                        RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
+                        key.DeleteValue(StringsAndConstants.FOP);
+                        RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
+                        key2.SetValue(StringsAndConstants.DidItRunAlready, 1, RegistryValueKind.DWord);
+                        YesLaterButton.Content = StringsAndConstants.doExecution;
+                    }
+                    else
+                    {
+                        YesLaterButton.Content = StringsAndConstants.doExecutionResError;
+                    }
                     pressed = false;
                     patrimTextBox.IsEnabled = true;
                     EmployeePresentRadioNo.IsEnabled = true;

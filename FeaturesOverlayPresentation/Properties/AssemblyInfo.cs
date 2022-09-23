@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("TutorialDeUsoDaEstaçãoDeTrabalho")]
 [assembly: AssemblyDescription("Apresenta os recursos da estação de trabalho")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Unidade de Tecnologia da Informação - CCSH - UFSM")]
+[assembly: AssemblyCompany("Subdivisão de Tecnologia da Informação / CCSH - UFSM")]
 [assembly: AssemblyProduct("FeaturesOverlayPresentation")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
@@ -51,6 +51,6 @@ using System.Windows;
 // É possível especificar todos os valores ou usar como padrão os Números de Build e da Revisão
 // usando o "*" como mostrado abaixo:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.6.0.2208")]
-[assembly: AssemblyFileVersion("1.6.0.2208")]
+[assembly: AssemblyVersion("1.6.1.2209")]
+[assembly: AssemblyFileVersion("1.6.1.2209")]
 [assembly: NeutralResourcesLanguage("pt-BR")]

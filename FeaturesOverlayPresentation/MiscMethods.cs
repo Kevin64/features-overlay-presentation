@@ -71,14 +71,19 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        public static void resolutionError()
+        public static bool resolutionError(bool exit)
         {
-            if (SystemParameters.PrimaryScreenWidth < 1280 || SystemParameters.PrimaryScreenHeight < 720)
+            if (SystemParameters.PrimaryScreenWidth < StringsAndConstants.Width || SystemParameters.PrimaryScreenHeight < StringsAndConstants.Height)
             {
                 MessageBox.Show(StringsAndConstants.resolutionWarning, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                File.Delete(StringsAndConstants.loginPath);
-                Application.Current.Shutdown();
+                if(exit)
+                {
+                    File.Delete(StringsAndConstants.loginPath);
+                    Application.Current.Shutdown();
+                }
+                return false;
             }
+            return true;
         }
     }
 }
