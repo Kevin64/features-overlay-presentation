@@ -387,7 +387,7 @@
                 </Style>
             </Button.Style>
             <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="nextBlock" Text="Próximo" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="ZapfHumnst BT" />
+                <TextBlock x:Name="nextBlock" Text="Próximo" Foreground="White" FontSize="48" FontWeight="Normal" FontFamily="ZapfHumnst BT" />
                 <Image Height="50" Width="66" Source="img/arrowNext.png" RenderOptions.BitmapScalingMode="HighQuality" />
             </StackPanel>
         </Button>
@@ -430,7 +430,7 @@
             </Button.Style>
             <StackPanel Orientation="Horizontal">
                 <Image Height="50" Width="66" Source="img/arrowPrevious.png" RenderTransformOrigin="0.5,0.5" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Stretch" />
-                <TextBlock x:Name="previousBlock" Text="Anterior" Foreground="White" FontSize="36" FontWeight="Normal" FontFamily="ZapfHumnst BT" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <TextBlock x:Name="previousBlock" Text="Anterior" Foreground="White" FontSize="48" FontWeight="Normal" FontFamily="ZapfHumnst BT" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             </StackPanel>
         </Button>
         <Label x:Name="LabelPage" Content="" Margin="0,0,10,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="137" Padding="0" FontFamily="ZapfHumnst BT"/>
@@ -438,10 +438,10 @@
         <Image x:Name="brasaoUFSM" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="52" Width="142" RenderOptions.BitmapScalingMode="HighQuality" Margin="350,0,0,24" Source="/img/logoUFSM.png"/>
         <Image x:Name="brasaoCCSH" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="37" Width="128" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,350,31" Source="/img/logoCCSH.png"/>
         <Image Margin="0,0,0,0" x:Name="mainImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="1200" Height="560" />
-        <TextBlock x:Name="TextStandBy" Margin="900,0,0,620" FontSize="36" Foreground="#7FFFFFFF" FontFamily="ZapfHumnst BT" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="50" Padding="0" TextAlignment="Center" Background="Transparent"/>
+        <TextBlock x:Name="TextStandBy" Margin="900,0,0,620" FontSize="48" Foreground="White" FontFamily="ZapfHumnst BT" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="50" Padding="0" TextAlignment="Center" Background="Transparent"/>
         <TextBlock x:Name="TextAppVersion" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="60" Height="15" FontSize="10" FontFamily="ZapfHumnst BT"/>
         <Frame x:Name="frameEnd" NavigationUIVisibility="Hidden" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Center" Width="980" Height="560" HorizontalAlignment="Stretch" Margin="0,0,0,0"/>
-        <TextBlock x:Name="TextAppVersionAbout" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="681" Height="15" Margin="0" Text="Aplicação desenvolvida por Kevin Costa, SIAPE 1971957, com arte e auxílio de Matheus Smidt, SIAPE 3152380. Para uso nas estações de trabalho do CCSH." FontSize="10" FontFamily="ZapfHumnst BT"/>
+        <TextBlock x:Name="TextAppVersionAbout" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="auto" Height="15" Margin="0" Text="Aplicação desenvolvida por Kevin Costa, SIAPE 1971957. Para uso nas estações de trabalho do CCSH." FontSize="10" FontFamily="ZapfHumnst BT"/>
         <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="ComboBoxNavigate" HorizontalAlignment="Right" Margin="0,0,10,52" VerticalAlignment="Bottom" Width="246" RenderTransformOrigin="0.5,0.5" SelectionChanged="ComboBoxNavigate_SelectionChanged" Foreground="White" FontFamily="ZapfHumnst BT">
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="ComboBoxItem">

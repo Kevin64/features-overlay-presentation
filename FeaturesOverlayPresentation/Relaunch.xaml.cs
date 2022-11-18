@@ -90,7 +90,7 @@ namespace FeaturesOverlayPresentation
             bool check = false;
             if(patrimTextBox.Text != "")
             {
-                if (LoginFileReader.checkHost(serverDropDown.Text, portDropDown.Text))
+                if (LoginFileReader.checkHostST(serverDropDown.Text, portDropDown.Text))
                 {
                     if (pressed == false)
                     {
@@ -111,13 +111,15 @@ namespace FeaturesOverlayPresentation
                             MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             check = false;
                         }
+                        YesButton.IsEnabled = false;
                     }
                     else
                     {
                         webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
                     + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null + "&siapeRecebedor=" + null + "&entregador=" + null);
                         check = true;
-                    }                    
+                        YesButton.IsEnabled = true;
+                    }
                 }
                 else
                     MessageBox.Show(StringsAndConstants.serverNotFound, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -186,7 +188,7 @@ namespace FeaturesOverlayPresentation
                 MessageBox.Show(StringsAndConstants.NO_AUTH, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             else
             {
-                str = LoginFileReader.fetchInfo(userTextBox.Text, passwordBox.Password, serverDropDown.Text, portDropDown.Text);
+                str = LoginFileReader.fetchInfoST(userTextBox.Text, passwordBox.Password, serverDropDown.Text, portDropDown.Text);
 
                 if (str == null)
                     MessageBox.Show(StringsAndConstants.SERVER_NOT_FOUND_ERROR, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);

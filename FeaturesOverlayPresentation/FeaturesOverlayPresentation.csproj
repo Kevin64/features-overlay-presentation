@@ -203,6 +203,7 @@
   <ItemGroup>
     <Resource Include="img\background.png" />
     <Resource Include="img\ico-256.ico" />
+    <Resource Include="background.png" />
     <Content Include="installer\installerInno-Win10.iss" />
     <Content Include="installer\installerInno-Win7.iss" />
   </ItemGroup>

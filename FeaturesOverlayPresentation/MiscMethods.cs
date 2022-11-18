@@ -46,10 +46,13 @@ namespace FeaturesOverlayPresentation
         public static string OSCheck()
         {
             string current = Directory.GetCurrentDirectory();
-            if (Environment.OSVersion.Version.ToString().Contains(StringsAndConstants.win7nt))
+            int osBuild = Convert.ToInt32(Environment.OSVersion.Version.ToString().Substring(5,5));
+            if (osBuild == Convert.ToInt32(StringsAndConstants.win7ntBuildMinor))
                 return current + StringsAndConstants.win7imgDir;
-            else
+            else if (osBuild >= Convert.ToInt32(StringsAndConstants.win10ntBuildMinor) && osBuild < Convert.ToInt32(StringsAndConstants.win11ntBuildMinor))
                 return current + StringsAndConstants.win10imgDir;
+            else
+                return current + StringsAndConstants.win11imgDir;
         }
 
         //Generates a MD5 hash from an input
