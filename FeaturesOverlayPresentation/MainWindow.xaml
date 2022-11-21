@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:FeaturesOverlayPresentation"
         xmlns:Collections="clr-namespace:System.Collections;assembly=mscorlib" x:Name="MainWindow1" x:Class="FeaturesOverlayPresentation.MainWindow"
         mc:Ignorable="d"
-        Title="FeatureOverlayPresentation" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowState="Maximized" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="1280" Height="1024" Topmost="True" ShowInTaskbar="False" WindowStyle="None" Loaded="FormLoaded"
+        Title="FeatureOverlayPresentation" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowState="Maximized" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="1366" Height="768" Topmost="True" ShowInTaskbar="False" WindowStyle="None" Loaded="FormLoaded"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
     <Window.Resources>
         <Style x:Key="FocusVisual">
@@ -345,11 +345,27 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.Background>
-            <ImageBrush ImageSource="/img/background.png"/>
+            <VisualBrush Stretch="UniformToFill">
+                <VisualBrush.RelativeTransform>
+                    <TransformGroup>
+                        <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleX="1.1" ScaleY="1.1"/>
+                        <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                        <RotateTransform CenterX="0.5" CenterY="0.5"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </VisualBrush.RelativeTransform>
+                <VisualBrush.Visual>
+                    <Image Source="/img/background.png">
+                        <Image.BitmapEffect>
+                            <BlurBitmapEffect x:Name="Blur" KernelType="Gaussian" Radius="{Binding Radius}" />
+                        </Image.BitmapEffect>
+                    </Image>
+                </VisualBrush.Visual>
+            </VisualBrush>
         </Grid.Background>
-        <Button x:Name="ButtonNext" Margin="900,0,0,620" FontSize="24" Click="ButtonNext_Click" FontWeight="Bold" BorderBrush="#00707070" Background="Transparent" Foreground="Black" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0">
+        <Button x:Name="ButtonNext" Margin="0,10,10,0" FontSize="24" Click="ButtonNext_Click" FontWeight="Bold" BorderBrush="#00707070" Background="Transparent" Foreground="Black" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Template">
@@ -391,7 +407,7 @@
                 <Image Height="50" Width="66" Source="img/arrowNext.png" RenderOptions.BitmapScalingMode="HighQuality" />
             </StackPanel>
         </Button>
-        <Button x:Name="ButtonPrevious" Margin="0,0,900,620" FontSize="24" Click="ButtonPrevious_Click" FontWeight="Bold" Background="Transparent" BorderBrush="#00707070" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.48" VerticalAlignment="Center" Padding="0" HorizontalAlignment="Center">
+        <Button x:Name="ButtonPrevious" Margin="10,10,0,0" FontSize="24" Click="ButtonPrevious_Click" FontWeight="Bold" Background="Transparent" BorderBrush="#00707070" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" RenderTransformOrigin="0.5,0.48" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Left">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Template">
@@ -428,19 +444,38 @@
                     </Style.Triggers>
                 </Style>
             </Button.Style>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Width="229.733333333333">
                 <Image Height="50" Width="66" Source="img/arrowPrevious.png" RenderTransformOrigin="0.5,0.5" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Stretch" />
                 <TextBlock x:Name="previousBlock" Text="Anterior" Foreground="White" FontSize="48" FontWeight="Normal" FontFamily="ZapfHumnst BT" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             </StackPanel>
         </Button>
         <Label x:Name="LabelPage" Content="" Margin="0,0,10,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="137" Padding="0" FontFamily="ZapfHumnst BT"/>
         <Label x:Name="LabelPage2" Content=" Página: " Margin="0,0,147,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="0" FontFamily="ZapfHumnst BT"/>
-        <Image x:Name="brasaoUFSM" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="52" Width="142" RenderOptions.BitmapScalingMode="HighQuality" Margin="350,0,0,24" Source="/img/logoUFSM.png"/>
-        <Image x:Name="brasaoCCSH" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="37" Width="128" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,350,31" Source="/img/logoCCSH.png"/>
-        <Image Margin="0,0,0,0" x:Name="mainImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="1200" Height="560" />
+        <Image x:Name="brasaoUFSM" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="52" Width="142" RenderOptions.BitmapScalingMode="HighQuality" Margin="350,0,0,24" Source="/img/logoUFSM.png" MouseLeftButtonUp="brasaoUFSM_MouseLeftButtonUp">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+        <Image x:Name="brasaoCCSH" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="37" Width="128" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,350,31" Source="/img/logoCCSH.png" MouseLeftButtonUp="brasaoCCSH_MouseLeftButtonUp">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+        <Image Margin="202,106,202,122" x:Name="mainImage" />
         <TextBlock x:Name="TextStandBy" Margin="900,0,0,620" FontSize="48" Foreground="White" FontFamily="ZapfHumnst BT" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="50" Padding="0" TextAlignment="Center" Background="Transparent"/>
         <TextBlock x:Name="TextAppVersion" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="60" Height="15" FontSize="10" FontFamily="ZapfHumnst BT"/>
-        <Frame x:Name="frameEnd" NavigationUIVisibility="Hidden" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" VerticalAlignment="Center" Width="980" Height="560" HorizontalAlignment="Stretch" Margin="0,0,0,0"/>
         <TextBlock x:Name="TextAppVersionAbout" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="auto" Height="15" Margin="0" Text="Aplicação desenvolvida por Kevin Costa, SIAPE 1971957. Para uso nas estações de trabalho do CCSH." FontSize="10" FontFamily="ZapfHumnst BT"/>
         <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="ComboBoxNavigate" HorizontalAlignment="Right" Margin="0,0,10,52" VerticalAlignment="Bottom" Width="246" RenderTransformOrigin="0.5,0.5" SelectionChanged="ComboBoxNavigate_SelectionChanged" Foreground="White" FontFamily="ZapfHumnst BT">
             <ComboBox.ItemContainerStyle>
@@ -458,9 +493,20 @@
                 </TransformGroup>
             </ComboBox.RenderTransform>
         </ComboBox>
-        <Label x:Name="LabelSlideSubtitle" Content="" HorizontalAlignment="Center" Margin="0,0,0,620" VerticalAlignment="Center" Width="700" Height="52" Foreground="#FFFFD900" FontSize="36" FontFamily="ZapfHumnst BT" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label x:Name="LabelSlideSubtitle" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Width="838" Height="52" Foreground="#FFFFD900" FontSize="36" FontFamily="ZapfHumnst BT" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,10,0,0"/>
         <Button Style="{DynamicResource ButtonStyle1}" x:Name="ExitButtonPresentation" Content="Sair" HorizontalAlignment="Left" Margin="14,0,0,14" VerticalAlignment="Bottom" FontFamily="ZapfHumnst BT" Width="67" Background="#FF2F2F2F" Foreground="White" Click="Button_Click" Height="37" RenderTransformOrigin="0.507,0.541" FontSize="18"/>
-        <Image x:Name="brasaoSTI" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="50" Width="256" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,0,24" Source="/img/logoSTI.png"/>
-
+        <Image x:Name="brasaoSTI" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="50" Width="256" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,0,24" Source="/img/logoSTI.png" MouseLeftButtonUp="brasaoSTI_MouseLeftButtonUp">
+            <Image.Style>
+                <Style TargetType="{x:Type Image}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Cursor" Value="Hand" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
+        <Border Name="Border1" BorderThickness="1" Grid.Row="0" Grid.ColumnSpan="2" CornerRadius="50,50,50,50" BorderBrush="Black" Background="#BF000000" Margin="180,80,180,90" Panel.ZIndex="-1"/>
+        <Border Name="Border2" BorderThickness="1" Grid.Row="0" BorderBrush="Black" Background="#BF000000" Panel.ZIndex="-1" VerticalAlignment="Bottom" Height="85"/>
     </Grid>
 </Window>

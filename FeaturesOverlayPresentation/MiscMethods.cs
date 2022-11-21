@@ -46,10 +46,11 @@ namespace FeaturesOverlayPresentation
         public static string OSCheck()
         {
             string current = Directory.GetCurrentDirectory();
-            int osBuild = Convert.ToInt32(Environment.OSVersion.Version.ToString().Substring(5,5));
-            if (osBuild == Convert.ToInt32(StringsAndConstants.win7ntBuildMinor))
+            Version osFullVer = Environment.OSVersion.Version;
+            //int osBuild = Convert.ToInt32(osFullVer);
+            if (osFullVer.Major == Convert.ToInt32(StringsAndConstants.win7ntMajor) && osFullVer.Minor == Convert.ToInt32(StringsAndConstants.win7ntMinor))
                 return current + StringsAndConstants.win7imgDir;
-            else if (osBuild >= Convert.ToInt32(StringsAndConstants.win10ntBuildMinor) && osBuild < Convert.ToInt32(StringsAndConstants.win11ntBuildMinor))
+            else if (osFullVer.Build >= Convert.ToInt32(StringsAndConstants.win10ntBuild) && osFullVer.Build < Convert.ToInt32(StringsAndConstants.win11ntBuild))
                 return current + StringsAndConstants.win10imgDir;
             else
                 return current + StringsAndConstants.win11imgDir;
