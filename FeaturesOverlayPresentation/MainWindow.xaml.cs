@@ -33,7 +33,7 @@ namespace FeaturesOverlayPresentation
         private bool empty = false;
         private string newFilePath;
         private DispatcherTimer timer;
-        private BlurBitmapEffect blurBMEffect;
+        private BlurEffect blurEffect1;
         List<string> imgList, labelList;
         ReinstallError e;
 
@@ -47,14 +47,15 @@ namespace FeaturesOverlayPresentation
         public MainWindow()
         {
             InitializeComponent();
-            blurBMEffect = this.FindName("Blur") as BlurBitmapEffect;
-            blurBMEffect.Radius = 10;
+            var _ = new Microsoft.Xaml.Behaviors.DefaultTriggerAttribute(typeof(Trigger), typeof(Microsoft.Xaml.Behaviors.TriggerBase), null);
+            blurEffect1 = this.FindName("BlurImage") as BlurEffect;
+            blurEffect1.Radius = 5;
             ButtonPrevious.Visibility = Visibility.Hidden;
             LabelPrint();
             TextAppVersion.Text = "v" + MiscMethods.Version;
             FindImages();
             FindLabels();
-            ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(0.3));
+            ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
             mainImage.Visibility = Visibility.Visible;
             MiscMethods.regRecreate(empty);
 
@@ -262,7 +263,7 @@ namespace FeaturesOverlayPresentation
             if (counter < finalCount - 2)
             {
                 counter++;
-                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(0.3));
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 LabelPrint();
                 ButtonPrevious.Visibility = Visibility.Visible;
                 ComboBoxNavigate.SelectedIndex = counter;
@@ -271,7 +272,7 @@ namespace FeaturesOverlayPresentation
             else if (counter == finalCount - 2)
             {
                 counter++;
-                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(0.3));
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 LabelPrint();
                 finishTextPrint();
                 ComboBoxNavigate.SelectedIndex = counter;
@@ -309,7 +310,7 @@ namespace FeaturesOverlayPresentation
                 counter--;
                 LabelPrint();
                 nextTextPrint();
-                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter - 1])), TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(0.3));
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter - 1])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, true);
             }
@@ -317,14 +318,14 @@ namespace FeaturesOverlayPresentation
             {
                 counter--;
                 LabelPrint();
-                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter - 1])), TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(0.3));                
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter - 1])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));                
             }
             else if(counter == 1)
             {
                 counter--;
                 LabelPrint();
                 ButtonPrevious.Visibility = Visibility.Hidden;
-                ChangeSource(mainImage, null, TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(0.3));                
+                ChangeSource(mainImage, null, TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));                
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, false);
             }
@@ -343,21 +344,21 @@ namespace FeaturesOverlayPresentation
             if (counter > 0 && counter < finalCount - 1)
             {
                 ButtonPrevious.Visibility = Visibility.Visible;
-                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(0.3));
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 SlideSubTitlePrint(counter, true);
                 nextTextPrint();
             }
             else if (counter == 0)
             {
                 ButtonPrevious.Visibility = Visibility.Hidden;
-                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(0.3));
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 SlideSubTitlePrint(counter, false);
                 nextTextPrint();
             }
             else if (counter == finalCount - 1)
             {
                 ButtonPrevious.Visibility = Visibility.Visible;
-                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(0.3), TimeSpan.FromSeconds(0.3));
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 SlideSubTitlePrint(counter, false);
                 finishTextPrint();
             }

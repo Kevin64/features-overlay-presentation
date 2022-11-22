@@ -3,11 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FeaturesOverlayPresentation"
-        xmlns:Collections="clr-namespace:System.Collections;assembly=mscorlib" x:Name="MainWindow1" x:Class="FeaturesOverlayPresentation.MainWindow"
+        x:Name="MainWindow1" x:Class="FeaturesOverlayPresentation.MainWindow"
         mc:Ignorable="d"
         Title="FeatureOverlayPresentation" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowState="Maximized" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="1366" Height="768" Topmost="True" ShowInTaskbar="False" WindowStyle="None" Loaded="FormLoaded"
-    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:local="clr-namespace:FeaturesOverlayPresentation">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -358,9 +357,9 @@
                 </VisualBrush.RelativeTransform>
                 <VisualBrush.Visual>
                     <Image Source="/img/background.png">
-                        <Image.BitmapEffect>
-                            <BlurBitmapEffect x:Name="Blur" KernelType="Gaussian" Radius="{Binding Radius}" />
-                        </Image.BitmapEffect>
+                        <Image.Effect>
+                            <BlurEffect x:Name="BlurImage" KernelType="Gaussian" Radius="{Binding Radius}" />
+                        </Image.Effect>
                     </Image>
                 </VisualBrush.Visual>
             </VisualBrush>
@@ -451,7 +450,7 @@
         </Button>
         <Label x:Name="LabelPage" Content="" Margin="0,0,10,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="137" Padding="0" FontFamily="ZapfHumnst BT"/>
         <Label x:Name="LabelPage2" Content=" Página: " Margin="0,0,147,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="0" FontFamily="ZapfHumnst BT"/>
-        <Image x:Name="brasaoUFSM" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="52" Width="142" RenderOptions.BitmapScalingMode="HighQuality" Margin="350,0,0,24" Source="/img/logoUFSM.png" MouseLeftButtonUp="brasaoUFSM_MouseLeftButtonUp">
+        <Image x:Name="brasaoUFSM" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="52" Width="142" RenderOptions.BitmapScalingMode="HighQuality" Margin="-500,0,0,24" Source="/img/logoUFSM.png" MouseLeftButtonUp="brasaoUFSM_MouseLeftButtonUp">
             <Image.Style>
                 <Style TargetType="{x:Type Image}">
                     <Style.Triggers>
@@ -462,7 +461,7 @@
                 </Style>
             </Image.Style>
         </Image>
-        <Image x:Name="brasaoCCSH" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="37" Width="128" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,350,31" Source="/img/logoCCSH.png" MouseLeftButtonUp="brasaoCCSH_MouseLeftButtonUp">
+        <Image x:Name="brasaoCCSH" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="37" Width="128" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,-500,31" Source="/img/logoCCSH.png" MouseLeftButtonUp="brasaoCCSH_MouseLeftButtonUp">
             <Image.Style>
                 <Style TargetType="{x:Type Image}">
                     <Style.Triggers>
@@ -474,7 +473,7 @@
             </Image.Style>
         </Image>
         <Image Margin="202,106,202,122" x:Name="mainImage" />
-        <TextBlock x:Name="TextStandBy" Margin="900,0,0,620" FontSize="48" Foreground="White" FontFamily="ZapfHumnst BT" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="50" Padding="0" TextAlignment="Center" Background="Transparent"/>
+        <TextBlock x:Name="TextStandBy" Margin="0,10,10,0" FontSize="48" Foreground="White" FontFamily="ZapfHumnst BT" Width="236" Height="61" Padding="0" TextAlignment="Center" Background="Transparent" HorizontalAlignment="Right" VerticalAlignment="Top"/>
         <TextBlock x:Name="TextAppVersion" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="60" Height="15" FontSize="10" FontFamily="ZapfHumnst BT"/>
         <TextBlock x:Name="TextAppVersionAbout" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="auto" Height="15" Margin="0" Text="Aplicação desenvolvida por Kevin Costa, SIAPE 1971957. Para uso nas estações de trabalho do CCSH." FontSize="10" FontFamily="ZapfHumnst BT"/>
         <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="ComboBoxNavigate" HorizontalAlignment="Right" Margin="0,0,10,52" VerticalAlignment="Bottom" Width="246" RenderTransformOrigin="0.5,0.5" SelectionChanged="ComboBoxNavigate_SelectionChanged" Foreground="White" FontFamily="ZapfHumnst BT">
@@ -493,7 +492,7 @@
                 </TransformGroup>
             </ComboBox.RenderTransform>
         </ComboBox>
-        <Label x:Name="LabelSlideSubtitle" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Width="838" Height="52" Foreground="#FFFFD900" FontSize="36" FontFamily="ZapfHumnst BT" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,10,0,0"/>
+        <Label x:Name="LabelSlideSubtitle" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Width="838" Height="55" Foreground="#FFFFD900" FontSize="36" FontFamily="ZapfHumnst BT" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,10,0,0"/>
         <Button Style="{DynamicResource ButtonStyle1}" x:Name="ExitButtonPresentation" Content="Sair" HorizontalAlignment="Left" Margin="14,0,0,14" VerticalAlignment="Bottom" FontFamily="ZapfHumnst BT" Width="67" Background="#FF2F2F2F" Foreground="White" Click="Button_Click" Height="37" RenderTransformOrigin="0.507,0.541" FontSize="18"/>
         <Image x:Name="brasaoSTI" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="50" Width="256" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,0,24" Source="/img/logoSTI.png" MouseLeftButtonUp="brasaoSTI_MouseLeftButtonUp">
             <Image.Style>
@@ -506,7 +505,34 @@
                 </Style>
             </Image.Style>
         </Image>
-        <Border Name="Border1" BorderThickness="1" Grid.Row="0" Grid.ColumnSpan="2" CornerRadius="50,50,50,50" BorderBrush="Black" Background="#BF000000" Margin="180,80,180,90" Panel.ZIndex="-1"/>
-        <Border Name="Border2" BorderThickness="1" Grid.Row="0" BorderBrush="Black" Background="#BF000000" Panel.ZIndex="-1" VerticalAlignment="Bottom" Height="85"/>
+        <Border Name="Border1" BorderThickness="1,1,1,1" Grid.Row="0" Grid.ColumnSpan="2" CornerRadius="25,25,25,25" BorderBrush="Black" Background="#99272727" Margin="180,90,180,105" Panel.ZIndex="-1">
+        </Border>
+
+        <!--<Border x:Name="content">
+            --><!--<Border.Background>
+                    <ImageBrush ImageSource="bild1.jpg" />
+                </Border.Background>--><!--
+
+            <StackPanel>
+                <TextBox Width="200" Margin="10" />
+                <TextBox Width="200" Margin="10" />
+                <TextBox Width="200" Margin="10" />
+            </StackPanel>
+        </Border>
+
+        <Grid Margin="59,63,46,110">
+
+            <Border ClipToBounds="True">
+                --><!--<i:Interaction.Behaviors>
+                    <local:BlurBackgroundBehavior BlurContainer="{Binding ElementName=content}" />
+                </i:Interaction.Behaviors>--><!--
+            </Border>
+
+            <TextBox VerticalAlignment="Center" Text="Blah" Width="200" Height="30" />
+
+        </Grid>-->
+        
+        <Border Name="Border2" BorderThickness="1,2,1,1" Grid.Row="0" BorderBrush="Black" Background="#99000000" Panel.ZIndex="-1" VerticalAlignment="Bottom" Height="85"/>
+        <Border x:Name="Border2_Copy" BorderThickness="1,2,1,1" Grid.Row="0" BorderBrush="Black" Background="#66000000" Panel.ZIndex="-1" VerticalAlignment="Top" Height="70"/>
     </Grid>
 </Window>
