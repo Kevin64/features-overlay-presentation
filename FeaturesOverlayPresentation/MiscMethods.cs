@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using ConstantsDLL;
+using FeaturesOverlayPresentation.Properties;
 
 namespace FeaturesOverlayPresentation
 {
@@ -88,6 +89,33 @@ namespace FeaturesOverlayPresentation
                 return false;
             }
             return true;
+        }
+
+        public static string checkIfLogExists(string path)
+        {
+            bool b;
+            try
+            {
+#if DEBUG
+                //Checks if log directory exists
+                b = File.Exists(path + StringsAndConstants.LOG_FILENAME_OOBE + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Resources.dev_status + StringsAndConstants.LOG_FILE_EXT);
+#else
+                //Checks if log file exists
+                b = File.Exists(path + StringsAndConstants.LOG_FILENAME_OOBE + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + StringsAndConstants.LOG_FILE_EXT);
+#endif
+                //If not, creates a new directory
+                if (!b)
+                {
+                    Directory.CreateDirectory(path);
+                    return "false";
+                }
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
         }
     }
 }
