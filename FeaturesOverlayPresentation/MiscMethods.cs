@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using ConstantsDLL;
+using FeaturesOverlayPresentation.Properties;
 
 namespace FeaturesOverlayPresentation
 {
@@ -46,10 +47,14 @@ namespace FeaturesOverlayPresentation
         public static string OSCheck()
         {
             string current = Directory.GetCurrentDirectory();
-            if (Environment.OSVersion.Version.ToString().Contains(StringsAndConstants.win7nt))
+            Version osFullVer = Environment.OSVersion.Version;
+            //int osBuild = Convert.ToInt32(osFullVer);
+            if (osFullVer.Major == Convert.ToInt32(StringsAndConstants.win7ntMajor) && osFullVer.Minor == Convert.ToInt32(StringsAndConstants.win7ntMinor))
                 return current + StringsAndConstants.win7imgDir;
-            else
+            else if (osFullVer.Build >= Convert.ToInt32(StringsAndConstants.win10ntBuild) && osFullVer.Build < Convert.ToInt32(StringsAndConstants.win11ntBuild))
                 return current + StringsAndConstants.win10imgDir;
+            else
+                return current + StringsAndConstants.win11imgDir;
         }
 
         //Generates a MD5 hash from an input
@@ -84,6 +89,33 @@ namespace FeaturesOverlayPresentation
                 return false;
             }
             return true;
+        }
+
+        public static string checkIfLogExists(string path)
+        {
+            bool b;
+            try
+            {
+#if DEBUG
+                //Checks if log directory exists
+                b = File.Exists(path + StringsAndConstants.LOG_FILENAME_OOBE + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Resources.dev_status + StringsAndConstants.LOG_FILE_EXT);
+#else
+                //Checks if log file exists
+                b = File.Exists(path + StringsAndConstants.LOG_FILENAME_OOBE + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + StringsAndConstants.LOG_FILE_EXT);
+#endif
+                //If not, creates a new directory
+                if (!b)
+                {
+                    Directory.CreateDirectory(path);
+                    return "false";
+                }
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+
         }
     }
 }

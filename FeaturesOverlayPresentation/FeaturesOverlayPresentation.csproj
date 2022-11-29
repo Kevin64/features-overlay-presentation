@@ -78,6 +78,12 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="INIFileParser, Version=2.5.2.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
+      <HintPath>..\packages\ini-parser.2.5.2\lib\net20\INIFileParser.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -104,6 +110,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BlurBackgroundBehavior.cs" />
     <Compile Include="ReinstallError.xaml.cs">
       <DependentUpon>ReinstallError.xaml</DependentUpon>
     </Compile>
@@ -111,10 +118,6 @@
       <DependentUpon>Relaunch.xaml</DependentUpon>
     </Compile>
     <Compile Include="MiscMethods.cs" />
-    <Page Include="Ending.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -122,9 +125,6 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Ending.xaml.cs">
-      <DependentUpon>Ending.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -203,6 +203,7 @@
   <ItemGroup>
     <Resource Include="img\background.png" />
     <Resource Include="img\ico-256.ico" />
+    <Resource Include="background.png" />
     <Content Include="installer\installerInno-Win10.iss" />
     <Content Include="installer\installerInno-Win7.iss" />
   </ItemGroup>
@@ -215,6 +216,13 @@
       <Project>{a325c892-1ffe-4102-bd42-e8f299af2710}</Project>
       <Name>JsonFileReaderDLL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Dependencies\LogGeneratorDLL\LogGeneratorDLL.csproj">
+      <Project>{b1c36277-8ec3-4cd8-bfbb-6a48f0c703a0}</Project>
+      <Name>LogGeneratorDLL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

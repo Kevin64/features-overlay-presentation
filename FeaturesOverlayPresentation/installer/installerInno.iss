@@ -38,6 +38,7 @@ MinVersion=6.1sp1
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 
 [Dirs]
+Name: "{app}\img-windows11"
 Name: "{app}\img-windows10"
 Name: "{app}\img-windows7"
 
@@ -48,9 +49,13 @@ Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\Feat
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\ConstantsDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\JsonFileReaderDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\img-windows11\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows11"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\img-windows10\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows10"; Flags: ignoreversion recursesubdirs createallsubdirs
 

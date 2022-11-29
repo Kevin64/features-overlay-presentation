@@ -11,6 +11,12 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using ConstantsDLL;
+using System.Windows.Controls;
+using System.Xml.Linq;
+using System.Windows.Media.Effects;
+using System.Windows.Navigation;
+using System.Windows.Media;
+using System.Diagnostics;
 
 namespace FeaturesOverlayPresentation
 {
@@ -27,6 +33,7 @@ namespace FeaturesOverlayPresentation
         private bool empty = false;
         private string newFilePath;
         private DispatcherTimer timer;
+        private BlurEffect blurEffect1;
         List<string> imgList, labelList;
         ReinstallError e;
 
@@ -40,15 +47,15 @@ namespace FeaturesOverlayPresentation
         public MainWindow()
         {
             InitializeComponent();
+            var _ = new Microsoft.Xaml.Behaviors.DefaultTriggerAttribute(typeof(Trigger), typeof(Microsoft.Xaml.Behaviors.TriggerBase), null);
+            blurEffect1 = this.FindName("BlurImage") as BlurEffect;
+            blurEffect1.Radius = 5;
             ButtonPrevious.Visibility = Visibility.Hidden;
-            frameEnd.Content = new Ending();
-            frameEnd.Visibility = Visibility.Hidden;
             LabelPrint();
             TextAppVersion.Text = "v" + MiscMethods.Version;
-            AnimateFrame();
             FindImages();
             FindLabels();
-            mainImage.Source = new BitmapImage(new Uri(imgList[counter]));
+            ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
             mainImage.Visibility = Visibility.Visible;
             MiscMethods.regRecreate(empty);
 
@@ -56,7 +63,6 @@ namespace FeaturesOverlayPresentation
             {
                 foreach (string item in labelList)
                     ComboBoxNavigate.Items.Add(item.Remove(0, 5));
-                ComboBoxNavigate.Items.Add(StringsAndConstants.finaleScreen);
                 ComboBoxNavigate.SelectedIndex = ComboBoxNavigate.Items.IndexOf(StringsAndConstants.introScreen);
             }
             catch
@@ -103,7 +109,7 @@ namespace FeaturesOverlayPresentation
 
         private void LabelPrint()
         {
-            LabelPage.Content = (counter + 1) + " de " + (finalCount + 1);
+            LabelPage.Content = (counter + 1) + " de " + finalCount;
         }
 
         public void FindLabels()
@@ -214,7 +220,7 @@ namespace FeaturesOverlayPresentation
             {
                 timer.Stop();
                 TextStandBy.Text = StringsAndConstants.waitText + "(" + (tickSeconds + 1) + ")";
-                if (counter == finalCount)
+                if (counter == finalCount - 1)
                     finishTextPrint();
                 else
                     nextTextPrint();
@@ -223,41 +229,50 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        void AnimateFrame()
+        private void ChangeSource(Image image, ImageSource source, TimeSpan fadeOutTime, TimeSpan fadeInTime)
         {
-            DoubleAnimation da = new DoubleAnimation
+            var fadeInAnimation = new DoubleAnimation(1d, fadeInTime);
+
+            if (image.Source != null)
             {
-                From = 0,
-                To = 1,
-                Duration = new Duration(TimeSpan.FromSeconds(1)),
-                AutoReverse = false
-            };
-            frameEnd.BeginAnimation(OpacityProperty, da);
-            mainImage.BeginAnimation(OpacityProperty, da);
+                var fadeOutAnimation = new DoubleAnimation(0d, fadeOutTime);
+
+                fadeOutAnimation.Completed += (o, e) =>
+                {
+                    image.Source = source;
+                    image.BeginAnimation(Image.OpacityProperty, fadeInAnimation);
+                };
+
+                image.BeginAnimation(Image.OpacityProperty, fadeOutAnimation);
+            }
+            else
+            {
+                image.Opacity = 0d;
+                image.Source = source;
+                image.BeginAnimation(Image.OpacityProperty, fadeInAnimation);
+            }
         }
 
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
-            AnimateFrame();
             if (counter == furthestCount && !MiscMethods.regCheck())
             {
                 TimerTickCreation();
                 furthestCount++;
             }
-            if (counter < finalCount - 1)
+            if (counter < finalCount - 2)
             {
                 counter++;
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter]));                
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 LabelPrint();
                 ButtonPrevious.Visibility = Visibility.Visible;
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, true);
             }
-            else if (counter + 1 == finalCount)
+            else if (counter == finalCount - 2)
             {
                 counter++;
-                frameEnd.Visibility = Visibility.Visible;
-                mainImage.Source = null;
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 LabelPrint();
                 finishTextPrint();
                 ComboBoxNavigate.SelectedIndex = counter;
@@ -273,34 +288,44 @@ namespace FeaturesOverlayPresentation
             }
         }
 
+        private void brasaoSTI_MouseLeftButtonUp(object sender, RoutedEventArgs e)
+        {
+            Process.Start(StringsAndConstants.STI_URL);
+        }
+
+        private void brasaoUFSM_MouseLeftButtonUp(object sender, RoutedEventArgs e)
+        {
+            Process.Start(StringsAndConstants.UFSM_URL);
+        }
+
+        private void brasaoCCSH_MouseLeftButtonUp(object sender, RoutedEventArgs e)
+        {
+            Process.Start(StringsAndConstants.CCSH_URL);
+        }
+
         private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
         {
-            AnimateFrame();
-            frameEnd.Visibility = Visibility.Hidden;
             if (counter > 1)
             {
                 counter--;
                 LabelPrint();
                 nextTextPrint();
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter - 1]));
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter - 1])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, true);
             }
-            else if (counter == finalCount)
+            else if (counter == finalCount - 1)
             {
                 counter--;
                 LabelPrint();
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter - 1]));
-                if (!nextBlock.Text.Equals(StringsAndConstants.nextText))
-                    nextTextPrint();
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter - 1])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));                
             }
             else if(counter == 1)
             {
                 counter--;
-                ButtonPrevious.Visibility = Visibility.Hidden;
-                mainImage.Source = null;
                 LabelPrint();
-                nextTextPrint();
+                ButtonPrevious.Visibility = Visibility.Hidden;
+                ChangeSource(mainImage, null, TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));                
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, false);
             }
@@ -312,32 +337,28 @@ namespace FeaturesOverlayPresentation
             Application.Current.Shutdown();
         }
 
-        private void ComboBoxNavigate_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void ComboBoxNavigate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            AnimateFrame();            
             counter = ComboBoxNavigate.SelectedIndex;
             LabelPrint();
-            if (counter > 0 && counter < finalCount)
+            if (counter > 0 && counter < finalCount - 1)
             {
-                frameEnd.Visibility = Visibility.Hidden;
                 ButtonPrevious.Visibility = Visibility.Visible;
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter]));
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 SlideSubTitlePrint(counter, true);
                 nextTextPrint();
             }
             else if (counter == 0)
             {
-                frameEnd.Visibility = Visibility.Hidden;
                 ButtonPrevious.Visibility = Visibility.Hidden;
-                mainImage.Source = new BitmapImage(new Uri(imgList[counter]));
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 SlideSubTitlePrint(counter, false);
                 nextTextPrint();
             }
-            else if (counter == finalCount)
+            else if (counter == finalCount - 1)
             {
-                frameEnd.Visibility = Visibility.Visible;
                 ButtonPrevious.Visibility = Visibility.Visible;
-                mainImage.Source = null;
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 SlideSubTitlePrint(counter, false);
                 finishTextPrint();
             }
