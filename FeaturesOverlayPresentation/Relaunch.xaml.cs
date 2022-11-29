@@ -65,6 +65,7 @@ namespace FeaturesOverlayPresentation
                         resPass = MiscMethods.resolutionError(true);
                         m = new MainWindow();
                         m.Show();
+                        this.Hide();
                         this.ShowInTaskbar = false;
                     }
                     else
