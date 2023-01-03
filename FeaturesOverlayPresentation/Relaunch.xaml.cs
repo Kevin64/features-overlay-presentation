@@ -20,6 +20,7 @@ namespace FeaturesOverlayPresentation
         private bool pressed = false;
         private bool present;
         private bool resPass = true;
+        private bool isFormat;
         MainWindow m;
         LogGenerator log;
 
@@ -29,6 +30,7 @@ namespace FeaturesOverlayPresentation
             var parser = new FileIniDataParser();
             try
             {
+                InitializeComponent();
                 //Parses the INI file
                 def = parser.ReadFile(StringsAndConstants.defFile);
 
@@ -39,10 +41,16 @@ namespace FeaturesOverlayPresentation
                 //Create a new log file (or append to a existing one)
                 log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status, logLocationStr, StringsAndConstants.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status + StringsAndConstants.LOG_FILE_EXT, StringsAndConstants.consoleOutCLI);
                 log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_DEBUG_MODE, string.Empty, StringsAndConstants.consoleOutCLI);
+
+                serverDropDown.SelectedIndex = 1;
+                portDropDown.SelectedIndex = 0;
 #else
                 //Create a new log file (or append to a existing one)
                 log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version, logLocationStr, StringsAndConstants.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + StringsAndConstants.LOG_FILE_EXT, StringsAndConstants.consoleOutCLI);
                 log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RELEASE_MODE, string.Empty, StringsAndConstants.consoleOutCLI);
+
+                serverDropDown.SelectedIndex = 0;
+                portDropDown.SelectedIndex = 0;
 #endif
                 //Checks if log file exists
                 if (!fileExists)
@@ -51,15 +59,11 @@ namespace FeaturesOverlayPresentation
                     log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOGFILE_EXISTS, string.Empty, StringsAndConstants.consoleOutCLI);
 
                 log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_DEFFILE_FOUND, Directory.GetCurrentDirectory() + "\\" + StringsAndConstants.defFile, StringsAndConstants.consoleOutCLI);
-
-                InitializeComponent();
+                
                 try
                 {
                     if (!FindFolder())
-                    {
-                        
                         throw new Exception();
-                    }
                     if (!MiscMethods.regCheck())
                     {
                         resPass = MiscMethods.resolutionError(true);
@@ -205,14 +209,23 @@ namespace FeaturesOverlayPresentation
                     if (resPass == true)
                     {
                         log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RESOLUTION_PASSED, string.Empty, StringsAndConstants.consoleOutGUI);
-                        log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_ADDING_REG, string.Empty, StringsAndConstants.consoleOutGUI);
-                        RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
-                        if (Environment.Is64BitOperatingSystem)
-                            key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86);
+                        if (isFormat == true)
+                        {
+                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_SERVICE_TYPE, StringsAndConstants.LOG_FORMAT_SERVICE, StringsAndConstants.consoleOutGUI);
+                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_ADDING_REG, string.Empty, StringsAndConstants.consoleOutGUI);
+                            RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
+                            if (Environment.Is64BitOperatingSystem)
+                                key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86);
+                            else
+                                key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64);
+                            RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
+                            key2.SetValue(StringsAndConstants.DidItRunAlready, 0, RegistryValueKind.DWord);
+                        }
                         else
-                            key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64);
-                        RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
-                        key2.SetValue(StringsAndConstants.DidItRunAlready, 0, RegistryValueKind.DWord);
+                        {
+                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_SERVICE_TYPE, StringsAndConstants.LOG_MAINTENANCE_SERVICE, StringsAndConstants.consoleOutGUI);
+                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_NOT_ADDING_REG, string.Empty, StringsAndConstants.consoleOutGUI);
+                        }
                         YesLaterButton.Content = StringsAndConstants.cancelExecution;
                     }
                     else
@@ -220,10 +233,13 @@ namespace FeaturesOverlayPresentation
                         log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_RESOLUTION_FAILED, string.Empty, StringsAndConstants.consoleOutGUI);
                         YesLaterButton.Content = StringsAndConstants.cancelExecutionResError;
                     }
+                    
                     pressed = true;
                     patrimTextBox.IsEnabled = false;
                     EmployeePresentRadioNo.IsEnabled = false;
                     EmployeePresentRadioYes.IsEnabled = false;
+                    FormatRadioButton.IsEnabled = false;
+                    MaintenanceRadioButton.IsEnabled = false;
                     SIAPETextBox.IsEnabled = false;
                 }
                 else
@@ -233,7 +249,8 @@ namespace FeaturesOverlayPresentation
                         log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RESOLUTION_PASSED, string.Empty, StringsAndConstants.consoleOutGUI);
                         log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REMOVING_REG, string.Empty, StringsAndConstants.consoleOutGUI);
                         RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
-                        key.DeleteValue(StringsAndConstants.FOP);
+                        if(isFormat)
+                            key.DeleteValue(StringsAndConstants.FOP);
                         RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
                         key2.SetValue(StringsAndConstants.DidItRunAlready, 1, RegistryValueKind.DWord);
                         YesLaterButton.Content = StringsAndConstants.doExecution;
@@ -247,6 +264,8 @@ namespace FeaturesOverlayPresentation
                     patrimTextBox.IsEnabled = true;
                     EmployeePresentRadioNo.IsEnabled = true;
                     EmployeePresentRadioYes.IsEnabled = true;
+                    FormatRadioButton.IsEnabled = true;
+                    MaintenanceRadioButton.IsEnabled = true;
                     SIAPETextBox.IsEnabled = true;
                 }
             }
@@ -298,6 +317,8 @@ namespace FeaturesOverlayPresentation
                     EmployeePresentLabel.IsEnabled = true;
                     EmployeePresentRadioYes.IsEnabled = true;
                     EmployeePresentRadioNo.IsEnabled = true;
+                    FormatRadioButton.IsEnabled = true;
+                    MaintenanceRadioButton.IsEnabled = true;
                     AuthButton.IsEnabled = false;
                 }
             }
@@ -329,6 +350,16 @@ namespace FeaturesOverlayPresentation
             SIAPETextBox.IsEnabled = false;
             present = false;
             YesLaterButton.IsEnabled = true;
+        }
+
+        private void FormatRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            isFormat = true;
+        }
+
+        private void MaintenanceRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            isFormat = false;
         }
     }
 }
