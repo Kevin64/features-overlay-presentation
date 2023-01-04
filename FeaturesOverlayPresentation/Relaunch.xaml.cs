@@ -338,28 +338,32 @@ namespace FeaturesOverlayPresentation
 
         private void EmployeePresentRadioYes_Checked(object sender, RoutedEventArgs e)
         {
-            SIAPELabel.IsEnabled = true;
             SIAPETextBox.IsEnabled = true;
             present = true;
-            YesLaterButton.IsEnabled = true;
+            if (FormatRadioButton.IsChecked == true || MaintenanceRadioButton.IsChecked == true)
+                YesLaterButton.IsEnabled = true;
         }
 
         private void EmployeePresentRadioNo_Checked(object sender, RoutedEventArgs e)
         {
-            SIAPELabel.IsEnabled = false;
             SIAPETextBox.IsEnabled = false;
             present = false;
-            YesLaterButton.IsEnabled = true;
+            if (FormatRadioButton.IsChecked == true || MaintenanceRadioButton.IsChecked == true)
+                YesLaterButton.IsEnabled = true;
         }
 
         private void FormatRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             isFormat = true;
+            if (EmployeePresentRadioNo.IsChecked == true || EmployeePresentRadioYes.IsChecked == true)
+                YesLaterButton.IsEnabled = true;
         }
 
         private void MaintenanceRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             isFormat = false;
+            if (EmployeePresentRadioNo.IsChecked == true || EmployeePresentRadioYes.IsChecked == true)
+                YesLaterButton.IsEnabled = true;
         }
     }
 }
