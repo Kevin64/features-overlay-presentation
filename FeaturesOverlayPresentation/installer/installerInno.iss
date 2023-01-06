@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "FOP"
-#define MyAppVersion GetFileVersion('D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaÁ„oDeTrabalho.exe')
-#define MyAppPublisher "Subdivis„o de Tecnologia da InformaÁ„o - CCSH - UFSM"
+#define MyAppVersion GetFileVersion('D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEsta√ß√£oDeTrabalho.exe')
+#define MyAppPublisher "Subdivis√£o de Tecnologia da Informa√ß√£o - CCSH - UFSM"
 #define MyAppURL "https://www.ufsm.br/unidades-universitarias/ccsh/unidade-de-tecnologia-da-informacao/"
-#define MyAppExeName "TutorialDeUsoDaEstaÁ„oDeTrabalho.exe"
+#define MyAppExeName "TutorialDeUsoDaEsta√ß√£oDeTrabalho.exe"
 #define RegKey "Software\FOP"
 
 [Setup]
@@ -26,7 +26,7 @@ DisableDirPage=yes
 ;PrivilegesRequired=lowest
 ;PrivilegesRequiredOverridesAllowed=dialog
 OutputBaseFilename=FOPsetupCCSH-{#MyAppVersion}
-OutputDir=D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Output
+OutputDir=D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\installer\Output
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -43,21 +43,25 @@ Name: "{app}\img-windows10"
 Name: "{app}\img-windows7"
 
 [Files]
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaÁ„oDeTrabalho.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
-
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaÁ„oDeTrabalho.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
-
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
-
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\BCrypt.Net-Next.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\ConstantsDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
-
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\LogGeneratorDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\INIFileParser.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\JsonFileReaderDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\LogGeneratorDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEsta√ß√£oDeTrabalho.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEsta√ß√£oDeTrabalho.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
@@ -185,7 +189,7 @@ begin
     // Disallow installation on Home edition of Windows
     if Version.SuiteMask and VER_SUITE_PERSONAL <> 0 then
     begin
-      SuppressibleMsgBox('Este programa n„o pode ser instalado na vers„o Home do Windows',
+      SuppressibleMsgBox('Este programa n√£o pode ser instalado na vers√£o Home do Windows',
         mbCriticalError, MB_OK, IDOK);
       result := False;
       Exit;
@@ -196,14 +200,14 @@ begin
     begin
       if Version.Minor = 3 then
       begin
-        SuppressibleMsgBox('Este programa n„o pode ser instalado no Windows 8.1',
+        SuppressibleMsgBox('Este programa n√£o pode ser instalado no Windows 8.1',
           mbCriticalError, MB_OK, IDOK);
         result := False;
         Exit;
       end;
       if Version.Minor = 2 then
       begin
-        SuppressibleMsgBox('Este programa n„o pode ser instalado no Windows 8',
+        SuppressibleMsgBox('Este programa n√£o pode ser instalado no Windows 8',
           mbCriticalError, MB_OK, IDOK);
         result := False;
         Exit;
@@ -216,4 +220,114 @@ begin
         result := false;
     end else
         result := true;
+end;
+
+const
+  GWL_WNDPROC = -4;
+  SB_VERT = 1;
+  SB_BOTTOM = 7;
+  WM_VSCROLL = $0115;
+  WM_ERASEBKGND = $0014;
+
+type
+  WPARAM = UINT_PTR;
+  LPARAM = LongInt;
+  LRESULT = LongInt;
+
+var
+  OldStatusLabelWndProc: LongInt;
+  OldFilenameLabelWndProc: LongInt;
+  OldProgressListBoxWndProc: LongInt;
+  ProgressListBox: TNewListBox;
+  PrevStatus: string;
+  PrevFileName: string;
+
+function CallWindowProc(
+  lpPrevWndFunc: LongInt; hWnd: HWND; Msg: UINT; wParam: WPARAM;
+  lParam: LPARAM): LRESULT; external 'CallWindowProcW@user32.dll stdcall';  
+function SetWindowLong(hWnd: HWND; nIndex: Integer; dwNewLong: LongInt): LongInt;
+  external 'SetWindowLongW@user32.dll stdcall';
+
+procedure AddProgress(S: string);
+begin
+  if S <> '' then
+  begin
+    ProgressListBox.Items.Add(S);
+    ProgressListBox.ItemIndex := ProgressListBox.Items.Count;
+    SendMessage(ProgressListBox.Handle, WM_VSCROLL, SB_BOTTOM, 0);
+  end;
+end;
+
+function StatusLabelWndProc(
+  hwnd: HWND; uMsg: UINT; wParam: WPARAM; lParam: LPARAM): LRESULT;
+begin
+  Result := CallWindowProc(OldStatusLabelWndProc, hwnd, uMsg, wParam, lParam);
+  if PrevStatus <> WizardForm.StatusLabel.Caption then
+  begin
+    AddProgress(WizardForm.StatusLabel.Caption);
+    PrevStatus := WizardForm.StatusLabel.Caption;
+  end;
+end;
+
+function FilenameLabelWndProc(
+  hwnd: HWND; uMsg: UINT; wParam: WPARAM; lParam: LPARAM): LRESULT;
+begin
+  Result := CallWindowProc(OldFilenameLabelWndProc, hwnd, uMsg, wParam, lParam);
+  if PrevFileName <> WizardForm.FilenameLabel.Caption then
+  begin
+    AddProgress(WizardForm.FilenameLabel.Caption);
+    PrevFileName := WizardForm.FilenameLabel.Caption;
+  end;
+end;
+
+function ProgressListBoxWndProc(
+  hwnd: HWND; uMsg: UINT; wParam: WPARAM; lParam: LPARAM): LRESULT;
+begin
+  // reduce flicker
+  if uMsg = WM_ERASEBKGND then
+  begin
+    Result := 1;
+  end
+    else
+  begin
+    Result := CallWindowProc(OldProgressListBoxWndProc, hwnd, uMsg, wParam, lParam);
+  end;
+end;
+
+procedure InitializeWizard();
+begin
+  OldStatusLabelWndProc :=
+    SetWindowLong(WizardForm.StatusLabel.Handle, GWL_WNDPROC,
+      CreateCallback(@StatusLabelWndProc));
+  OldFilenameLabelWndProc :=
+    SetWindowLong(WizardForm.FilenameLabel.Handle, GWL_WNDPROC,
+      CreateCallback(@FilenameLabelWndProc));
+
+  WizardForm.ProgressGauge.Top := WizardForm.FilenameLabel.Top;
+
+  ProgressListBox := TNewListBox.Create(WizardForm);
+  ProgressListBox.Parent := WizardForm.ProgressGauge.Parent;
+  ProgressListBox.Top :=
+    WizardForm.ProgressGauge.Top + WizardForm.ProgressGauge.Height + ScaleY(8);
+  ProgressListBox.Width := WizardForm.FilenameLabel.Width;
+  ProgressListBox.Height :=
+    ProgressListBox.Parent.ClientHeight - ProgressListBox.Top - ScaleY(16);
+  ProgressListBox.Anchors := [akLeft, akTop, akRight, akBottom];
+  OldProgressListBoxWndProc :=
+    SetWindowLong(ProgressListBox.Handle, GWL_WNDPROC,
+      CreateCallback(@ProgressListBoxWndProc));
+  // Lame way to shrink width of labels to client width of the list box,
+  // so that particularly when the file paths in FilenameLabel are shortened
+  // to fit to the label, they actually fit even to the list box.
+  WizardForm.StatusLabel.Width := WizardForm.StatusLabel.Width - ScaleY(24);
+  WizardForm.FilenameLabel.Width := WizardForm.FilenameLabel.Width - ScaleY(24);
+end;
+
+procedure DeinitializeSetup();
+begin
+  // In case you are using VCL styles or similar, this needs to be done before
+  // you unload the style.
+  SetWindowLong(WizardForm.StatusLabel.Handle, GWL_WNDPROC, OldStatusLabelWndProc);
+  SetWindowLong(WizardForm.FilenameLabel.Handle, GWL_WNDPROC, OldFilenameLabelWndProc);
+  SetWindowLong(ProgressListBox.Handle, GWL_WNDPROC, OldProgressListBoxWndProc);
 end;

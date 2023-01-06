@@ -9,6 +9,7 @@ using Microsoft.Xaml.Behaviors;
 
 namespace FeaturesOverlayPresentation
 {
+    //Class for implementing a blur effect on the image
     public class BlurBackgroundBehavior : Behavior<Shape>
     {
         public static readonly DependencyProperty BlurContainerProperty

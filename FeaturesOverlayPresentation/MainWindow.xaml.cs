@@ -12,9 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using ConstantsDLL;
 using System.Windows.Controls;
-using System.Xml.Linq;
 using System.Windows.Media.Effects;
-using System.Windows.Navigation;
 using System.Windows.Media;
 using System.Diagnostics;
 
@@ -44,6 +42,7 @@ namespace FeaturesOverlayPresentation
         private const int GWL_EX_STYLE = -20;
         private const int WS_EX_APPWINDOW = 0x00040000, WS_EX_TOOLWINDOW = 0x00000080;
         
+        //Main Window constructor
         public MainWindow()
         {
             InitializeComponent();
@@ -101,17 +100,20 @@ namespace FeaturesOverlayPresentation
             
         }
 
+        //Deny Alt+F4 exiting
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.System && e.SystemKey == Key.F4)
                 e.Handled = true;
         }
 
+        //Prints the slide counter on the screen
         private void LabelPrint()
         {
             LabelPage.Content = (counter + 1) + " de " + finalCount;
         }
 
+        //Finds and creates a list of the image file names found inside the specified folder
         public void FindLabels()
         {
             finalCount = 0;
@@ -146,6 +148,7 @@ namespace FeaturesOverlayPresentation
             }
         }
 
+        //Finds and creates a list of the slide images found inside the specified folder
         public void FindImages()
         {
             finalCount = 0;
@@ -178,7 +181,8 @@ namespace FeaturesOverlayPresentation
                 empty = true;
             }
         }
-
+        
+        //Prints filename label next to each slide
         private void SlideSubTitlePrint(int counter, bool flag)
         {
             string str;
@@ -191,16 +195,19 @@ namespace FeaturesOverlayPresentation
                 LabelSlideSubtitle.Content = "";
         }
 
+        //Define 'next' button name
         private void nextTextPrint()
         {
             nextBlock.Text = StringsAndConstants.nextText;
         }
 
+        //Define 'finish' button name
         private void finishTextPrint()
         {
             nextBlock.Text = StringsAndConstants.finishText;
         }
 
+        //Creates a timer for each slide when running for the first time
         private void TimerTickCreation()
         {
             timerTickCount = tickSeconds;
@@ -212,6 +219,7 @@ namespace FeaturesOverlayPresentation
             TextStandBy.Visibility = Visibility.Visible;
         }
 
+        //Runs the previous created timer
         private void TimerTickRun(object sender, EventArgs e)
         {
             TextStandBy.Text = StringsAndConstants.waitText + "(" + timerTickCount.ToString() + ")";
@@ -229,6 +237,7 @@ namespace FeaturesOverlayPresentation
             }
         }
 
+        //Changes the image source, adding fade-in/fade-out animation
         private void ChangeSource(Image image, ImageSource source, TimeSpan fadeOutTime, TimeSpan fadeInTime)
         {
             if (Environment.OSVersion.Version.Major.ToString().Contains(StringsAndConstants.win10ntMajor))
@@ -260,6 +269,7 @@ namespace FeaturesOverlayPresentation
             }
         }
 
+        //When the 'next' button is pressed
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
             if (counter == furthestCount && !MiscMethods.regCheck())
@@ -295,21 +305,25 @@ namespace FeaturesOverlayPresentation
             }
         }
 
+        //When clicking on the arms pictures, opens its sites
         private void brasaoSTI_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             Process.Start(StringsAndConstants.STI_URL);
         }
 
+        //When clicking on the arms pictures, opens its sites
         private void brasaoUFSM_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             Process.Start(StringsAndConstants.UFSM_URL);
         }
 
+        //When clicking on the arms pictures, opens its sites
         private void brasaoCCSH_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             Process.Start(StringsAndConstants.CCSH_URL);
         }
 
+        //When the 'previous' button is pressed
         private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
         {
             if (counter > 1)
@@ -338,12 +352,14 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        //When the 'exit' button is pressed
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             File.Delete(StringsAndConstants.loginPath);
             Application.Current.Shutdown();
         }
 
+        //When a combobox item is selected
         private void ComboBoxNavigate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             counter = ComboBoxNavigate.SelectedIndex;

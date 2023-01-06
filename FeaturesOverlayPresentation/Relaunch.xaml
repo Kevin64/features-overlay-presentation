@@ -413,7 +413,7 @@
         <Button Style="{DynamicResource ButtonStyle1}" x:Name="YesButton" Content="Sim" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Width="98" Click="YesButton_Click" TabIndex="0" Background="#FF7E7E7E" Foreground="White"/>
         <Button Style="{DynamicResource ButtonStyle2}" x:Name="NoButton" Content="Não" HorizontalAlignment="Left" Margin="113,39,0,0" VerticalAlignment="Top" Width="101" Click="NoButton_Click" TabIndex="1" Background="#FF7E7E7E" Foreground="White"/>
         <Expander Header="Opções avançadas" HorizontalAlignment="Left" Height="Auto" Margin="10,64,0,0" VerticalAlignment="Top" Width="Auto" TabIndex="2" Foreground="White">
-            <Grid HorizontalAlignment="Center" Height="303" VerticalAlignment="Top" Width="Auto">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Width="Auto">
                 <ComboBox x:Name="serverDropDown" HorizontalAlignment="Left" VerticalAlignment="Top" Width="123" SelectedIndex="0" Margin="82,53,0,0" IsEnabled="True" TabIndex="8" CommandManager.PreviewExecuted="textBox_PreviewExecuted" ContextMenu="{x:Null}" Background="#FF7E7E7E" Foreground="White" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}" IsEditable="True">
                     <ComboBoxItem Content="192.168.76.103" HorizontalAlignment="Left" Width="150" Foreground="White" Background="#FF7E7E7E"/>
                     <ComboBoxItem Content="localhost" HorizontalAlignment="Left" Width="150" Foreground="White" Background="#FF7E7E7E"/>
@@ -428,7 +428,7 @@
                     <ComboBoxItem Content="8081" HorizontalAlignment="Left" Width="150" Background="#FF7E7E7E" Foreground="White"/>
                     <ComboBoxItem Content="80" HorizontalAlignment="Left" Width="150" Background="#FF7E7E7E" Foreground="White"/>
                 </ComboBox>
-                <Button Style="{DynamicResource ButtonStyle1}" x:Name="YesLaterButton" Content="Enviar dados de entrega" HorizontalAlignment="Center" Margin="0,251,0,0" VerticalAlignment="Top" Width="204" Click="YesLaterButton_Click" IsEnabled="False" TabIndex="10" Background="#FF7E7E7E" Foreground="White" Height="42"/>
+                <Button Style="{DynamicResource ButtonStyle1}" x:Name="YesLaterButton" Content="Enviar dados de entrega" HorizontalAlignment="Center" Margin="0,284,0,0" VerticalAlignment="Top" Width="204" Click="YesLaterButton_Click" IsEnabled="False" TabIndex="10" Background="#FF7E7E7E" Foreground="White" Height="42"/>
                 <TextBox x:Name="patrimTextBox" HorizontalAlignment="Left" Height="22" Margin="82,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="123" IsEnabled="False" TabIndex="7" MaxLines="1" CommandManager.PreviewExecuted="textBox_PreviewExecuted" ContextMenu="{x:Null}" PreviewTextInput="textBox_PreviewTextInput" MaxLength="6" Background="#FF7E7E7E" Foreground="White"/>
                 <Label x:Name="patrimLabel" Content="Patrimônio:" HorizontalAlignment="Left" Margin="1,161,0,0" VerticalAlignment="Top" Width="76" IsEnabled="False"  Foreground="White" Height="24"/>
                 <Label x:Name="serverLabel" Content="Servidor:" HorizontalAlignment="Left" Margin="1,51,0,0" VerticalAlignment="Top" Width="76" IsEnabled="False"  Foreground="White"/>
@@ -440,11 +440,14 @@
                 <Label x:Name="passwordLabel" Content="Senha:" HorizontalAlignment="Left" Margin="1,26,0,0" VerticalAlignment="Top" Width="76"  Foreground="White"/>
                 <Label x:Name="warningLabel" Content="Credenciais incorretas!" VerticalAlignment="Top" Height="24" Foreground="Red" HorizontalContentAlignment="Center" Margin="6,106,6,0" Visibility="Hidden" />
                 <WebBrowser x:Name="webBrowser1" HorizontalAlignment="Left" Height="36" Margin="1,207,0,0" VerticalAlignment="Top" Width="203" Visibility="Hidden"/>
-                <TextBox x:Name="SIAPETextBox" HorizontalAlignment="Left" Height="22" Margin="82,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="122" IsEnabled="False" TabIndex="7" MaxLines="1" CommandManager.PreviewExecuted="textBox_PreviewExecuted" ContextMenu="{x:Null}" PreviewTextInput="textBox_PreviewTextInput" MaxLength="8" Background="#FF7E7E7E" Foreground="White"/>
-                <Label x:Name="SIAPELabel" Content="SIAPE:" HorizontalAlignment="Left" Margin="1,223,0,0" VerticalAlignment="Top" Width="76" IsEnabled="False"  Foreground="White" Height="24"/>
-                <RadioButton x:Name="EmployeePresentRadioYes" Content="Presente" HorizontalAlignment="Left" Margin="135,188,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False" Checked="EmployeePresentRadioYes_Checked"/>
-                <RadioButton x:Name="EmployeePresentRadioNo" Content="Ausente" HorizontalAlignment="Left" Margin="135,202,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False" Checked="EmployeePresentRadioNo_Checked"/>
-                <Label x:Name="EmployeePresentLabel" Content="Funcionário presente:" HorizontalAlignment="Left" Margin="0,189,0,0" VerticalAlignment="Top" Width="123" IsEnabled="False"  Foreground="White" Height="28"/>
+                <TextBox x:Name="SIAPETextBox" HorizontalAlignment="Left" Height="22" Margin="82,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="122" IsEnabled="False" TabIndex="7" MaxLines="1" CommandManager.PreviewExecuted="textBox_PreviewExecuted" ContextMenu="{x:Null}" PreviewTextInput="textBox_PreviewTextInput" MaxLength="8" Background="#FF7E7E7E" Foreground="White"/>
+                <Label x:Name="SIAPELabel" Content="SIAPE:" HorizontalAlignment="Left" Margin="1,256,0,0" VerticalAlignment="Top" Width="76" IsEnabled="False"  Foreground="White" Height="24"/>
+                <RadioButton x:Name="EmployeePresentRadioYes" GroupName="IsPresent" Content="Presente" HorizontalAlignment="Left" Margin="121,225,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False" Checked="EmployeePresentRadioYes_Checked"/>
+                <RadioButton x:Name="EmployeePresentRadioNo" GroupName="IsPresent" Content="Ausente" HorizontalAlignment="Left" Margin="121,239,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False" Checked="EmployeePresentRadioNo_Checked"/>
+                <Label x:Name="EmployeePresentLabel" Content="Funcionário presente:" HorizontalAlignment="Left" Margin="0,226,0,0" VerticalAlignment="Top" Width="116" IsEnabled="False"  Foreground="White" Height="28"/>
+                <RadioButton x:Name="FormatRadioButton" GroupName="ServiceType" Content="Formatação" HorizontalAlignment="Left" Margin="121,187,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False" Checked="FormatRadioButton_Checked"/>
+                <RadioButton x:Name="MaintenanceRadioButton" GroupName="ServiceType" Content="Manutenção" HorizontalAlignment="Left" Margin="121,201,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False" Checked="MaintenanceRadioButton_Checked"/>
+                <Label x:Name="ServiceTypeLabel" Content="Tipo de serviço:" HorizontalAlignment="Left" Margin="0,188,0,0" VerticalAlignment="Top" Width="116" IsEnabled="False"  Foreground="White" Height="28"/>
             </Grid>
         </Expander>
     </Grid>
