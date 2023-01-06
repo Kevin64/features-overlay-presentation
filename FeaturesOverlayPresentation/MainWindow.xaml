@@ -493,7 +493,7 @@
             </ComboBox.RenderTransform>
         </ComboBox>
         <Label x:Name="LabelSlideSubtitle" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Width="838" Height="55" Foreground="#FFFFD900" FontSize="36" FontFamily="ZapfHumnst BT" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,10,0,0"/>
-        <Button Style="{DynamicResource ButtonStyle1}" x:Name="ExitButtonPresentation" Content="Sair" HorizontalAlignment="Left" Margin="14,0,0,14" VerticalAlignment="Bottom" FontFamily="ZapfHumnst BT" Width="67" Background="#FF2F2F2F" Foreground="White" Click="Button_Click" Height="37" RenderTransformOrigin="0.507,0.541" FontSize="18"/>
+        <Button Style="{DynamicResource ButtonStyle1}" x:Name="ExitButtonPresentation" Content="Sair" HorizontalAlignment="Left" Margin="14,0,0,14" VerticalAlignment="Bottom" FontFamily="ZapfHumnst BT" Width="67" Background="#FF2F2F2F" Foreground="White" Click="ExitButton_Click" Height="37" RenderTransformOrigin="0.507,0.541" FontSize="18"/>
         <Image x:Name="brasaoSTI" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="50" Width="256" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,0,24" Source="/img/logoSTI.png" MouseLeftButtonUp="brasaoSTI_MouseLeftButtonUp">
             <Image.Style>
                 <Style TargetType="{x:Type Image}">

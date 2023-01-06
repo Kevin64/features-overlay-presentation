@@ -2,8 +2,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
 using ConstantsDLL;
 using FeaturesOverlayPresentation.Properties;
@@ -12,6 +10,7 @@ namespace FeaturesOverlayPresentation
 {
     internal static class MiscMethods
     {
+        //Checks via registry if the program was already executed
         public static bool regCheck()
         {
             RegistryKey rk = Registry.CurrentUser.OpenSubKey(StringsAndConstants.FopRegKey);
@@ -22,6 +21,7 @@ namespace FeaturesOverlayPresentation
                 return false;
         }
 
+        //Creates RunOnce registry key
         public static void regRecreate(bool empty)
         {
             if (!empty && !regCheck())
@@ -37,6 +37,7 @@ namespace FeaturesOverlayPresentation
             }
         }
 
+        //Deletes RunOnce registry key
         public static void regDelete()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(StringsAndConstants.FopRunOnceKey, true);
@@ -44,6 +45,7 @@ namespace FeaturesOverlayPresentation
                 key.DeleteValue(StringsAndConstants.FOP);
         }
 
+        //Checks OS version
         public static string OSCheck()
         {
             string current = Directory.GetCurrentDirectory();
@@ -57,17 +59,7 @@ namespace FeaturesOverlayPresentation
                 return current + StringsAndConstants.win11imgDir;
         }
 
-        //Generates a MD5 hash from an input
-        public static string HashMd5Generator(string input)
-        {
-            MD5 md5Hash = MD5.Create();
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
-            StringBuilder sBuilder = new StringBuilder();
-            for (int i = 0; i < data.Length; i++)
-                sBuilder.Append(data[i].ToString("x2"));
-            return sBuilder.ToString();
-        }
-
+        //Checks assembly version
         public static string Version
         {
             get
@@ -76,6 +68,7 @@ namespace FeaturesOverlayPresentation
             }
         }
 
+        //Checks the current screen resolution
         public static bool resolutionError(bool exit)
         {
             if (SystemParameters.PrimaryScreenWidth < StringsAndConstants.Width || SystemParameters.PrimaryScreenHeight < StringsAndConstants.Height)
@@ -91,6 +84,7 @@ namespace FeaturesOverlayPresentation
             return true;
         }
 
+        //Checks if logfile exists
         public static string checkIfLogExists(string path)
         {
             bool b;
@@ -115,7 +109,6 @@ namespace FeaturesOverlayPresentation
             {
                 return e.Message;
             }
-
         }
     }
 }
