@@ -14,7 +14,7 @@
 AppId={{774C846A-339E-4668-9AB4-78D769F29CAB}
 AppName={#MyAppName}
 AppVersion={#MyAppVersion}
-;AppVerName={#MyAppName}-{#MyAppVersion}
+AppVerName={#MyAppName}-{#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
@@ -56,14 +56,6 @@ Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\Feat
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
-
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\System.Buffers.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
-
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\System.Memory.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
-
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\System.Numerics.Vectors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
-
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaçãoDeTrabalho.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
