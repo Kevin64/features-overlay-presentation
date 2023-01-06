@@ -239,4 +239,7 @@
     <Content Include="installer\installerInno.iss" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del /F /Q *.xml</PostBuildEvent>
+  </PropertyGroup>
 </Project>
