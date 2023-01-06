@@ -38,7 +38,7 @@ namespace FeaturesOverlayPresentation
 
                 bool logFileExists = bool.Parse(MiscMethods.checkIfLogExists(logLocationStr));
 #if DEBUG
-                //Create a new log file (or append to a existing one)
+                //Create a new log file (or append to an existing one)
                 log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status, logLocationStr, StringsAndConstants.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status + StringsAndConstants.LOG_FILE_EXT, StringsAndConstants.consoleOutCLI);
                 log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_DEBUG_MODE, string.Empty, StringsAndConstants.consoleOutCLI);
 
