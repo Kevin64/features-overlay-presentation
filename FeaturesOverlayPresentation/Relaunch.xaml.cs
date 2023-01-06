@@ -76,7 +76,10 @@ namespace FeaturesOverlayPresentation
                     {
                         resPass = MiscMethods.resolutionError(false);
                         if (!resPass)
+                        {
+                            log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_RESOLUTION_ERROR, SystemParameters.PrimaryScreenWidth.ToString() + 'x' + SystemParameters.PrimaryScreenHeight.ToString(), StringsAndConstants.consoleOutGUI);
                             YesButton.IsEnabled = false;
+                        }
                         this.Show();
                         this.ShowInTaskbar = true;
                     }
@@ -209,7 +212,8 @@ namespace FeaturesOverlayPresentation
                         webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
                     + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null + "&siapeRecebedor=" + null + "&entregador=" + null);
                         check = true;
-                        YesButton.IsEnabled = true;
+                        if(resPass)
+                            YesButton.IsEnabled = true;
                     }
                 }
                 else //If login fails
@@ -224,6 +228,7 @@ namespace FeaturesOverlayPresentation
                 MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
+            //Do registry stuff, and handles control states
             if(check == true) //If data is already sent to the server
             {
                 if(pressed == false) //If 'send' button is not pressed
@@ -236,13 +241,7 @@ namespace FeaturesOverlayPresentation
                             log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_SERVICE_TYPE, StringsAndConstants.LOG_FORMAT_SERVICE, StringsAndConstants.consoleOutGUI);
                             log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_SCHEDULING, string.Empty, StringsAndConstants.consoleOutGUI);
                             log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_ADDING_REG, string.Empty, StringsAndConstants.consoleOutGUI);
-                            RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
-                            if (Environment.Is64BitOperatingSystem)
-                                key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86);
-                            else
-                                key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64);
-                            RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
-                            key2.SetValue(StringsAndConstants.DidItRunAlready, 0, RegistryValueKind.DWord);
+                            MiscMethods.regCreate();
                         }
                         else //If service type is 'maintenance'
                         {
@@ -253,7 +252,7 @@ namespace FeaturesOverlayPresentation
                     }
                     else  //If screen resolution fails the requirement
                     {
-                        log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_RESOLUTION_FAILED, string.Empty, StringsAndConstants.consoleOutGUI);
+                        log.LogWrite(StringsAndConstants.LOG_WARNING, StringsAndConstants.LOG_RESOLUTION_FAILED, StringsAndConstants.LOG_DISABLE_BOOT, StringsAndConstants.consoleOutGUI);
                         YesLaterButton.Content = StringsAndConstants.cancelExecutionResError;
                     }
                     
@@ -279,10 +278,7 @@ namespace FeaturesOverlayPresentation
                         YesLaterButton.Content = StringsAndConstants.doExecution;
                     }
                     else //If screen resolution fails the requirement
-                    {
-                        log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_RESOLUTION_FAILED, string.Empty, StringsAndConstants.consoleOutGUI);
                         YesLaterButton.Content = StringsAndConstants.doExecutionResError;
-                    }
                     pressed = false;
                     patrimTextBox.IsEnabled = true;
                     EmployeePresentRadioNo.IsEnabled = true;

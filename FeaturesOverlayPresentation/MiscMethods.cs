@@ -21,7 +21,19 @@ namespace FeaturesOverlayPresentation
                 return false;
         }
 
-        //Creates RunOnce registry key
+        //Creates RunOnce and FOP registry keys
+        public static void regCreate()
+        {
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey, true);
+            if (Environment.Is64BitOperatingSystem)
+                key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86, RegistryValueKind.String);
+            else
+                key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64, RegistryValueKind.String);
+            RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
+            key2.SetValue(StringsAndConstants.DidItRunAlready, 0, RegistryValueKind.DWord);
+        }
+
+        //ReCreates RunOnce registry key
         public static void regRecreate(bool empty)
         {
             if (!empty && !regCheck())
@@ -29,7 +41,7 @@ namespace FeaturesOverlayPresentation
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(StringsAndConstants.FopRunOnceKey, true);
                 if (!key.GetValueNames().Contains(StringsAndConstants.FOP))
                 {
-                    if (Environment.Is64BitOperatingSystem == true)
+                    if (Environment.Is64BitOperatingSystem)
                         key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86, RegistryValueKind.String);
                     else
                         key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64, RegistryValueKind.String);
