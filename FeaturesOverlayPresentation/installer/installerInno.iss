@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "FOP"
-#define MyAppVersion GetFileVersion('D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaÁ„oDeTrabalho.exe')
-#define MyAppPublisher "Subdivis„o de Tecnologia da InformaÁ„o - CCSH - UFSM"
+#define MyAppVersion GetFileVersion('D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEsta√ß√£oDeTrabalho.exe')
+#define MyAppPublisher "Subdivis√£o de Tecnologia da Informa√ß√£o - CCSH - UFSM"
 #define MyAppURL "https://www.ufsm.br/unidades-universitarias/ccsh/unidade-de-tecnologia-da-informacao/"
-#define MyAppExeName "TutorialDeUsoDaEstaÁ„oDeTrabalho.exe"
+#define MyAppExeName "TutorialDeUsoDaEsta√ß√£oDeTrabalho.exe"
 #define RegKey "Software\FOP"
 
 [Setup]
@@ -57,9 +57,11 @@ Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\Feat
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaÁ„oDeTrabalho.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEsta√ß√£oDeTrabalho.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaÁ„oDeTrabalho.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEsta√ß√£oDeTrabalho.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
+Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
 Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
@@ -187,7 +189,7 @@ begin
     // Disallow installation on Home edition of Windows
     if Version.SuiteMask and VER_SUITE_PERSONAL <> 0 then
     begin
-      SuppressibleMsgBox('Este programa n„o pode ser instalado na vers„o Home do Windows',
+      SuppressibleMsgBox('Este programa n√£o pode ser instalado na vers√£o Home do Windows',
         mbCriticalError, MB_OK, IDOK);
       result := False;
       Exit;
@@ -198,14 +200,14 @@ begin
     begin
       if Version.Minor = 3 then
       begin
-        SuppressibleMsgBox('Este programa n„o pode ser instalado no Windows 8.1',
+        SuppressibleMsgBox('Este programa n√£o pode ser instalado no Windows 8.1',
           mbCriticalError, MB_OK, IDOK);
         result := False;
         Exit;
       end;
       if Version.Minor = 2 then
       begin
-        SuppressibleMsgBox('Este programa n„o pode ser instalado no Windows 8',
+        SuppressibleMsgBox('Este programa n√£o pode ser instalado no Windows 8',
           mbCriticalError, MB_OK, IDOK);
         result := False;
         Exit;

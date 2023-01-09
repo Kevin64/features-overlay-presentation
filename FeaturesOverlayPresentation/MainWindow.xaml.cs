@@ -240,25 +240,32 @@ namespace FeaturesOverlayPresentation
         //Changes the image source, adding fade-in/fade-out animation
         private void ChangeSource(Image image, ImageSource source, TimeSpan fadeOutTime, TimeSpan fadeInTime)
         {
-            var fadeInAnimation = new DoubleAnimation(1d, fadeInTime);
-
-            if (image.Source != null)
+            if (Environment.OSVersion.Version.Major.ToString().Contains(StringsAndConstants.win10ntMajor))
             {
-                var fadeOutAnimation = new DoubleAnimation(0d, fadeOutTime);
+                var fadeInAnimation = new DoubleAnimation(1d, fadeInTime);
 
-                fadeOutAnimation.Completed += (o, e) =>
+                if (image.Source != null)
                 {
+                    var fadeOutAnimation = new DoubleAnimation(0d, fadeOutTime);
+
+                    fadeOutAnimation.Completed += (o, e) =>
+                    {
+                        image.Source = source;
+                        image.BeginAnimation(Image.OpacityProperty, fadeInAnimation);
+                    };
+
+                    image.BeginAnimation(Image.OpacityProperty, fadeOutAnimation);
+                }
+                else
+                {
+                    image.Opacity = 0d;
                     image.Source = source;
                     image.BeginAnimation(Image.OpacityProperty, fadeInAnimation);
-                };
-
-                image.BeginAnimation(Image.OpacityProperty, fadeOutAnimation);
+                }
             }
             else
             {
-                image.Opacity = 0d;
                 image.Source = source;
-                image.BeginAnimation(Image.OpacityProperty, fadeInAnimation);
             }
         }
 
