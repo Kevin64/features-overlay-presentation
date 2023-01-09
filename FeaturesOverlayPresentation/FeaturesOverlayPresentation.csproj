@@ -228,7 +228,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del /F /Q *.xml
-if $(ConfigurationName) == Release iscc "$(ProjectDir)\installer\installerInno.iss"</PostBuildEvent>
+    <PostBuildEvent>del /F /Q *.xml &amp; if $(ConfigurationName) == Release iscc "$(ProjectDir)\installer\installerInno.iss"</PostBuildEvent>
   </PropertyGroup>
 </Project>
