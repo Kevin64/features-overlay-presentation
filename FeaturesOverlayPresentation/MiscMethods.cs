@@ -15,10 +15,7 @@ namespace FeaturesOverlayPresentation
         {
             RegistryKey rk = Registry.CurrentUser.OpenSubKey(StringsAndConstants.FopRegKey);
             string k = rk.GetValue(StringsAndConstants.DidItRunAlready).ToString();
-            if (k.Equals("1"))
-                return true;
-            else
-                return false;
+            return k.Equals("1");
         }
 
         //Creates RunOnce and FOP registry keys
@@ -26,9 +23,14 @@ namespace FeaturesOverlayPresentation
         {
             RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey, true);
             if (Environment.Is64BitOperatingSystem)
+            {
                 key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86, RegistryValueKind.String);
+            }
             else
+            {
                 key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64, RegistryValueKind.String);
+            }
+
             RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
             key2.SetValue(StringsAndConstants.DidItRunAlready, 0, RegistryValueKind.DWord);
         }
@@ -42,9 +44,13 @@ namespace FeaturesOverlayPresentation
                 if (!key.GetValueNames().Contains(StringsAndConstants.FOP))
                 {
                     if (Environment.Is64BitOperatingSystem)
+                    {
                         key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86, RegistryValueKind.String);
+                    }
                     else
+                    {
                         key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64, RegistryValueKind.String);
+                    }
                 }
             }
         }
@@ -54,7 +60,9 @@ namespace FeaturesOverlayPresentation
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(StringsAndConstants.FopRunOnceKey, true);
             if (key.GetValueNames().Contains(StringsAndConstants.FOP))
+            {
                 key.DeleteValue(StringsAndConstants.FOP);
+            }
         }
 
         //Checks OS version
@@ -64,28 +72,26 @@ namespace FeaturesOverlayPresentation
             Version osFullVer = Environment.OSVersion.Version;
             //int osBuild = Convert.ToInt32(osFullVer);
             if (osFullVer.Major == Convert.ToInt32(StringsAndConstants.win7ntMajor) && osFullVer.Minor == Convert.ToInt32(StringsAndConstants.win7ntMinor))
+            {
                 return current + StringsAndConstants.win7imgDir;
-            else if (osFullVer.Build >= Convert.ToInt32(StringsAndConstants.win10ntBuild) && osFullVer.Build < Convert.ToInt32(StringsAndConstants.win11ntBuild))
-                return current + StringsAndConstants.win10imgDir;
+            }
             else
-                return current + StringsAndConstants.win11imgDir;
+            {
+                return osFullVer.Build >= Convert.ToInt32(StringsAndConstants.win10ntBuild) && osFullVer.Build < Convert.ToInt32(StringsAndConstants.win11ntBuild)
+                ? current + StringsAndConstants.win10imgDir
+                : current + StringsAndConstants.win11imgDir;
+            }
         }
 
         //Checks assembly version
-        public static string Version
-        {
-            get
-            {
-                return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
-        }
+        public static string Version => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         //Checks the current screen resolution
         public static bool resolutionError(bool exit)
         {
             if (SystemParameters.PrimaryScreenWidth < StringsAndConstants.Width || SystemParameters.PrimaryScreenHeight < StringsAndConstants.Height)
             {
-                MessageBox.Show(StringsAndConstants.resolutionWarning, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(StringsAndConstants.resolutionWarning, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 if (exit)
                 {
                     File.Delete(StringsAndConstants.loginPath);

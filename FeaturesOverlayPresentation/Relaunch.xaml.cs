@@ -27,14 +27,14 @@ namespace FeaturesOverlayPresentation
         public Relaunch()
         {
             IniData def = null;
-            var parser = new FileIniDataParser();
+            FileIniDataParser parser = new FileIniDataParser();
             try
             {
                 InitializeComponent();
                 //Parses the INI file
                 def = parser.ReadFile(StringsAndConstants.defFile);
 
-                var logLocationStr = def[StringsAndConstants.INI_SECTION_1][StringsAndConstants.INI_SECTION_1_9];
+                string logLocationStr = def[StringsAndConstants.INI_SECTION_1][StringsAndConstants.INI_SECTION_1_9];
 
                 bool logFileExists = bool.Parse(MiscMethods.checkIfLogExists(logLocationStr));
 #if DEBUG
@@ -54,23 +54,30 @@ namespace FeaturesOverlayPresentation
 #endif
                 //Checks if log file exists
                 if (!logFileExists)
+                {
                     log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOGFILE_NOTEXISTS, string.Empty, StringsAndConstants.consoleOutCLI);
+                }
                 else
+                {
                     log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOGFILE_EXISTS, string.Empty, StringsAndConstants.consoleOutCLI);
+                }
 
                 log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_DEFFILE_FOUND, Directory.GetCurrentDirectory() + "\\" + StringsAndConstants.defFile, StringsAndConstants.consoleOutCLI);
 
                 try
                 {
                     if (!FindFolder() || !CheckAppFiles())
+                    {
                         throw new Exception();
+                    }
+
                     if (!MiscMethods.regCheck())
                     {
                         resPass = MiscMethods.resolutionError(true);
                         m = new MainWindow();
                         m.Show();
-                        this.Hide();
-                        this.ShowInTaskbar = false;
+                        Hide();
+                        ShowInTaskbar = false;
                     }
                     else
                     {
@@ -80,13 +87,13 @@ namespace FeaturesOverlayPresentation
                             log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_RESOLUTION_ERROR, SystemParameters.PrimaryScreenWidth.ToString() + 'x' + SystemParameters.PrimaryScreenHeight.ToString(), StringsAndConstants.consoleOutGUI);
                             YesButton.IsEnabled = false;
                         }
-                        this.Show();
-                        this.ShowInTaskbar = true;
+                        Show();
+                        ShowInTaskbar = true;
                     }
                 }
                 catch
                 {
-                    this.Hide();
+                    Hide();
                     ReinstallError r = new ReinstallError(); //Prompts the user to reinstall the program
                     r.Show();
                 }
@@ -115,7 +122,10 @@ namespace FeaturesOverlayPresentation
             string getCurrentDir = Directory.GetCurrentDirectory();
             fileList1.AddRange(Directory.GetFiles(getCurrentDir));
             foreach (string file in fileList1)
+            {
                 fileList2.Add(Path.GetFileName(file));
+            }
+
             if (!StringsAndConstants.fopFileList.All(x => fileList2.Any(y => y == x)))
             {
                 log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_APPFILE_NOT_FOUND, string.Empty, StringsAndConstants.consoleOutGUI);
@@ -152,12 +162,12 @@ namespace FeaturesOverlayPresentation
                 log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RUNNING, string.Empty, StringsAndConstants.consoleOutGUI);
                 m = new MainWindow();
                 m.Show();
-                this.Hide();
+                Hide();
             }
             catch
             {
                 log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_CLOSING, string.Empty, StringsAndConstants.consoleOutGUI);
-                this.Close();
+                Close();
                 m.Close();
             }
         }
@@ -205,7 +215,7 @@ namespace FeaturesOverlayPresentation
                             else //If employee is present and SIAPE textbox is empty
                             {
                                 log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_FILLFORM, string.Empty, StringsAndConstants.consoleOutGUI);
-                                MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                _ = MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                 check = false;
                             }
                             YesButton.IsEnabled = false;
@@ -213,7 +223,7 @@ namespace FeaturesOverlayPresentation
                         else
                         {
                             log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_PC_NOT_REGISTERED, string.Empty, StringsAndConstants.consoleOutGUI);
-                            MessageBox.Show(StringsAndConstants.pcNotRegistered, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            _ = MessageBox.Show(StringsAndConstants.pcNotRegistered, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                     else //If 'send' button is already pressed
@@ -223,19 +233,21 @@ namespace FeaturesOverlayPresentation
                     + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null + "&siapeRecebedor=" + null + "&entregador=" + null);
                         check = true;
                         if (resPass)
+                        {
                             YesButton.IsEnabled = true;
+                        }
                     }
                 }
                 else //If login fails
                 {
                     log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_SERVER_NOT_FOUND, string.Empty, StringsAndConstants.consoleOutGUI);
-                    MessageBox.Show(StringsAndConstants.SERVER_NOT_FOUND_ERROR, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    _ = MessageBox.Show(StringsAndConstants.SERVER_NOT_FOUND_ERROR, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else //If patrimony textbox is empty
             {
                 log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_FILLFORM, string.Empty, StringsAndConstants.consoleOutGUI);
-                MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             //Do registry stuff, and handles control states
@@ -282,13 +294,19 @@ namespace FeaturesOverlayPresentation
                         log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REMOVING_REG, string.Empty, StringsAndConstants.consoleOutGUI);
                         RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
                         if (isFormat)
+                        {
                             key.DeleteValue(StringsAndConstants.FOP);
+                        }
+
                         RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
                         key2.SetValue(StringsAndConstants.DidItRunAlready, 1, RegistryValueKind.DWord);
                         YesLaterButton.Content = StringsAndConstants.doExecution;
                     }
                     else //If screen resolution fails the requirement
+                    {
                         YesLaterButton.Content = StringsAndConstants.doExecutionResError;
+                    }
+
                     pressed = false;
                     patrimTextBox.IsEnabled = true;
                     EmployeePresentRadioNo.IsEnabled = true;
@@ -313,7 +331,9 @@ namespace FeaturesOverlayPresentation
         {
             string[] str;
             if (userTextBox.Text == "" || passwordBox.Password == "") //If user and password textboxes are empty
-                MessageBox.Show(StringsAndConstants.NO_AUTH, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            {
+                _ = MessageBox.Show(StringsAndConstants.NO_AUTH, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             else //... if are not empty
             {
                 log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_INIT_LOGIN, string.Empty, StringsAndConstants.consoleOutGUI);
@@ -322,14 +342,14 @@ namespace FeaturesOverlayPresentation
                 if (str == null) //If server is not found
                 {
                     log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_SERVER_NOT_FOUND, string.Empty, StringsAndConstants.consoleOutGUI);
-                    MessageBox.Show(StringsAndConstants.SERVER_NOT_FOUND_ERROR, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    _ = MessageBox.Show(StringsAndConstants.SERVER_NOT_FOUND_ERROR, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else if (str[0] == "false") //If server is found but login fails
                 {
                     log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_LOGIN_FAILED, string.Empty, StringsAndConstants.consoleOutGUI);
                     warningLabel.Visibility = Visibility.Visible;
                     passwordBox.SelectAll();
-                    passwordBox.Focus();
+                    _ = passwordBox.Focus();
                 }
                 else //If server is found and login succeeds
                 {
@@ -359,7 +379,9 @@ namespace FeaturesOverlayPresentation
         private void TextBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Command == ApplicationCommands.Copy || e.Command == ApplicationCommands.Cut || e.Command == ApplicationCommands.Paste)
+            {
                 e.Handled = true;
+            }
         }
 
         //Limits some textboxes to allow only numerical inputs
@@ -375,7 +397,9 @@ namespace FeaturesOverlayPresentation
             SIAPETextBox.IsEnabled = true;
             present = true;
             if (FormatRadioButton.IsChecked == true || MaintenanceRadioButton.IsChecked == true) //... and 'format/maintenance radio button changes
+            {
                 YesLaterButton.IsEnabled = true;
+            }
         }
 
         //If 'employee radio button' changes...
@@ -384,7 +408,9 @@ namespace FeaturesOverlayPresentation
             SIAPETextBox.IsEnabled = false;
             present = false;
             if (FormatRadioButton.IsChecked == true || MaintenanceRadioButton.IsChecked == true) //... and 'format/maintenance radio button changes
+            {
                 YesLaterButton.IsEnabled = true;
+            }
         }
 
         //If 'format/maintenance radio button changes...
@@ -392,7 +418,9 @@ namespace FeaturesOverlayPresentation
         {
             isFormat = true;
             if (EmployeePresentRadioNo.IsChecked == true || EmployeePresentRadioYes.IsChecked == true) //... and 'employee radio button' changes
+            {
                 YesLaterButton.IsEnabled = true;
+            }
         }
 
         //If 'format/maintenance radio button changes...
@@ -400,7 +428,9 @@ namespace FeaturesOverlayPresentation
         {
             isFormat = false;
             if (EmployeePresentRadioNo.IsChecked == true || EmployeePresentRadioYes.IsChecked == true) //... and 'employee radio button' changes
+            {
                 YesLaterButton.IsEnabled = true;
+            }
         }
     }
 }

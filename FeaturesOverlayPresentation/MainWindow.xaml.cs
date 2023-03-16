@@ -25,20 +25,20 @@ namespace FeaturesOverlayPresentation
     {
         private int furthestCount = 0;
         private int timerTickCount;
-        private int tickSeconds = 3;
+        private readonly int tickSeconds = 3;
         private int counter = 0;
         private int finalCount;
         private bool empty = false;
         private string newFilePath;
         private DispatcherTimer timer;
-        private BlurEffect blurEffect1;
-        List<string> imgList, labelList;
-        ReinstallError e;
+        private readonly BlurEffect blurEffect1;
+        private List<string> imgList, labelList;
+        private ReinstallError e;
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
         [DllImport("user32.dll")]
-        static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
         private const int GWL_EX_STYLE = -20;
         private const int WS_EX_APPWINDOW = 0x00040000, WS_EX_TOOLWINDOW = 0x00000080;
 
@@ -46,8 +46,8 @@ namespace FeaturesOverlayPresentation
         public MainWindow()
         {
             InitializeComponent();
-            var _ = new Microsoft.Xaml.Behaviors.DefaultTriggerAttribute(typeof(Trigger), typeof(Microsoft.Xaml.Behaviors.TriggerBase), null);
-            blurEffect1 = this.FindName("BlurImage") as BlurEffect;
+            _ = new Microsoft.Xaml.Behaviors.DefaultTriggerAttribute(typeof(Trigger), typeof(Microsoft.Xaml.Behaviors.TriggerBase), null);
+            blurEffect1 = FindName("BlurImage") as BlurEffect;
             blurEffect1.Radius = 5;
             ButtonPrevious.Visibility = Visibility.Hidden;
             LabelPrint();
@@ -61,38 +61,41 @@ namespace FeaturesOverlayPresentation
             try
             {
                 foreach (string item in labelList)
-                    ComboBoxNavigate.Items.Add(item.Remove(0, 5));
+                {
+                    _ = ComboBoxNavigate.Items.Add(item.Remove(0, 5));
+                }
+
                 ComboBoxNavigate.SelectedIndex = ComboBoxNavigate.Items.IndexOf(StringsAndConstants.introScreen);
             }
             catch
             {
                 e = new ReinstallError();
                 e.Show();
-                this.Close();
+                Close();
                 empty = true;
             }
         }
 
         //Form loaded event handler
-        void FormLoaded(object sender, RoutedEventArgs args)
+        private void FormLoaded(object sender, RoutedEventArgs args)
         {
             if (!MiscMethods.regCheck())
             {
                 //Variable to hold the handle for the form
-                var helper = new WindowInteropHelper(this).Handle;
+                IntPtr helper = new WindowInteropHelper(this).Handle;
                 //Performing some magic to hide the form from Alt+Tab
-                SetWindowLong(helper, GWL_EX_STYLE, (GetWindowLong(helper, GWL_EX_STYLE) | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW);
-                this.Topmost = true;
-                this.ShowInTaskbar = false;
-                this.KeyDown += OnPreviewKeyDown;
+                _ = SetWindowLong(helper, GWL_EX_STYLE, (GetWindowLong(helper, GWL_EX_STYLE) | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW);
+                Topmost = true;
+                ShowInTaskbar = false;
+                KeyDown += OnPreviewKeyDown;
                 TimerTickCreation();
                 ExitButtonPresentation.Visibility = Visibility.Hidden;
                 ComboBoxNavigate.Visibility = Visibility.Hidden;
             }
             else
             {
-                this.Topmost = false;
-                this.ShowInTaskbar = true;
+                Topmost = false;
+                ShowInTaskbar = true;
                 ExitButtonPresentation.Visibility = Visibility.Visible;
                 TextStandBy.Visibility = Visibility.Hidden;
                 ComboBoxNavigate.Visibility = Visibility.Visible;
@@ -104,13 +107,15 @@ namespace FeaturesOverlayPresentation
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.System && e.SystemKey == Key.F4)
+            {
                 e.Handled = true;
+            }
         }
 
         //Prints the slide counter on the screen
         private void LabelPrint()
         {
-            LabelPage.Content = (counter + 1) + " de " + finalCount;
+            LabelPage.Content = counter + 1 + " de " + finalCount;
         }
 
         //Finds and creates a list of the image file names found inside the specified folder
@@ -135,7 +140,7 @@ namespace FeaturesOverlayPresentation
                 {
                     e = new ReinstallError();
                     e.Show();
-                    this.Close();
+                    Close();
                     empty = true;
                 }
             }
@@ -143,7 +148,7 @@ namespace FeaturesOverlayPresentation
             {
                 e = new ReinstallError();
                 e.Show();
-                this.Close();
+                Close();
                 empty = true;
             }
         }
@@ -169,7 +174,7 @@ namespace FeaturesOverlayPresentation
                 {
                     e = new ReinstallError();
                     e.Show();
-                    this.Close();
+                    Close();
                     empty = true;
                 }
             }
@@ -177,7 +182,7 @@ namespace FeaturesOverlayPresentation
             {
                 e = new ReinstallError();
                 e.Show();
-                this.Close();
+                Close();
                 empty = true;
             }
         }
@@ -192,7 +197,9 @@ namespace FeaturesOverlayPresentation
                 LabelSlideSubtitle.Content = str;
             }
             else
+            {
                 LabelSlideSubtitle.Content = "";
+            }
         }
 
         //Define 'next' button name
@@ -211,8 +218,10 @@ namespace FeaturesOverlayPresentation
         private void TimerTickCreation()
         {
             timerTickCount = tickSeconds;
-            timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 1);
+            timer = new DispatcherTimer
+            {
+                Interval = new TimeSpan(0, 0, 1)
+            };
             timer.Tick += new EventHandler(TimerTickRun);
             timer.Start();
             ButtonNext.Visibility = Visibility.Hidden;
@@ -229,9 +238,14 @@ namespace FeaturesOverlayPresentation
                 timer.Stop();
                 TextStandBy.Text = StringsAndConstants.waitText + "(" + (tickSeconds + 1) + ")";
                 if (counter == finalCount - 1)
+                {
                     finishTextPrint();
+                }
                 else
+                {
                     nextTextPrint();
+                }
+
                 TextStandBy.Visibility = Visibility.Hidden;
                 ButtonNext.Visibility = Visibility.Visible;
             }
@@ -242,11 +256,11 @@ namespace FeaturesOverlayPresentation
         {
             if (Environment.OSVersion.Version.Major.ToString().Contains(StringsAndConstants.win10ntMajor))
             {
-                var fadeInAnimation = new DoubleAnimation(1d, fadeInTime);
+                DoubleAnimation fadeInAnimation = new DoubleAnimation(1d, fadeInTime);
 
                 if (image.Source != null)
                 {
-                    var fadeOutAnimation = new DoubleAnimation(0d, fadeOutTime);
+                    DoubleAnimation fadeOutAnimation = new DoubleAnimation(0d, fadeOutTime);
 
                     fadeOutAnimation.Completed += (o, e) =>
                     {
@@ -308,19 +322,19 @@ namespace FeaturesOverlayPresentation
         //When clicking on the arms pictures, opens its sites
         private void brasaoSTI_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            Process.Start(StringsAndConstants.STI_URL);
+            _ = Process.Start(StringsAndConstants.STI_URL);
         }
 
         //When clicking on the arms pictures, opens its sites
         private void brasaoUFSM_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            Process.Start(StringsAndConstants.UFSM_URL);
+            _ = Process.Start(StringsAndConstants.UFSM_URL);
         }
 
         //When clicking on the arms pictures, opens its sites
         private void brasaoCCSH_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            Process.Start(StringsAndConstants.CCSH_URL);
+            _ = Process.Start(StringsAndConstants.CCSH_URL);
         }
 
         //When the 'previous' button is pressed

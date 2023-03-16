@@ -28,39 +28,39 @@ namespace FeaturesOverlayPresentation
 
         private VisualBrush Brush
         {
-            get { return (VisualBrush)this.GetValue(BrushProperty); }
-            set { this.SetValue(BrushProperty, value); }
+            get => (VisualBrush)GetValue(BrushProperty);
+            set => SetValue(BrushProperty, value);
         }
 
         public UIElement BlurContainer
         {
-            get { return (UIElement)this.GetValue(BlurContainerProperty); }
-            set { this.SetValue(BlurContainerProperty, value); }
+            get => (UIElement)GetValue(BlurContainerProperty);
+            set => SetValue(BlurContainerProperty, value);
         }
 
         protected override void OnAttached()
         {
-            this.AssociatedObject.Effect = new BlurEffect
+            AssociatedObject.Effect = new BlurEffect
             {
                 Radius = 10,
                 KernelType = KernelType.Gaussian,
                 RenderingBias = RenderingBias.Quality
             };
 
-            this.AssociatedObject.SetBinding(Shape.FillProperty,
+            _ = AssociatedObject.SetBinding(Shape.FillProperty,
                                              new Binding
                                              {
                                                  Source = this,
                                                  Path = new PropertyPath(BrushProperty)
                                              });
 
-            this.AssociatedObject.LayoutUpdated += (sender, args) => this.UpdateBounds();
-            this.UpdateBounds();
+            AssociatedObject.LayoutUpdated += (sender, args) => UpdateBounds();
+            UpdateBounds();
         }
 
         protected override void OnDetaching()
         {
-            BindingOperations.ClearBinding(this.AssociatedObject, Border.BackgroundProperty);
+            BindingOperations.ClearBinding(AssociatedObject, Border.BackgroundProperty);
         }
 
         private static void OnContainerChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -72,36 +72,36 @@ namespace FeaturesOverlayPresentation
         {
             if (oldValue != null)
             {
-                oldValue.LayoutUpdated -= this.OnContainerLayoutUpdated;
+                oldValue.LayoutUpdated -= OnContainerLayoutUpdated;
             }
 
             if (newValue != null)
             {
-                this.Brush = new VisualBrush(newValue)
+                Brush = new VisualBrush(newValue)
                 {
                     ViewboxUnits = BrushMappingMode.Absolute
                 };
 
-                newValue.LayoutUpdated += this.OnContainerLayoutUpdated;
-                this.UpdateBounds();
+                newValue.LayoutUpdated += OnContainerLayoutUpdated;
+                UpdateBounds();
             }
             else
             {
-                this.Brush = null;
+                Brush = null;
             }
         }
 
         private void OnContainerLayoutUpdated(object sender, EventArgs eventArgs)
         {
-            this.UpdateBounds();
+            UpdateBounds();
         }
 
         private void UpdateBounds()
         {
-            if (this.AssociatedObject != null && this.BlurContainer != null && this.Brush != null)
+            if (AssociatedObject != null && BlurContainer != null && Brush != null)
             {
-                Point difference = this.AssociatedObject.TranslatePoint(new Point(), this.BlurContainer);
-                this.Brush.Viewbox = new Rect(difference, this.AssociatedObject.RenderSize);
+                Point difference = AssociatedObject.TranslatePoint(new Point(), BlurContainer);
+                Brush.Viewbox = new Rect(difference, AssociatedObject.RenderSize);
             }
         }
     }
