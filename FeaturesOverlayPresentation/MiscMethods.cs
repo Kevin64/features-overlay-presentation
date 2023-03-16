@@ -1,10 +1,10 @@
-﻿using Microsoft.Win32;
+﻿using ConstantsDLL;
+using FeaturesOverlayPresentation.Properties;
+using Microsoft.Win32;
 using System;
 using System.IO;
 using System.Linq;
 using System.Windows;
-using ConstantsDLL;
-using FeaturesOverlayPresentation.Properties;
 
 namespace FeaturesOverlayPresentation
 {
@@ -86,7 +86,7 @@ namespace FeaturesOverlayPresentation
             if (SystemParameters.PrimaryScreenWidth < StringsAndConstants.Width || SystemParameters.PrimaryScreenHeight < StringsAndConstants.Height)
             {
                 MessageBox.Show(StringsAndConstants.resolutionWarning, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                if(exit)
+                if (exit)
                 {
                     File.Delete(StringsAndConstants.loginPath);
                     Application.Current.Shutdown();

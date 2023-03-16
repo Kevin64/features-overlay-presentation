@@ -1,20 +1,20 @@
-﻿using Microsoft.Win32;
+﻿using ConstantsDLL;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using ConstantsDLL;
-using System.Windows.Controls;
-using System.Windows.Media.Effects;
-using System.Windows.Media;
-using System.Diagnostics;
 
 namespace FeaturesOverlayPresentation
 {
@@ -41,7 +41,7 @@ namespace FeaturesOverlayPresentation
         static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
         private const int GWL_EX_STYLE = -20;
         private const int WS_EX_APPWINDOW = 0x00040000, WS_EX_TOOLWINDOW = 0x00000080;
-        
+
         //Main Window constructor
         public MainWindow()
         {
@@ -76,7 +76,7 @@ namespace FeaturesOverlayPresentation
         //Form loaded event handler
         void FormLoaded(object sender, RoutedEventArgs args)
         {
-            if(!MiscMethods.regCheck())
+            if (!MiscMethods.regCheck())
             {
                 //Variable to hold the handle for the form
                 var helper = new WindowInteropHelper(this).Handle;
@@ -88,7 +88,7 @@ namespace FeaturesOverlayPresentation
                 TimerTickCreation();
                 ExitButtonPresentation.Visibility = Visibility.Hidden;
                 ComboBoxNavigate.Visibility = Visibility.Hidden;
-            }      
+            }
             else
             {
                 this.Topmost = false;
@@ -97,7 +97,7 @@ namespace FeaturesOverlayPresentation
                 TextStandBy.Visibility = Visibility.Hidden;
                 ComboBoxNavigate.Visibility = Visibility.Visible;
             }
-            
+
         }
 
         //Deny Alt+F4 exiting
@@ -181,16 +181,16 @@ namespace FeaturesOverlayPresentation
                 empty = true;
             }
         }
-        
+
         //Prints filename label next to each slide
         private void SlideSubTitlePrint(int counter, bool flag)
         {
             string str;
-            if(flag)
+            if (flag)
             {
                 str = ComboBoxNavigate.Items.GetItemAt(counter).ToString();
                 LabelSlideSubtitle.Content = str;
-            }                
+            }
             else
                 LabelSlideSubtitle.Content = "";
         }
@@ -339,14 +339,14 @@ namespace FeaturesOverlayPresentation
             {
                 counter--;
                 LabelPrint();
-                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter - 1])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));                
+                ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter - 1])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
             }
-            else if(counter == 1)
+            else if (counter == 1)
             {
                 counter--;
                 LabelPrint();
                 ButtonPrevious.Visibility = Visibility.Hidden;
-                ChangeSource(mainImage, null, TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));                
+                ChangeSource(mainImage, null, TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, false);
             }

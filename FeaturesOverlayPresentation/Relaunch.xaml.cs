@@ -1,4 +1,10 @@
-﻿using Microsoft.Win32;
+﻿using ConstantsDLL;
+using IniParser;
+using IniParser.Exceptions;
+using IniParser.Model;
+using JsonFileReaderDLL;
+using LogGeneratorDLL;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,12 +12,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
-using ConstantsDLL;
-using JsonFileReaderDLL;
-using LogGeneratorDLL;
-using IniParser;
-using IniParser.Model;
-using IniParser.Exceptions;
 
 namespace FeaturesOverlayPresentation
 {
@@ -59,7 +59,7 @@ namespace FeaturesOverlayPresentation
                     log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOGFILE_EXISTS, string.Empty, StringsAndConstants.consoleOutCLI);
 
                 log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_DEFFILE_FOUND, Directory.GetCurrentDirectory() + "\\" + StringsAndConstants.defFile, StringsAndConstants.consoleOutCLI);
-                
+
                 try
                 {
                     if (!FindFolder() || !CheckAppFiles())
@@ -161,7 +161,7 @@ namespace FeaturesOverlayPresentation
                 m.Close();
             }
         }
-        
+
         //If 'no' button is pressed
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
@@ -222,7 +222,7 @@ namespace FeaturesOverlayPresentation
                         webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
                     + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null + "&siapeRecebedor=" + null + "&entregador=" + null);
                         check = true;
-                        if(resPass)
+                        if (resPass)
                             YesButton.IsEnabled = true;
                     }
                 }
@@ -239,9 +239,9 @@ namespace FeaturesOverlayPresentation
             }
 
             //Do registry stuff, and handles control states
-            if(check) //If data is already sent to the server
+            if (check) //If data is already sent to the server
             {
-                if(!pressed) //If 'send' button is not pressed
+                if (!pressed) //If 'send' button is not pressed
                 {
                     if (resPass) //If screen resolution passes the requirement
                     {
@@ -265,7 +265,7 @@ namespace FeaturesOverlayPresentation
                         log.LogWrite(StringsAndConstants.LOG_WARNING, StringsAndConstants.LOG_RESOLUTION_FAILED, StringsAndConstants.LOG_DISABLE_BOOT, StringsAndConstants.consoleOutGUI);
                         YesLaterButton.Content = StringsAndConstants.cancelExecutionResError;
                     }
-                    
+
                     pressed = true;
                     patrimTextBox.IsEnabled = false;
                     EmployeePresentRadioNo.IsEnabled = false;
@@ -281,7 +281,7 @@ namespace FeaturesOverlayPresentation
                         log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RESOLUTION_PASSED, string.Empty, StringsAndConstants.consoleOutGUI);
                         log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REMOVING_REG, string.Empty, StringsAndConstants.consoleOutGUI);
                         RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
-                        if(isFormat)
+                        if (isFormat)
                             key.DeleteValue(StringsAndConstants.FOP);
                         RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
                         key2.SetValue(StringsAndConstants.DidItRunAlready, 1, RegistryValueKind.DWord);
