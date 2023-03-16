@@ -7,11 +7,42 @@ using System.Windows;
 // As informações gerais sobre um assembly são controladas por
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associada a um assembly.
-[assembly: AssemblyTitle("TutorialDeUsoDaEstaçãoDeTrabalho")]
-[assembly: AssemblyDescription("Apresenta os recursos da estação de trabalho")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Subdivisão de Tecnologia da Informação / CCSH - UFSM")]
-[assembly: AssemblyProduct("FeaturesOverlayPresentation")]
+[assembly: AssemblyTitle("Tutorial de Uso da Estação de Trabalho")]
+[assembly: AssemblyDescription("Software criado, desenvolvido e mantido por Kevin Costa. Programado em C# utilizando .NET Framework 4.8. Sistemas com suporte: Windows 7, 10 e 11.\r\n" +
+    "\r\n" +
+    "    • URL do projeto: https://github.com/Kevin64/FeaturesOverlayPresentation\r\n" +
+    "    • Licença: (MIT) https://github.com/Kevin64/FeaturesOverlayPresentation/blob/master/LICENCE\r\n" +
+    "\r\n" +
+    "Este software deve ser usado em conjunto com projeto SCPD para funcionar corretamente.\r\n" +
+    "\r\n" +
+    "► Sistema de Controle de Patrimônio e Docentes - SCPD\r\n" +
+    "    • URL do projeto: https://github.com/Kevin64/Sistema-de-controle-de-patrimonio-e-docentes\r\n" +
+    "    • Licença: (MIT) https://github.com/Kevin64/Sistema-de-controle-de-patrimonio-e-docentes/blob/main/LICENCE\r\n" +
+    "\r\n" +
+    "Este software e suas bibliotecas (DLLs) utilizam artes, bibliotecas Open Source e códigos avulsos de terceiros, listados abaixo. Todos os créditos vão para os seus respectivos criadores e mantenedores:\r\n" +
+    "\r\n" +
+    "► ini-parser\r\n" +
+    "    • Copyright (c) 2008 Ricardo Amores Hernández\r\n" +
+    "    • URL do projeto: https://github.com/rickyah/ini-parser \r\n" +
+    "    • Licença: (MIT) https://github.com/rickyah/ini-parser/blob/master/LICENSE\r\n" +
+    "\r\n" +
+    "► LoadingCircle (créditos a Martin Gagne)\r\n" +
+    "    • URL do projeto: https://www.codeproject.com/Articles/14841/How-to-write-a-loading-circle-animation-in-NET\r\n" +
+    "    • Licença: (CPOL) https://www.codeproject.com/info/cpol10.aspx\r\n" +
+    "\r\n" +
+    "► NewtonsoftJson\r\n" +
+    "    • Copyright (c) 2007 James Newton-King\r\n" +
+    "    • URL do projeto: https://github.com/JamesNK/Newtonsoft.Json\r\n" +
+    "    • Licença: (MIT) https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md\r\n" +
+    "\r\n" +
+    "► BCrypt.Net-Next\r\n" +
+    "    • Copyright (c) 2006 Damien Miller djm@mindrot.org (jBCrypt)\r\n" +
+    "    • Copyright (c) 2013 Ryan D. Emerle (.Net port)\r\n" +
+    "    • Copyright (c) 2016/2021 Chris McKee (.Net-core port / patches)\r\n" +
+    "    • URL do projeto: https://github.com/BcryptNet/bcrypt.net\r\n" +
+    "    • Licença: (MIT) https://github.com/BcryptNet/bcrypt.net/blob/main/licence.txt\r\n")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Coleta de Hardware e Cadastro de Patrimônio")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

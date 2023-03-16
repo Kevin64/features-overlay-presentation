@@ -1,4 +1,5 @@
 ﻿using ConstantsDLL;
+using HardwareInformation;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -364,6 +365,12 @@ namespace FeaturesOverlayPresentation
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, false);
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AboutBox aboutForm = new AboutBox();
+            _ = aboutForm.ShowDialog();
         }
 
         //When the 'exit' button is pressed
