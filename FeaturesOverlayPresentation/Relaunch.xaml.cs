@@ -19,10 +19,10 @@ namespace FeaturesOverlayPresentation
     {
         private bool pressed = false;
         private bool present;
-        private bool resPass = true;
+        private readonly bool resPass = true;
         private bool isFormat;
-        MainWindow m;
-        LogGenerator log;
+        private MainWindow m;
+        private readonly LogGenerator log;
 
         public Relaunch()
         {
@@ -62,7 +62,7 @@ namespace FeaturesOverlayPresentation
                 
                 try
                 {
-                    if (!FindFolder() || !checkAppFiles())
+                    if (!FindFolder() || !CheckAppFiles())
                         throw new Exception();
                     if (!MiscMethods.regCheck())
                     {
@@ -108,7 +108,7 @@ namespace FeaturesOverlayPresentation
         }
 
         //Checks if critical app assembly and DLLs are present
-        public bool checkAppFiles()
+        public bool CheckAppFiles()
         {
             List<string> fileList1 = new List<string>();
             List<string> fileList2 = new List<string>();
@@ -173,38 +173,48 @@ namespace FeaturesOverlayPresentation
         //If 'send' button is pressed
         private void YesLaterButton_Click(object sender, RoutedEventArgs e)
         {
+            string[] pcPatr;
             DateTime dateAndTime = DateTime.Today;
             bool check = false;
             if (patrimTextBox.Text != "") //If patrimony textbox is not empty
             {
-                if (LoginFileReader.checkHostST(serverDropDown.Text, portDropDown.Text)) //If login succeeded
+                if (LoginFileReader.CheckHostST(serverDropDown.Text, portDropDown.Text)) //If login succeeded
                 {
-                    if (pressed == false) //If 'send' button is not pressed already
+                    if (!pressed) //If 'send' button is not pressed already
                     {
-                        log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_PATR_NUM, patrimTextBox.Text, StringsAndConstants.consoleOutGUI);
-                        if (present == false) //If employee is not present
+                        pcPatr = PCFileReader.FetchInfoST(patrimTextBox.Text, serverDropDown.Text, portDropDown.Text);
+                        if (pcPatr[0] != "false")
                         {
-                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_EMPLOYEEAWAY, string.Empty, StringsAndConstants.consoleOutGUI);
-                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, StringsAndConstants.consoleOutGUI);
-                            webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                        + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + "Ausente" + "&entregador=" + userTextBox.Text);
-                            check = true;
+                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_PATR_NUM, patrimTextBox.Text, StringsAndConstants.consoleOutGUI);
+                            if (present == false) //If employee is not present
+                            {
+                                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_EMPLOYEEAWAY, string.Empty, StringsAndConstants.consoleOutGUI);
+                                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, StringsAndConstants.consoleOutGUI);
+                                webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
+                            + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + "Ausente" + "&entregador=" + userTextBox.Text);
+                                check = true;
+                            }
+                            else if (SIAPETextBox.Text != "") //If employee is present and SIAPE textbox is not empty
+                            {
+                                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_EMPLOYEEPRESENT, string.Empty, StringsAndConstants.consoleOutGUI);
+                                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, StringsAndConstants.consoleOutGUI);
+                                webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
+                            + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + SIAPETextBox.Text + "&entregador=" + userTextBox.Text);
+                                check = true;
+                            }
+                            else //If employee is present and SIAPE textbox is empty
+                            {
+                                log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_FILLFORM, string.Empty, StringsAndConstants.consoleOutGUI);
+                                MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                check = false;
+                            }
+                            YesButton.IsEnabled = false;
                         }
-                        else if (SIAPETextBox.Text != "") //If employee is present and SIAPE textbox is not empty
+                        else
                         {
-                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_EMPLOYEEPRESENT, string.Empty, StringsAndConstants.consoleOutGUI);
-                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, StringsAndConstants.consoleOutGUI);
-                            webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                        + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + SIAPETextBox.Text + "&entregador=" + userTextBox.Text);
-                            check = true;
+                            log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_PC_NOT_REGISTERED, string.Empty, StringsAndConstants.consoleOutGUI);
+                            MessageBox.Show(StringsAndConstants.pcNotRegistered, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         }
-                        else //If employee is present and SIAPE textbox is empty
-                        {
-                            log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_FILLFORM, string.Empty, StringsAndConstants.consoleOutGUI);
-                            MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                            check = false;
-                        }
-                        YesButton.IsEnabled = false;
                     }
                     else //If 'send' button is already pressed
                     {
@@ -229,11 +239,11 @@ namespace FeaturesOverlayPresentation
             }
 
             //Do registry stuff, and handles control states
-            if(check == true) //If data is already sent to the server
+            if(check) //If data is already sent to the server
             {
-                if(pressed == false) //If 'send' button is not pressed
+                if(!pressed) //If 'send' button is not pressed
                 {
-                    if (resPass == true) //If screen resolution passes the requirement
+                    if (resPass) //If screen resolution passes the requirement
                     {
                         log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RESOLUTION_PASSED, string.Empty, StringsAndConstants.consoleOutGUI);
                         if (isFormat == true) //If service type is 'format'
@@ -266,7 +276,7 @@ namespace FeaturesOverlayPresentation
                 }
                 else //If 'send' button is pressed
                 {
-                    if (resPass == true) //If screen resolution passes the requirement
+                    if (resPass) //If screen resolution passes the requirement
                     {
                         log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RESOLUTION_PASSED, string.Empty, StringsAndConstants.consoleOutGUI);
                         log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REMOVING_REG, string.Empty, StringsAndConstants.consoleOutGUI);
@@ -301,13 +311,13 @@ namespace FeaturesOverlayPresentation
         //When clicking the authenticate button
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            string[] str = { };
+            string[] str;
             if (userTextBox.Text == "" || passwordBox.Password == "") //If user and password textboxes are empty
                 MessageBox.Show(StringsAndConstants.NO_AUTH, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             else //... if are not empty
             {
                 log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_INIT_LOGIN, string.Empty, StringsAndConstants.consoleOutGUI);
-                str = LoginFileReader.fetchInfoST(userTextBox.Text, passwordBox.Password, serverDropDown.Text, portDropDown.Text);
+                str = LoginFileReader.FetchInfoST(userTextBox.Text, passwordBox.Password, serverDropDown.Text, portDropDown.Text);
 
                 if (str == null) //If server is not found
                 {
@@ -346,14 +356,14 @@ namespace FeaturesOverlayPresentation
         }
 
         //Limits textboxes to disallow cut, copy and paste operations
-        private void textBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
+        private void TextBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Command == ApplicationCommands.Copy || e.Command == ApplicationCommands.Cut || e.Command == ApplicationCommands.Paste)
                 e.Handled = true;
         }
 
         //Limits some textboxes to allow only numerical inputs
-        private void textBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);

@@ -15,7 +15,7 @@ namespace FeaturesOverlayPresentation
             InitializeComponent();
         }
 
-        private void closeAppButton_Click(object sender, RoutedEventArgs e)
+        private void CloseAppButton_Click(object sender, RoutedEventArgs e)
         {
             File.Delete(StringsAndConstants.loginPath);
             Application.Current.Shutdown();
