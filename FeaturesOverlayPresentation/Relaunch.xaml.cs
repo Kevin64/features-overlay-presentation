@@ -195,30 +195,38 @@ namespace FeaturesOverlayPresentation
                         pcPatr = PCFileReader.FetchInfoST(patrimTextBox.Text, serverDropDown.Text, portDropDown.Text);
                         if (pcPatr[0] != "false")
                         {
-                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_PATR_NUM, patrimTextBox.Text, StringsAndConstants.consoleOutGUI);
-                            if (present == false) //If employee is not present
+                            if (pcPatr[9] == "1")
                             {
-                                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_EMPLOYEEAWAY, string.Empty, StringsAndConstants.consoleOutGUI);
-                                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, StringsAndConstants.consoleOutGUI);
-                                webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                            + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + "Ausente" + "&entregador=" + userTextBox.Text);
-                                check = true;
+                                log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_PC_DROPPED, string.Empty, StringsAndConstants.consoleOutGUI);
+                                _ = MessageBox.Show(StringsAndConstants.PC_DROPPED, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             }
-                            else if (SIAPETextBox.Text != "") //If employee is present and SIAPE textbox is not empty
+                            else
                             {
-                                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_EMPLOYEEPRESENT, string.Empty, StringsAndConstants.consoleOutGUI);
-                                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, StringsAndConstants.consoleOutGUI);
-                                webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                            + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + SIAPETextBox.Text + "&entregador=" + userTextBox.Text);
-                                check = true;
+                                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_PATR_NUM, patrimTextBox.Text, StringsAndConstants.consoleOutGUI);
+                                if (present == false) //If employee is not present
+                                {
+                                    log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_EMPLOYEEAWAY, string.Empty, StringsAndConstants.consoleOutGUI);
+                                    log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, StringsAndConstants.consoleOutGUI);
+                                    webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
+                                + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + "Ausente" + "&entregador=" + userTextBox.Text);
+                                    check = true;
+                                }
+                                else if (SIAPETextBox.Text != "") //If employee is present and SIAPE textbox is not empty
+                                {
+                                    log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_EMPLOYEEPRESENT, string.Empty, StringsAndConstants.consoleOutGUI);
+                                    log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, StringsAndConstants.consoleOutGUI);
+                                    webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
+                                + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + SIAPETextBox.Text + "&entregador=" + userTextBox.Text);
+                                    check = true;
+                                }
+                                else //If employee is present and SIAPE textbox is empty
+                                {
+                                    log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_FILLFORM, string.Empty, StringsAndConstants.consoleOutGUI);
+                                    _ = MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    check = false;
+                                }
+                                YesButton.IsEnabled = false;
                             }
-                            else //If employee is present and SIAPE textbox is empty
-                            {
-                                log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_FILLFORM, string.Empty, StringsAndConstants.consoleOutGUI);
-                                _ = MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                                check = false;
-                            }
-                            YesButton.IsEnabled = false;
                         }
                         else
                         {
