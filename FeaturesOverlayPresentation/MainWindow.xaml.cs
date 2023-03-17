@@ -34,6 +34,7 @@ namespace FeaturesOverlayPresentation
         private DispatcherTimer timer;
         private readonly BlurEffect blurEffect1;
         private List<string> imgList, labelList;
+        private readonly List<string[]> defList;
         private ReinstallError e;
 
         [DllImport("user32.dll", SetLastError = true)]
@@ -44,7 +45,7 @@ namespace FeaturesOverlayPresentation
         private const int WS_EX_APPWINDOW = 0x00040000, WS_EX_TOOLWINDOW = 0x00000080;
 
         //Main Window constructor
-        public MainWindow()
+        public MainWindow(List<string[]> definitionListSection)
         {
             InitializeComponent();
             _ = new Microsoft.Xaml.Behaviors.DefaultTriggerAttribute(typeof(Trigger), typeof(Microsoft.Xaml.Behaviors.TriggerBase), null);
@@ -58,6 +59,9 @@ namespace FeaturesOverlayPresentation
             ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
             mainImage.Visibility = Visibility.Visible;
             MiscMethods.regRecreate(empty);
+
+            defList = new List<string[]>();
+            defList = definitionListSection;
 
             try
             {
@@ -90,14 +94,16 @@ namespace FeaturesOverlayPresentation
                 ShowInTaskbar = false;
                 KeyDown += OnPreviewKeyDown;
                 TimerTickCreation();
-                ExitButtonPresentation.Visibility = Visibility.Hidden;
+                ExitPresentationButton.Visibility = Visibility.Hidden;
+                AboutButton.Visibility = Visibility.Hidden;
                 ComboBoxNavigate.Visibility = Visibility.Hidden;
             }
             else
             {
                 Topmost = false;
                 ShowInTaskbar = true;
-                ExitButtonPresentation.Visibility = Visibility.Visible;
+                ExitPresentationButton.Visibility = Visibility.Visible;
+                AboutButton.Visibility = Visibility.Visible;
                 TextStandBy.Visibility = Visibility.Hidden;
                 ComboBoxNavigate.Visibility = Visibility.Visible;
             }
@@ -321,21 +327,21 @@ namespace FeaturesOverlayPresentation
         }
 
         //When clicking on the arms pictures, opens its sites
-        private void brasaoSTI_MouseLeftButtonUp(object sender, RoutedEventArgs e)
+        private void logo2_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            _ = Process.Start(StringsAndConstants.STI_URL);
+            _ = Process.Start(defList[2][0]);
         }
 
         //When clicking on the arms pictures, opens its sites
-        private void brasaoUFSM_MouseLeftButtonUp(object sender, RoutedEventArgs e)
+        private void logo1_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            _ = Process.Start(StringsAndConstants.UFSM_URL);
+            _ = Process.Start(defList[1][0]);
         }
 
         //When clicking on the arms pictures, opens its sites
-        private void brasaoCCSH_MouseLeftButtonUp(object sender, RoutedEventArgs e)
+        private void logo3_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            _ = Process.Start(StringsAndConstants.CCSH_URL);
+            _ = Process.Start(defList[3][0]);
         }
 
         //When the 'previous' button is pressed

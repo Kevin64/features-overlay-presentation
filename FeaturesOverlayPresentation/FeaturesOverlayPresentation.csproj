@@ -57,7 +57,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>img\ico-256.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>EF733400ABC4FC93BEF8A0A0DDB932BEC1C08338</ManifestCertificateThumbprint>
@@ -188,9 +188,6 @@
     <Resource Include="fonts\ZHUM601I.TTF" />
     <Resource Include="fonts\ZHUM601N.TTF" />
     <Resource Include="fonts\ZHUM601U.TTF" />
-    <Resource Include="img\logoCCSH.png" />
-    <Resource Include="img\logoSTI.png" />
-    <Resource Include="img\logoUFSM.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -205,15 +202,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\IconGroup103.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="img\arrowNext.png" />
-    <Resource Include="img\arrowPrevious.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="img\background.png" />
-    <Resource Include="img\ico-256.ico" />
     <Resource Include="background.png" />
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +222,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="icon.ico" />
     <Content Include="installer\installerInno.iss" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

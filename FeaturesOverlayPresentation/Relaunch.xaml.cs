@@ -18,11 +18,12 @@ namespace FeaturesOverlayPresentation
     public partial class Relaunch : Window
     {
         private bool pressed = false;
-        private bool present;
+        private bool present, isFormat;
         private readonly bool resPass = true;
-        private bool isFormat;
-        private MainWindow m;
         private readonly LogGenerator log;
+        private static List<string[]> definitionListSection;
+        private static string[] logLocationSection, logo1URLSection, logo2URLSection, logo3URLSection;
+        private MainWindow m;
 
         public Relaunch()
         {
@@ -35,6 +36,22 @@ namespace FeaturesOverlayPresentation
                 def = parser.ReadFile(StringsAndConstants.defFile);
 
                 string logLocationStr = def[StringsAndConstants.INI_SECTION_1][StringsAndConstants.INI_SECTION_1_9];
+                string logo1URLStr = def[StringsAndConstants.INI_SECTION_1][StringsAndConstants.INI_SECTION_1_16];
+                string logo2URLStr = def[StringsAndConstants.INI_SECTION_1][StringsAndConstants.INI_SECTION_1_17];
+                string logo3URLStr = def[StringsAndConstants.INI_SECTION_1][StringsAndConstants.INI_SECTION_1_18];
+
+                logLocationSection = logLocationStr.Split().ToArray();
+                logo1URLSection = logo1URLStr.Split().ToArray();
+                logo2URLSection = logo2URLStr.Split().ToArray();
+                logo3URLSection = logo3URLStr.Split().ToArray();
+
+                definitionListSection = new List<string[]>
+                {
+                    logLocationSection,
+                    logo1URLSection,
+                    logo2URLSection,
+                    logo3URLSection
+                };
 
                 bool logFileExists = bool.Parse(MiscMethods.checkIfLogExists(logLocationStr));
 #if DEBUG
@@ -74,7 +91,7 @@ namespace FeaturesOverlayPresentation
                     if (!MiscMethods.regCheck())
                     {
                         resPass = MiscMethods.resolutionError(true);
-                        m = new MainWindow();
+                        m = new MainWindow(definitionListSection);
                         m.Show();
                         Hide();
                         ShowInTaskbar = false;
@@ -160,7 +177,7 @@ namespace FeaturesOverlayPresentation
             try
             {
                 log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RUNNING, string.Empty, StringsAndConstants.consoleOutGUI);
-                m = new MainWindow();
+                m = new MainWindow(definitionListSection);
                 m.Show();
                 Hide();
             }

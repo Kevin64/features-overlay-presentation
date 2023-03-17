@@ -3,8 +3,8 @@
 
 #define MyAppName "FOP"
 #define MyAppVersion GetFileVersion('D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaçãoDeTrabalho.exe')
-#define MyAppPublisher "Subdivisão de Tecnologia da Informação - CCSH - UFSM"
-#define MyAppURL "https://www.ufsm.br/unidades-universitarias/ccsh/unidade-de-tecnologia-da-informacao/"
+#define MyAppPublisher "Kevin Costa"
+#define MyAppURL "https://github.com/Kevin64/FeaturesOverlayPresentation"
 #define MyAppExeName "TutorialDeUsoDaEstaçãoDeTrabalho.exe"
 #define RegKey "Software\FOP"
 
