@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:FeaturesOverlayPresentation"
       mc:Ignorable="d"
       Title="Erro de instalação"  ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closed="Window_Closed" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="128" Width="331" Foreground="Black" FontFamily="ZapfHumnst BT">
     <Window.Resources>

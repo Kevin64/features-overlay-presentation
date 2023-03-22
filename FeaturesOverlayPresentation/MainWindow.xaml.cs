@@ -24,18 +24,16 @@ namespace FeaturesOverlayPresentation
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int furthestCount = 0;
-        private int timerTickCount;
+        private int furthestCount = 0, counter = 0;
+        private int timerTickCount, finalCount;
         private readonly int tickSeconds = 3;
-        private int counter = 0;
-        private int finalCount;
         private bool empty = false;
         private string newFilePath;
-        private DispatcherTimer timer;
-        private readonly BlurEffect blurEffect1;
         private List<string> imgList, labelList;
         private readonly List<string[]> defList;
+        private readonly BlurEffect blurEffect1;
         private ReinstallError e;
+        private DispatcherTimer timer;
 
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
@@ -58,7 +56,7 @@ namespace FeaturesOverlayPresentation
             FindLabels();
             ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
             mainImage.Visibility = Visibility.Visible;
-            MiscMethods.regRecreate(empty);
+            MiscMethods.RegRecreate(empty);
 
             defList = new List<string[]>();
             defList = definitionListSection;
@@ -70,7 +68,7 @@ namespace FeaturesOverlayPresentation
                     _ = ComboBoxNavigate.Items.Add(item.Remove(0, 5));
                 }
 
-                ComboBoxNavigate.SelectedIndex = ComboBoxNavigate.Items.IndexOf(StringsAndConstants.introScreen);
+                ComboBoxNavigate.SelectedIndex = ComboBoxNavigate.Items.IndexOf(ConstantsDLL.Properties.Strings.introScreen);
             }
             catch
             {
@@ -84,7 +82,7 @@ namespace FeaturesOverlayPresentation
         //Form loaded event handler
         private void FormLoaded(object sender, RoutedEventArgs args)
         {
-            if (!MiscMethods.regCheck())
+            if (!MiscMethods.RegCheck())
             {
                 //Variable to hold the handle for the form
                 IntPtr helper = new WindowInteropHelper(this).Handle;
@@ -136,9 +134,9 @@ namespace FeaturesOverlayPresentation
                 labelList = new List<string>();
                 foreach (string filePath in filePathList)
                 {
-                    if (Path.GetFileName(filePath).ToLower().Contains(StringsAndConstants.imgExt))
+                    if (Path.GetFileName(filePath).ToLower().Contains(ConstantsDLL.Properties.Resources.imgExt))
                     {
-                        newFilePath = filePath.Replace(StringsAndConstants.imgExt, "");
+                        newFilePath = filePath.Replace(ConstantsDLL.Properties.Resources.imgExt, "");
                         labelList.Add(Path.GetFileName(newFilePath));
                         finalCount++;
                     }
@@ -171,7 +169,7 @@ namespace FeaturesOverlayPresentation
                 imgList = new List<string>();
                 foreach (string filePath in filePathList)
                 {
-                    if (Path.GetFileName(filePath).ToLower().Contains(StringsAndConstants.imgExt))
+                    if (Path.GetFileName(filePath).ToLower().Contains(ConstantsDLL.Properties.Resources.imgExt))
                     {
                         imgList.Add(filePath);
                         finalCount++;
@@ -210,15 +208,15 @@ namespace FeaturesOverlayPresentation
         }
 
         //Define 'next' button name
-        private void nextTextPrint()
+        private void NextTextPrint()
         {
-            nextBlock.Text = StringsAndConstants.nextText;
+            nextBlock.Text = ConstantsDLL.Properties.Strings.nextText;
         }
 
         //Define 'finish' button name
-        private void finishTextPrint()
+        private void FinishTextPrint()
         {
-            nextBlock.Text = StringsAndConstants.finishText;
+            nextBlock.Text = ConstantsDLL.Properties.Strings.finishText;
         }
 
         //Creates a timer for each slide when running for the first time
@@ -238,19 +236,19 @@ namespace FeaturesOverlayPresentation
         //Runs the previous created timer
         private void TimerTickRun(object sender, EventArgs e)
         {
-            TextStandBy.Text = StringsAndConstants.waitText + "(" + timerTickCount.ToString() + ")";
+            TextStandBy.Text = ConstantsDLL.Properties.Strings.waitText + "(" + timerTickCount.ToString() + ")";
             ButtonNext.Visibility = Visibility.Hidden;
             if (--timerTickCount == 0)
             {
                 timer.Stop();
-                TextStandBy.Text = StringsAndConstants.waitText + "(" + (tickSeconds + 1) + ")";
+                TextStandBy.Text = ConstantsDLL.Properties.Strings.waitText + "(" + (tickSeconds + 1) + ")";
                 if (counter == finalCount - 1)
                 {
-                    finishTextPrint();
+                    FinishTextPrint();
                 }
                 else
                 {
-                    nextTextPrint();
+                    NextTextPrint();
                 }
 
                 TextStandBy.Visibility = Visibility.Hidden;
@@ -261,7 +259,7 @@ namespace FeaturesOverlayPresentation
         //Changes the image source, adding fade-in/fade-out animation
         private void ChangeSource(Image image, ImageSource source, TimeSpan fadeOutTime, TimeSpan fadeInTime)
         {
-            if (Environment.OSVersion.Version.Major.ToString().Contains(StringsAndConstants.win10ntMajor))
+            if (Environment.OSVersion.Version.Major.ToString().Contains(ConstantsDLL.Properties.Resources.win10ntMajor))
             {
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(1d, fadeInTime);
 
@@ -293,7 +291,7 @@ namespace FeaturesOverlayPresentation
         //When the 'next' button is pressed
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
-            if (counter == furthestCount && !MiscMethods.regCheck())
+            if (counter == furthestCount && !MiscMethods.RegCheck())
             {
                 TimerTickCreation();
                 furthestCount++;
@@ -312,34 +310,34 @@ namespace FeaturesOverlayPresentation
                 counter++;
                 ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 LabelPrint();
-                finishTextPrint();
+                FinishTextPrint();
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, false);
             }
             else
             {
-                MiscMethods.regDelete();
-                RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
-                key.SetValue(StringsAndConstants.DidItRunAlready, 1);
-                File.Delete(StringsAndConstants.loginPath);
+                MiscMethods.RegDelete();
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FopRegKey);
+                key.SetValue(ConstantsDLL.Properties.Resources.DidItRunAlready, 1);
+                File.Delete(ConstantsDLL.Properties.Resources.loginPath);
                 Application.Current.Shutdown();
             }
         }
 
         //When clicking on the arms pictures, opens its sites
-        private void logo2_MouseLeftButtonUp(object sender, RoutedEventArgs e)
+        private void Logo2_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             _ = Process.Start(defList[2][0]);
         }
 
         //When clicking on the arms pictures, opens its sites
-        private void logo1_MouseLeftButtonUp(object sender, RoutedEventArgs e)
+        private void Logo1_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             _ = Process.Start(defList[1][0]);
         }
 
         //When clicking on the arms pictures, opens its sites
-        private void logo3_MouseLeftButtonUp(object sender, RoutedEventArgs e)
+        private void Logo3_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             _ = Process.Start(defList[3][0]);
         }
@@ -351,7 +349,7 @@ namespace FeaturesOverlayPresentation
             {
                 counter--;
                 LabelPrint();
-                nextTextPrint();
+                NextTextPrint();
                 ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter - 1])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 ComboBoxNavigate.SelectedIndex = counter;
                 SlideSubTitlePrint(counter, true);
@@ -382,7 +380,7 @@ namespace FeaturesOverlayPresentation
         //When the 'exit' button is pressed
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            File.Delete(StringsAndConstants.loginPath);
+            File.Delete(ConstantsDLL.Properties.Resources.loginPath);
             Application.Current.Shutdown();
         }
 
@@ -396,21 +394,21 @@ namespace FeaturesOverlayPresentation
                 ButtonPrevious.Visibility = Visibility.Visible;
                 ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 SlideSubTitlePrint(counter, true);
-                nextTextPrint();
+                NextTextPrint();
             }
             else if (counter == 0)
             {
                 ButtonPrevious.Visibility = Visibility.Hidden;
                 ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 SlideSubTitlePrint(counter, false);
-                nextTextPrint();
+                NextTextPrint();
             }
             else if (counter == finalCount - 1)
             {
                 ButtonPrevious.Visibility = Visibility.Visible;
                 ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
                 SlideSubTitlePrint(counter, false);
-                finishTextPrint();
+                FinishTextPrint();
             }
         }
     }

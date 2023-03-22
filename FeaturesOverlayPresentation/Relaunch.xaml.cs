@@ -33,12 +33,12 @@ namespace FeaturesOverlayPresentation
             {
                 InitializeComponent();
                 //Parses the INI file
-                def = parser.ReadFile(StringsAndConstants.defFile);
+                def = parser.ReadFile(ConstantsDLL.Properties.Resources.defFile);
 
-                string logLocationStr = def[StringsAndConstants.INI_SECTION_1][StringsAndConstants.INI_SECTION_1_9];
-                string logo1URLStr = def[StringsAndConstants.INI_SECTION_1][StringsAndConstants.INI_SECTION_1_16];
-                string logo2URLStr = def[StringsAndConstants.INI_SECTION_1][StringsAndConstants.INI_SECTION_1_17];
-                string logo3URLStr = def[StringsAndConstants.INI_SECTION_1][StringsAndConstants.INI_SECTION_1_18];
+                string logLocationStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_9];
+                string logo1URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_16];
+                string logo2URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_17];
+                string logo3URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_18];
 
                 logLocationSection = logLocationStr.Split().ToArray();
                 logo1URLSection = logo1URLStr.Split().ToArray();
@@ -53,18 +53,18 @@ namespace FeaturesOverlayPresentation
                     logo3URLSection
                 };
 
-                bool logFileExists = bool.Parse(MiscMethods.checkIfLogExists(logLocationStr));
+                bool logFileExists = bool.Parse(MiscMethods.CheckIfLogExists(logLocationStr));
 #if DEBUG
                 //Create a new log file (or append to an existing one)
-                log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status, logLocationStr, StringsAndConstants.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status + StringsAndConstants.LOG_FILE_EXT, StringsAndConstants.consoleOutCLI);
-                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_DEBUG_MODE, string.Empty, StringsAndConstants.consoleOutCLI);
+                log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status, logLocationStr, ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status + ConstantsDLL.Properties.Resources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_DEBUG_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
 
                 serverDropDown.SelectedIndex = 1;
                 portDropDown.SelectedIndex = 0;
 #else
                 //Create a new log file (or append to a existing one)
-                log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version, logLocationStr, StringsAndConstants.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + StringsAndConstants.LOG_FILE_EXT, StringsAndConstants.consoleOutCLI);
-                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RELEASE_MODE, string.Empty, StringsAndConstants.consoleOutCLI);
+                log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version, logLocationStr, ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + StringsAndConstants.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_RELEASE_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
 
                 serverDropDown.SelectedIndex = 0;
                 portDropDown.SelectedIndex = 0;
@@ -72,14 +72,14 @@ namespace FeaturesOverlayPresentation
                 //Checks if log file exists
                 if (!logFileExists)
                 {
-                    log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOGFILE_NOTEXISTS, string.Empty, StringsAndConstants.consoleOutCLI);
+                    log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOGFILE_NOTEXISTS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
                 }
                 else
                 {
-                    log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOGFILE_EXISTS, string.Empty, StringsAndConstants.consoleOutCLI);
+                    log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOGFILE_EXISTS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
                 }
 
-                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_DEFFILE_FOUND, Directory.GetCurrentDirectory() + "\\" + StringsAndConstants.defFile, StringsAndConstants.consoleOutCLI);
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_DEFFILE_FOUND, Directory.GetCurrentDirectory() + "\\" + ConstantsDLL.Properties.Resources.defFile, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
 
                 try
                 {
@@ -88,9 +88,9 @@ namespace FeaturesOverlayPresentation
                         throw new Exception();
                     }
 
-                    if (!MiscMethods.regCheck())
+                    if (!MiscMethods.RegCheck())
                     {
-                        resPass = MiscMethods.resolutionError(true);
+                        resPass = MiscMethods.ResolutionError(true);
                         m = new MainWindow(definitionListSection);
                         m.Show();
                         Hide();
@@ -98,10 +98,10 @@ namespace FeaturesOverlayPresentation
                     }
                     else
                     {
-                        resPass = MiscMethods.resolutionError(false);
+                        resPass = MiscMethods.ResolutionError(false);
                         if (!resPass)
                         {
-                            log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_RESOLUTION_ERROR, SystemParameters.PrimaryScreenWidth.ToString() + 'x' + SystemParameters.PrimaryScreenHeight.ToString(), StringsAndConstants.consoleOutGUI);
+                            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), StringsAndConstants.LOG_RESOLUTION_ERROR, SystemParameters.PrimaryScreenWidth.ToString() + 'x' + SystemParameters.PrimaryScreenHeight.ToString(), Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                             YesButton.IsEnabled = false;
                         }
                         Show();
@@ -120,14 +120,14 @@ namespace FeaturesOverlayPresentation
                 Console.WriteLine(StringsAndConstants.LOG_DEFFILE_NOT_FOUND + ": " + e.Message);
                 Console.WriteLine(StringsAndConstants.KEY_FINISH);
                 Console.ReadLine();
-                Environment.Exit(StringsAndConstants.RETURN_ERROR);
+                Environment.Exit(Convert.ToInt32(ConstantsDLL.Properties.Resources.RETURN_ERROR));
             }
             catch (FormatException e) //If definition file was malformed, but the logfile is not created (log path is undefined)
             {
                 Console.WriteLine(StringsAndConstants.PARAMETER_ERROR + ": " + e.Message);
                 Console.WriteLine(StringsAndConstants.KEY_FINISH);
                 Console.ReadLine();
-                Environment.Exit(StringsAndConstants.RETURN_ERROR);
+                Environment.Exit(Convert.ToInt32(ConstantsDLL.Properties.Resources.RETURN_ERROR));
             }
         }
 
@@ -145,28 +145,28 @@ namespace FeaturesOverlayPresentation
 
             if (!StringsAndConstants.fopFileList.All(x => fileList2.Any(y => y == x)))
             {
-                log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_APPFILE_NOT_FOUND, string.Empty, StringsAndConstants.consoleOutGUI);
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), StringsAndConstants.LOG_APPFILE_NOT_FOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                 return false;
             }
-            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_APPFILE_FOUND, string.Empty, StringsAndConstants.consoleOutGUI);
+            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_APPFILE_FOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
             return true;
         }
 
         //Returns true if slide folder that contains PNG pictures exist
         public bool FindFolder()
         {
-            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_DETECTING_OS, string.Empty, StringsAndConstants.consoleOutGUI);
+            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_DETECTING_OS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
             string imgDir = MiscMethods.OSCheck();
             try
             {
-                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_ENUM_FILES, string.Empty, StringsAndConstants.consoleOutGUI);
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_ENUM_FILES, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
-                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_IMG_FOUND, string.Empty, StringsAndConstants.consoleOutGUI);
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_IMG_FOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                 return true;
             }
             catch
             {
-                log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_IMG_NOTFOUND, string.Empty, StringsAndConstants.consoleOutGUI);
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), StringsAndConstants.LOG_IMG_NOTFOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                 return false;
             }
         }
@@ -176,14 +176,14 @@ namespace FeaturesOverlayPresentation
         {
             try
             {
-                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RUNNING, string.Empty, StringsAndConstants.consoleOutGUI);
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_RUNNING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                 m = new MainWindow(definitionListSection);
                 m.Show();
                 Hide();
             }
             catch
             {
-                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_CLOSING, string.Empty, StringsAndConstants.consoleOutGUI);
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                 Close();
                 m.Close();
             }
@@ -192,8 +192,8 @@ namespace FeaturesOverlayPresentation
         //If 'no' button is pressed
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
-            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_CLOSING, string.Empty, StringsAndConstants.consoleOutGUI);
-            File.Delete(StringsAndConstants.loginPath);
+            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+            File.Delete(ConstantsDLL.Properties.Resources.loginPath);
             Application.Current.Shutdown();
         }
 
@@ -214,32 +214,32 @@ namespace FeaturesOverlayPresentation
                         {
                             if (pcPatr[9] == "1")
                             {
-                                log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_PC_DROPPED, string.Empty, StringsAndConstants.consoleOutGUI);
-                                _ = MessageBox.Show(StringsAndConstants.PC_DROPPED, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), ConstantsDLL.Properties.Strings.PC_DROPPED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                                _ = MessageBox.Show(ConstantsDLL.Properties.Strings.PC_DROPPED, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             }
                             else
                             {
-                                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_PATR_NUM, patrimTextBox.Text, StringsAndConstants.consoleOutGUI);
+                                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_PATR_NUM, patrimTextBox.Text, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                                 if (present == false) //If employee is not present
                                 {
-                                    log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_EMPLOYEEAWAY, string.Empty, StringsAndConstants.consoleOutGUI);
-                                    log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, StringsAndConstants.consoleOutGUI);
+                                    log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_EMPLOYEEAWAY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                                    log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                                     webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
                                 + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + "Ausente" + "&entregador=" + userTextBox.Text);
                                     check = true;
                                 }
                                 else if (SIAPETextBox.Text != "") //If employee is present and SIAPE textbox is not empty
                                 {
-                                    log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_EMPLOYEEPRESENT, string.Empty, StringsAndConstants.consoleOutGUI);
-                                    log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, StringsAndConstants.consoleOutGUI);
+                                    log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_EMPLOYEEPRESENT, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                                    log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                                     webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
                                 + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + SIAPETextBox.Text + "&entregador=" + userTextBox.Text);
                                     check = true;
                                 }
                                 else //If employee is present and SIAPE textbox is empty
                                 {
-                                    log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_FILLFORM, string.Empty, StringsAndConstants.consoleOutGUI);
-                                    _ = MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                    log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), ConstantsDLL.Properties.Strings.fillForm, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                                    _ = MessageBox.Show(ConstantsDLL.Properties.Strings.fillForm, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                                     check = false;
                                 }
                                 YesButton.IsEnabled = false;
@@ -247,13 +247,13 @@ namespace FeaturesOverlayPresentation
                         }
                         else
                         {
-                            log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_PC_NOT_REGISTERED, string.Empty, StringsAndConstants.consoleOutGUI);
-                            _ = MessageBox.Show(StringsAndConstants.pcNotRegistered, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), ConstantsDLL.Properties.Strings.pcNotRegistered, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                            _ = MessageBox.Show(ConstantsDLL.Properties.Strings.pcNotRegistered, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                     else //If 'send' button is already pressed
                     {
-                        log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_NOTSCHEDULING, string.Empty, StringsAndConstants.consoleOutGUI);
+                        log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_NOTSCHEDULING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                         webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
                     + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null + "&siapeRecebedor=" + null + "&entregador=" + null);
                         check = true;
@@ -265,14 +265,14 @@ namespace FeaturesOverlayPresentation
                 }
                 else //If login fails
                 {
-                    log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_SERVER_NOT_FOUND, string.Empty, StringsAndConstants.consoleOutGUI);
-                    _ = MessageBox.Show(StringsAndConstants.SERVER_NOT_FOUND_ERROR, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), StringsAndConstants.LOG_SERVER_NOT_FOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                    _ = MessageBox.Show(ConstantsDLL.Properties.Strings.SERVER_NOT_FOUND_ERROR, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else //If patrimony textbox is empty
             {
-                log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_FILLFORM, string.Empty, StringsAndConstants.consoleOutGUI);
-                _ = MessageBox.Show(StringsAndConstants.fillForm, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), ConstantsDLL.Properties.Strings.fillForm, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                _ = MessageBox.Show(ConstantsDLL.Properties.Strings.fillForm, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             //Do registry stuff, and handles control states
@@ -282,25 +282,25 @@ namespace FeaturesOverlayPresentation
                 {
                     if (resPass) //If screen resolution passes the requirement
                     {
-                        log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RESOLUTION_PASSED, string.Empty, StringsAndConstants.consoleOutGUI);
+                        log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_RESOLUTION_PASSED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                         if (isFormat == true) //If service type is 'format'
                         {
-                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_SERVICE_TYPE, StringsAndConstants.LOG_FORMAT_SERVICE, StringsAndConstants.consoleOutGUI);
-                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_SCHEDULING, string.Empty, StringsAndConstants.consoleOutGUI);
-                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_ADDING_REG, string.Empty, StringsAndConstants.consoleOutGUI);
-                            MiscMethods.regCreate();
+                            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_SERVICE_TYPE, StringsAndConstants.LOG_FORMAT_SERVICE, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_SCHEDULING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_ADDING_REG, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                            MiscMethods.RegCreate();
                         }
                         else //If service type is 'maintenance'
                         {
-                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_SERVICE_TYPE, StringsAndConstants.LOG_MAINTENANCE_SERVICE, StringsAndConstants.consoleOutGUI);
-                            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_NOT_ADDING_REG, string.Empty, StringsAndConstants.consoleOutGUI);
+                            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_SERVICE_TYPE, StringsAndConstants.LOG_MAINTENANCE_SERVICE, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_NOT_ADDING_REG, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                         }
-                        YesLaterButton.Content = StringsAndConstants.cancelExecution;
+                        YesLaterButton.Content = ConstantsDLL.Properties.Strings.cancelExecution;
                     }
                     else  //If screen resolution fails the requirement
                     {
-                        log.LogWrite(StringsAndConstants.LOG_WARNING, StringsAndConstants.LOG_RESOLUTION_FAILED, StringsAndConstants.LOG_DISABLE_BOOT, StringsAndConstants.consoleOutGUI);
-                        YesLaterButton.Content = StringsAndConstants.cancelExecutionResError;
+                        log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_WARNING), StringsAndConstants.LOG_RESOLUTION_FAILED, StringsAndConstants.LOG_DISABLE_BOOT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                        YesLaterButton.Content = ConstantsDLL.Properties.Strings.cancelExecutionResError;
                     }
 
                     pressed = true;
@@ -315,21 +315,21 @@ namespace FeaturesOverlayPresentation
                 {
                     if (resPass) //If screen resolution passes the requirement
                     {
-                        log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_RESOLUTION_PASSED, string.Empty, StringsAndConstants.consoleOutGUI);
-                        log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_REMOVING_REG, string.Empty, StringsAndConstants.consoleOutGUI);
-                        RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey);
+                        log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_RESOLUTION_PASSED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                        log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_REMOVING_REG, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                        RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FopRunOnceKey);
                         if (isFormat)
                         {
-                            key.DeleteValue(StringsAndConstants.FOP);
+                            key.DeleteValue(ConstantsDLL.Properties.Resources.FOP);
                         }
 
-                        RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
-                        key2.SetValue(StringsAndConstants.DidItRunAlready, 1, RegistryValueKind.DWord);
-                        YesLaterButton.Content = StringsAndConstants.doExecution;
+                        RegistryKey key2 = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FopRegKey);
+                        key2.SetValue(ConstantsDLL.Properties.Resources.DidItRunAlready, 1, RegistryValueKind.DWord);
+                        YesLaterButton.Content = ConstantsDLL.Properties.Strings.doExecution;
                     }
                     else //If screen resolution fails the requirement
                     {
-                        YesLaterButton.Content = StringsAndConstants.doExecutionResError;
+                        YesLaterButton.Content = ConstantsDLL.Properties.Strings.doExecutionResError;
                     }
 
                     pressed = false;
@@ -346,8 +346,8 @@ namespace FeaturesOverlayPresentation
         //When closing the window
         private void Window_Closing(object sender, EventArgs e)
         {
-            log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_CLOSING, string.Empty, StringsAndConstants.consoleOutGUI);
-            File.Delete(StringsAndConstants.loginPath);
+            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+            File.Delete(ConstantsDLL.Properties.Resources.loginPath);
             Application.Current.Shutdown();
         }
 
@@ -357,28 +357,28 @@ namespace FeaturesOverlayPresentation
             string[] str;
             if (userTextBox.Text == "" || passwordBox.Password == "") //If user and password textboxes are empty
             {
-                _ = MessageBox.Show(StringsAndConstants.NO_AUTH, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(ConstantsDLL.Properties.Strings.NO_AUTH, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else //... if are not empty
             {
-                log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_INIT_LOGIN, string.Empty, StringsAndConstants.consoleOutGUI);
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_INIT_LOGIN, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                 str = LoginFileReader.FetchInfoST(userTextBox.Text, passwordBox.Password, serverDropDown.Text, portDropDown.Text);
 
                 if (str == null) //If server is not found
                 {
-                    log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_SERVER_NOT_FOUND, string.Empty, StringsAndConstants.consoleOutGUI);
-                    _ = MessageBox.Show(StringsAndConstants.SERVER_NOT_FOUND_ERROR, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), StringsAndConstants.LOG_SERVER_NOT_FOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                    _ = MessageBox.Show(ConstantsDLL.Properties.Strings.SERVER_NOT_FOUND_ERROR, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else if (str[0] == "false") //If server is found but login fails
                 {
-                    log.LogWrite(StringsAndConstants.LOG_ERROR, StringsAndConstants.LOG_LOGIN_FAILED, string.Empty, StringsAndConstants.consoleOutGUI);
+                    log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), ConstantsDLL.Properties.Strings.LOG_LOGIN_FAILED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                     warningLabel.Visibility = Visibility.Visible;
                     passwordBox.SelectAll();
                     _ = passwordBox.Focus();
                 }
                 else //If server is found and login succeeds
                 {
-                    log.LogWrite(StringsAndConstants.LOG_INFO, StringsAndConstants.LOG_LOGIN_SUCCESS, string.Empty, StringsAndConstants.consoleOutGUI);
+                    log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_LOGIN_SUCCESS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                     patrimLabel.IsEnabled = true;
                     patrimTextBox.IsEnabled = true;
                     serverLabel.IsEnabled = false;

@@ -11,57 +11,57 @@ namespace FeaturesOverlayPresentation
     internal static class MiscMethods
     {
         //Checks via registry if the program was already executed
-        public static bool regCheck()
+        public static bool RegCheck()
         {
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey(StringsAndConstants.FopRegKey);
-            string k = rk.GetValue(StringsAndConstants.DidItRunAlready).ToString();
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FopRegKey);
+            string k = rk.GetValue(ConstantsDLL.Properties.Resources.DidItRunAlready).ToString();
             return k.Equals("1");
         }
 
         //Creates RunOnce and FOP registry keys
-        public static void regCreate()
+        public static void RegCreate()
         {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRunOnceKey, true);
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FopRunOnceKey, true);
             if (Environment.Is64BitOperatingSystem)
             {
-                key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86, RegistryValueKind.String);
+                key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOPx86, RegistryValueKind.String);
             }
             else
             {
-                key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64, RegistryValueKind.String);
+                key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOPx64, RegistryValueKind.String);
             }
 
-            RegistryKey key2 = Registry.CurrentUser.CreateSubKey(StringsAndConstants.FopRegKey);
-            key2.SetValue(StringsAndConstants.DidItRunAlready, 0, RegistryValueKind.DWord);
+            RegistryKey key2 = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FopRegKey);
+            key2.SetValue(ConstantsDLL.Properties.Resources.DidItRunAlready, 0, RegistryValueKind.DWord);
         }
 
         //ReCreates RunOnce registry key
-        public static void regRecreate(bool empty)
+        public static void RegRecreate(bool empty)
         {
-            if (!empty && !regCheck())
+            if (!empty && !RegCheck())
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(StringsAndConstants.FopRunOnceKey, true);
-                if (!key.GetValueNames().Contains(StringsAndConstants.FOP))
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FopRunOnceKey, true);
+                if (!key.GetValueNames().Contains(ConstantsDLL.Properties.Resources.FOP))
                 {
                     if (Environment.Is64BitOperatingSystem)
                     {
-                        key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx86, RegistryValueKind.String);
+                        key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOPx86, RegistryValueKind.String);
                     }
                     else
                     {
-                        key.SetValue(StringsAndConstants.FOP, StringsAndConstants.FOPx64, RegistryValueKind.String);
+                        key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOPx64, RegistryValueKind.String);
                     }
                 }
             }
         }
 
         //Deletes RunOnce registry key
-        public static void regDelete()
+        public static void RegDelete()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(StringsAndConstants.FopRunOnceKey, true);
-            if (key.GetValueNames().Contains(StringsAndConstants.FOP))
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FopRunOnceKey, true);
+            if (key.GetValueNames().Contains(ConstantsDLL.Properties.Resources.FOP))
             {
-                key.DeleteValue(StringsAndConstants.FOP);
+                key.DeleteValue(ConstantsDLL.Properties.Resources.FOP);
             }
         }
 
@@ -71,15 +71,15 @@ namespace FeaturesOverlayPresentation
             string current = Directory.GetCurrentDirectory();
             Version osFullVer = Environment.OSVersion.Version;
             //int osBuild = Convert.ToInt32(osFullVer);
-            if (osFullVer.Major == Convert.ToInt32(StringsAndConstants.win7ntMajor) && osFullVer.Minor == Convert.ToInt32(StringsAndConstants.win7ntMinor))
+            if (osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMajor) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMinor))
             {
-                return current + StringsAndConstants.win7imgDir;
+                return current + ConstantsDLL.Properties.Resources.win7imgDir;
             }
             else
             {
-                return osFullVer.Build >= Convert.ToInt32(StringsAndConstants.win10ntBuild) && osFullVer.Build < Convert.ToInt32(StringsAndConstants.win11ntBuild)
-                ? current + StringsAndConstants.win10imgDir
-                : current + StringsAndConstants.win11imgDir;
+                return osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.Resources.win10ntBuild) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.Resources.win11ntBuild)
+                ? current + ConstantsDLL.Properties.Resources.win10imgDir
+                : current + ConstantsDLL.Properties.Resources.win11imgDir;
             }
         }
 
@@ -87,14 +87,14 @@ namespace FeaturesOverlayPresentation
         public static string Version => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         //Checks the current screen resolution
-        public static bool resolutionError(bool exit)
+        public static bool ResolutionError(bool exit)
         {
-            if (SystemParameters.PrimaryScreenWidth < StringsAndConstants.Width || SystemParameters.PrimaryScreenHeight < StringsAndConstants.Height)
+            if (SystemParameters.PrimaryScreenWidth < Convert.ToInt32(ConstantsDLL.Properties.Resources.Width) || SystemParameters.PrimaryScreenHeight < Convert.ToInt32(ConstantsDLL.Properties.Resources.Height))
             {
-                _ = MessageBox.Show(StringsAndConstants.resolutionWarning, StringsAndConstants.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(string.Format(ConstantsDLL.Properties.Strings.resolutionWarning, ConstantsDLL.Properties.Resources.Width, ConstantsDLL.Properties.Resources.Height), ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 if (exit)
                 {
-                    File.Delete(StringsAndConstants.loginPath);
+                    File.Delete(ConstantsDLL.Properties.Resources.loginPath);
                     Application.Current.Shutdown();
                 }
                 return false;
@@ -103,14 +103,14 @@ namespace FeaturesOverlayPresentation
         }
 
         //Checks if logfile exists
-        public static string checkIfLogExists(string path)
+        public static string CheckIfLogExists(string path)
         {
             bool b;
             try
             {
 #if DEBUG
                 //Checks if log directory exists
-                b = File.Exists(path + StringsAndConstants.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Resources.dev_status + StringsAndConstants.LOG_FILE_EXT);
+                b = File.Exists(path + ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Resources.dev_status + ConstantsDLL.Properties.Resources.LOG_FILE_EXT);
 #else
                 //Checks if log file exists
                 b = File.Exists(path + StringsAndConstants.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + StringsAndConstants.LOG_FILE_EXT);
