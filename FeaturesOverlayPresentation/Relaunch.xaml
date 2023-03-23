@@ -427,7 +427,9 @@
                     <ComboBoxItem Content="8081" HorizontalAlignment="Left" Width="150" Background="#FF7E7E7E" Foreground="White"/>
                     <ComboBoxItem Content="80" HorizontalAlignment="Left" Width="150" Background="#FF7E7E7E" Foreground="White"/>
                 </ComboBox>
-                <Button Style="{DynamicResource ButtonStyle1}" x:Name="YesLaterButton" Content="Enviar dados de entrega" HorizontalAlignment="Center" Margin="0,284,0,0" VerticalAlignment="Top" Width="204" Click="YesLaterButton_Click" IsEnabled="False" TabIndex="10" Background="#FF7E7E7E" Foreground="White" Height="42"/>
+                <Button Style="{DynamicResource ButtonStyle1}" x:Name="YesLaterButton"  HorizontalAlignment="Center" Margin="0,284,0,0" VerticalAlignment="Top" Width="204" Click="YesLaterButton_Click" IsEnabled="False" TabIndex="10" Background="#FF7E7E7E" Foreground="White" Height="42">
+                    <TextBlock x:Name="YesLaterButtonTB" Text="Enviar dados de entrega" TextWrapping="Wrap" TextAlignment="Center"/>
+                </Button>
                 <TextBox x:Name="patrimTextBox" HorizontalAlignment="Left" Height="22" Margin="82,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="123" IsEnabled="False" TabIndex="7" MaxLines="1" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}" PreviewTextInput="TextBox_PreviewTextInput" MaxLength="6" Background="#FF7E7E7E" Foreground="White"/>
                 <Label x:Name="patrimLabel" Content="Patrimônio:" HorizontalAlignment="Left" Margin="1,161,0,0" VerticalAlignment="Top" Width="76" IsEnabled="False"  Foreground="White" Height="24"/>
                 <Label x:Name="serverLabel" Content="Servidor:" HorizontalAlignment="Left" Margin="1,51,0,0" VerticalAlignment="Top" Width="76" IsEnabled="False"  Foreground="White"/>
