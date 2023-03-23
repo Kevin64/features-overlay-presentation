@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "FOP"
-#define MyAppVersion GetFileVersion('D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaçãoDeTrabalho.exe')
-#define MyAppPublisher "Kevin Costa"
+#define MyAppVersion GetVersionNumbersString('..\bin\Release\FeaturesOverlayPresentation.exe')
+#define MyAppPublisher "Kevin Vinícius Teixeira Costa"
 #define MyAppURL "https://github.com/Kevin64/FeaturesOverlayPresentation"
-#define MyAppExeName "TutorialDeUsoDaEstaçãoDeTrabalho.exe"
+#define MyAppExeName "FeaturesOverlayPresentation.exe"
 #define RegKey "Software\FOP"
 
 [Setup]
@@ -26,7 +26,7 @@ DisableDirPage=yes
 ;PrivilegesRequired=lowest
 ;PrivilegesRequiredOverridesAllowed=dialog
 OutputBaseFilename=FOPsetupCCSH-{#MyAppVersion}
-OutputDir=D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\installer\Output
+OutputDir=..\bin\inno-output
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -43,37 +43,37 @@ Name: "{app}\img-windows10"
 Name: "{app}\img-windows7"
 
 [Files]
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\BCrypt.Net-Next.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\BCrypt.Net-Next.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\ConstantsDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\ConstantsDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\INIFileParser.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\INIFileParser.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\JsonFileReaderDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\JsonFileReaderDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\LogGeneratorDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\LogGeneratorDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaçãoDeTrabalho.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\FeaturesOverlayPresentation.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\TutorialDeUsoDaEstaçãoDeTrabalho.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\FeaturesOverlayPresentation.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\img-windows11\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows11"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\bin\Release\img-windows11\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows11"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\img-windows10\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows10"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\bin\Release\img-windows10\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows10"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\img-windows7\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows7"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\bin\Release\img-windows7\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows7"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Rever tutorial de uso do computador.lnk"; DestDir: "{commondesktop}"; Flags: ignoreversion
+Source: "..\bin\Release\Rever tutorial de uso do computador.lnk"; DestDir: "{commondesktop}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Rever tutorial de uso do computador.lnk"; DestDir: "{commonstartmenu}"; Flags: ignoreversion
+Source: "..\bin\Release\Rever tutorial de uso do computador.lnk"; DestDir: "{commonstartmenu}"; Flags: ignoreversion
 
-Source: "D:\kevin\OneDrive\Documentos\GitHub\C#\FeaturesOverlayPresentation\FeaturesOverlayPresentation\bin\Release\Rever tutorial de uso do computador.lnk"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\Rever tutorial de uso do computador.lnk"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 ;[Registry]
@@ -179,7 +179,6 @@ end;
 function InitializeSetup(): Boolean;
 var
     Version: TWindowsVersion;
-    S: String;
 
 begin
     GetWindowsVersionEx(Version);

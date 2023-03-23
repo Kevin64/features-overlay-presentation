@@ -64,8 +64,8 @@ namespace FeaturesOverlayPresentation
                 portDropDown.SelectedIndex = 0;
 #else
                 //Create a new log file (or append to a existing one)
-                log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version, logLocationStr, ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + StringsAndConstants.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
-                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), StringsAndConstants.LOG_RELEASE_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
+                log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version, logLocationStr, ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + ConstantsDLL.Properties.Resources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
+                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_RELEASE_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
 
                 serverDropDown.SelectedIndex = 0;
                 portDropDown.SelectedIndex = 0;
@@ -204,7 +204,7 @@ namespace FeaturesOverlayPresentation
             string[] pcPatr;
             DateTime dateAndTime = DateTime.Today;
             bool check = false;
-            if (patrimTextBox.Text != "") //If patrimony textbox is not empty
+            if (patrimTextBox.Text != string.Empty) //If patrimony textbox is not empty
             {
                 if (LoginFileReader.CheckHostST(serverDropDown.Text, portDropDown.Text)) //If login succeeded
                 {
@@ -229,7 +229,7 @@ namespace FeaturesOverlayPresentation
                                 + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + "Ausente" + "&entregador=" + userTextBox.Text);
                                     check = true;
                                 }
-                                else if (SIAPETextBox.Text != "") //If employee is present and SIAPE textbox is not empty
+                                else if (SIAPETextBox.Text != string.Empty) //If employee is present and SIAPE textbox is not empty
                                 {
                                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_EMPLOYEEPRESENT, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
@@ -356,7 +356,7 @@ namespace FeaturesOverlayPresentation
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
             string[] str;
-            if (userTextBox.Text == "" || passwordBox.Password == "") //If user and password textboxes are empty
+            if (userTextBox.Text == string.Empty || passwordBox.Password == string.Empty) //If user and password textboxes are empty
             {
                 _ = MessageBox.Show(ConstantsDLL.Properties.Strings.NO_AUTH, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }

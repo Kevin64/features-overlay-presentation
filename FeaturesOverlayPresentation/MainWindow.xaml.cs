@@ -136,7 +136,7 @@ namespace FeaturesOverlayPresentation
                 {
                     if (Path.GetFileName(filePath).ToLower().Contains(ConstantsDLL.Properties.Resources.imgExt))
                     {
-                        newFilePath = filePath.Replace(ConstantsDLL.Properties.Resources.imgExt, "");
+                        newFilePath = filePath.Replace(ConstantsDLL.Properties.Resources.imgExt, string.Empty);
                         labelList.Add(Path.GetFileName(newFilePath));
                         finalCount++;
                     }
@@ -203,7 +203,7 @@ namespace FeaturesOverlayPresentation
             }
             else
             {
-                LabelSlideSubtitle.Content = "";
+                LabelSlideSubtitle.Content = string.Empty;
             }
         }
 
