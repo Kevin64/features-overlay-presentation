@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -23,23 +24,24 @@ namespace FeaturesOverlayPresentation
         private readonly bool resPass = true;
         private readonly LogGenerator log;
         private static List<string[]> definitionListSection;
-        private static string[] logLocationSection, logo1URLSection, logo2URLSection, logo3URLSection;
+        private static string[] logLocationSection, logo1URLSection, logo2URLSection, logo3URLSection, agentData = new string[2];
+        private static string logLocationStr, logo1URLStr, logo2URLStr, logo3URLStr;
         private MainWindow m;
 
         public Relaunch()
         {
-            IniData def = null;
-            FileIniDataParser parser = new FileIniDataParser();
             try
             {
                 InitializeComponent();
+                IniData def = null;
+                FileIniDataParser parser = new FileIniDataParser();
                 //Parses the INI file
-                def = parser.ReadFile(ConstantsDLL.Properties.Resources.defFile);
+                def = parser.ReadFile(ConstantsDLL.Properties.Resources.defFile, Encoding.UTF8);
 
-                string logLocationStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_9];
-                string logo1URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_16];
-                string logo2URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_17];
-                string logo3URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_18];
+                logLocationStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_9];
+                logo1URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_16];
+                logo2URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_17];
+                logo3URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_18];
 
                 logLocationSection = logLocationStr.Split().ToArray();
                 logo1URLSection = logo1URLStr.Split().ToArray();
@@ -84,7 +86,7 @@ namespace FeaturesOverlayPresentation
 
                 try
                 {
-                    if (!FindFolder() || !CheckAppFiles())
+                    if (!FindFolder())
                     {
                         throw new Exception();
                     }
@@ -132,32 +134,11 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Checks if critical app assembly and DLLs are present
-        public bool CheckAppFiles()
-        {
-            List<string> fileList1 = new List<string>();
-            List<string> fileList2 = new List<string>();
-            string getCurrentDir = Directory.GetCurrentDirectory();
-            fileList1.AddRange(Directory.GetFiles(getCurrentDir));
-            foreach (string file in fileList1)
-            {
-                fileList2.Add(Path.GetFileName(file));
-            }
-
-            if (!StringsAndConstants.fopFileList.All(x => fileList2.Any(y => y == x)))
-            {
-                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), ConstantsDLL.Properties.Strings.LOG_APPFILE_NOT_FOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-                return false;
-            }
-            log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_APPFILE_FOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-            return true;
-        }
-
         //Returns true if slide folder that contains PNG pictures exist
         public bool FindFolder()
         {
             log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_DETECTING_OS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-            string imgDir = MiscMethods.OSCheck();
+            string imgDir = Directory.GetCurrentDirectory() + ConstantsDLL.Properties.Resources.resourcesDir + ConstantsDLL.Properties.Resources.imgDir;
             try
             {
                 log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_ENUM_FILES, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
@@ -194,7 +175,7 @@ namespace FeaturesOverlayPresentation
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
             log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-            File.Delete(ConstantsDLL.Properties.Resources.loginPath);
+            File.Delete(StringsAndConstants.credentialsFilePath);
             Application.Current.Shutdown();
         }
 
@@ -206,11 +187,11 @@ namespace FeaturesOverlayPresentation
             bool check = false;
             if (patrimTextBox.Text != string.Empty) //If patrimony textbox is not empty
             {
-                if (LoginFileReader.CheckHostST(serverDropDown.Text, portDropDown.Text)) //If login succeeded
+                if (CredentialsFileReader.CheckHostST(serverDropDown.Text, portDropDown.Text)) //If login succeeded
                 {
                     if (!pressed) //If 'send' button is not pressed already
                     {
-                        pcPatr = PCFileReader.FetchInfoST(patrimTextBox.Text, serverDropDown.Text, portDropDown.Text);
+                        pcPatr = AssetFileReader.FetchInfoST(patrimTextBox.Text, serverDropDown.Text, portDropDown.Text);
                         if (pcPatr[0] != "false")
                         {
                             if (pcPatr[9] == "1")
@@ -225,16 +206,16 @@ namespace FeaturesOverlayPresentation
                                 {
                                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_EMPLOYEEAWAY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-                                    webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                                + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + "Ausente" + "&entregador=" + userTextBox.Text);
+                                    webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + serverDropDown.Text + ":" + portDropDown.Text
+                                + "/" + ConstantsDLL.Properties.Resources.deliveryURL + ".php" + ConstantsDLL.Properties.Resources.phpAssetNumber + patrimTextBox.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryDate + dateAndTime.ToShortDateString() + ConstantsDLL.Properties.Resources.phpDeliveredToRegistrationNumber + ConstantsDLL.Properties.Strings.absent + ConstantsDLL.Properties.Resources.phpLastDeliveryMadeBy + agentData[0]);
                                     check = true;
                                 }
                                 else if (SIAPETextBox.Text != string.Empty) //If employee is present and SIAPE textbox is not empty
                                 {
                                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_EMPLOYEEPRESENT, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-                                    webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                                + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + dateAndTime.ToShortDateString() + "&siapeRecebedor=" + SIAPETextBox.Text + "&entregador=" + userTextBox.Text);
+                                    webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + serverDropDown.Text + ":" + portDropDown.Text
+                                + "/" + ConstantsDLL.Properties.Resources.deliveryURL + ".php" + ConstantsDLL.Properties.Resources.phpAssetNumber + patrimTextBox.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryDate + dateAndTime.ToShortDateString() + ConstantsDLL.Properties.Resources.phpDeliveredToRegistrationNumber + SIAPETextBox.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryMadeBy + agentData[0]);
                                     check = true;
                                 }
                                 else //If employee is present and SIAPE textbox is empty
@@ -255,8 +236,8 @@ namespace FeaturesOverlayPresentation
                     else //If 'send' button is already pressed
                     {
                         log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_NOTSCHEDULING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-                        webBrowser1.Navigate("http://" + serverDropDown.Text + ":" + portDropDown.Text
-                    + "/recebeDadosEntrega.php?patrimonio=" + patrimTextBox.Text + "&dataEntrega=" + null + "&siapeRecebedor=" + null + "&entregador=" + null);
+                        webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + serverDropDown.Text + ":" + portDropDown.Text
+                    + "/" + ConstantsDLL.Properties.Resources.deliveryURL + ".php" + ConstantsDLL.Properties.Resources.phpAssetNumber + patrimTextBox.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryDate + null + ConstantsDLL.Properties.Resources.phpDeliveredToRegistrationNumber + null + ConstantsDLL.Properties.Resources.phpLastDeliveryMadeBy + null);
                         check = true;
                         if (resPass)
                         {
@@ -339,7 +320,8 @@ namespace FeaturesOverlayPresentation
                     EmployeePresentRadioYes.IsEnabled = true;
                     FormatRadioButton.IsEnabled = true;
                     MaintenanceRadioButton.IsEnabled = true;
-                    SIAPETextBox.IsEnabled = true;
+                    if (EmployeePresentRadioYes.IsChecked == true)
+                        SIAPETextBox.IsEnabled = true;
                 }
             }
         }
@@ -348,14 +330,13 @@ namespace FeaturesOverlayPresentation
         private void Window_Closing(object sender, EventArgs e)
         {
             log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-            File.Delete(ConstantsDLL.Properties.Resources.loginPath);
+            File.Delete(StringsAndConstants.credentialsFilePath);
             Application.Current.Shutdown();
         }
 
         //When clicking the authenticate button
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            string[] str;
             if (userTextBox.Text == string.Empty || passwordBox.Password == string.Empty) //If user and password textboxes are empty
             {
                 _ = MessageBox.Show(ConstantsDLL.Properties.Strings.NO_AUTH, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -363,14 +344,14 @@ namespace FeaturesOverlayPresentation
             else //... if are not empty
             {
                 log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_INIT_LOGIN, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-                str = LoginFileReader.FetchInfoST(userTextBox.Text, passwordBox.Password, serverDropDown.Text, portDropDown.Text);
+                agentData = CredentialsFileReader.FetchInfoST(userTextBox.Text, passwordBox.Password, serverDropDown.Text, portDropDown.Text);
 
-                if (str == null) //If server is not found
+                if (agentData == null) //If server is not found
                 {
                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), ConstantsDLL.Properties.Strings.SERVER_NOT_FOUND_ERROR, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                     _ = MessageBox.Show(ConstantsDLL.Properties.Strings.SERVER_NOT_FOUND_ERROR, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                else if (str[0] == "false") //If server is found but login fails
+                else if (agentData[0] == "false") //If server is found but login fails
                 {
                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), ConstantsDLL.Properties.Strings.LOG_LOGIN_FAILED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                     warningLabel.Visibility = Visibility.Visible;

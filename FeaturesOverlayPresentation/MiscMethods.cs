@@ -66,22 +66,22 @@ namespace FeaturesOverlayPresentation
         }
 
         //Checks OS version
-        public static string OSCheck()
-        {
-            string current = Directory.GetCurrentDirectory();
-            Version osFullVer = Environment.OSVersion.Version;
-            //int osBuild = Convert.ToInt32(osFullVer);
-            if (osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMajor) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMinor))
-            {
-                return current + ConstantsDLL.Properties.Resources.win7imgDir;
-            }
-            else
-            {
-                return osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.Resources.win10ntBuild) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.Resources.win11ntBuild)
-                ? current + ConstantsDLL.Properties.Resources.win10imgDir
-                : current + ConstantsDLL.Properties.Resources.win11imgDir;
-            }
-        }
+        //public static string OSCheck()
+        //{
+        //    string current = Directory.GetCurrentDirectory();
+        //    Version osFullVer = Environment.OSVersion.Version;
+        //    //int osBuild = Convert.ToInt32(osFullVer);
+        //    if (osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMajor) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMinor))
+        //    {
+        //        return current + "\\img" + ConstantsDLL.Properties.Resources.win7imgDir;
+        //    }
+        //    else
+        //    {
+        //        return osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.Resources.win10ntBuild) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.Resources.win11ntBuild)
+        //        ? current + "\\img" + ConstantsDLL.Properties.Resources.win10imgDir
+        //        : current + "\\img" + ConstantsDLL.Properties.Resources.win11imgDir;
+        //    }
+        //}
 
         //Checks assembly version
         public static string Version => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -94,7 +94,7 @@ namespace FeaturesOverlayPresentation
                 _ = MessageBox.Show(string.Format(ConstantsDLL.Properties.Strings.resolutionWarning, ConstantsDLL.Properties.Resources.Width, ConstantsDLL.Properties.Resources.Height), ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 if (exit)
                 {
-                    File.Delete(ConstantsDLL.Properties.Resources.loginPath);
+                    File.Delete(StringsAndConstants.credentialsFilePath);
                     Application.Current.Shutdown();
                 }
                 return false;

@@ -50,10 +50,11 @@ namespace FeaturesOverlayPresentation
             blurEffect1 = FindName("BlurImage") as BlurEffect;
             blurEffect1.Radius = 5;
             ButtonPrevious.Visibility = Visibility.Hidden;
-            LabelPrint();
+            
             TextAppVersion.Text = "v" + MiscMethods.Version;
             FindImages();
             FindLabels();
+            LabelPrint();
             ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
             mainImage.Visibility = Visibility.Visible;
             MiscMethods.RegRecreate(empty);
@@ -68,7 +69,7 @@ namespace FeaturesOverlayPresentation
                     _ = ComboBoxNavigate.Items.Add(item.Remove(0, 5));
                 }
 
-                ComboBoxNavigate.SelectedIndex = ComboBoxNavigate.Items.IndexOf(ConstantsDLL.Properties.Strings.introScreen);
+                ComboBoxNavigate.SelectedIndex = 0;
             }
             catch
             {
@@ -127,7 +128,7 @@ namespace FeaturesOverlayPresentation
         public void FindLabels()
         {
             finalCount = 0;
-            string imgDir = MiscMethods.OSCheck();
+            string imgDir = Directory.GetCurrentDirectory() + ConstantsDLL.Properties.Resources.resourcesDir + ConstantsDLL.Properties.Resources.imgDir;
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
@@ -162,7 +163,7 @@ namespace FeaturesOverlayPresentation
         public void FindImages()
         {
             finalCount = 0;
-            string imgDir = MiscMethods.OSCheck();
+            string imgDir = Directory.GetCurrentDirectory() + ConstantsDLL.Properties.Resources.resourcesDir + ConstantsDLL.Properties.Resources.imgDir;
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
@@ -319,7 +320,7 @@ namespace FeaturesOverlayPresentation
                 MiscMethods.RegDelete();
                 RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FopRegKey);
                 key.SetValue(ConstantsDLL.Properties.Resources.DidItRunAlready, 1);
-                File.Delete(ConstantsDLL.Properties.Resources.loginPath);
+                File.Delete(StringsAndConstants.credentialsFilePath);
                 Application.Current.Shutdown();
             }
         }
@@ -380,7 +381,7 @@ namespace FeaturesOverlayPresentation
         //When the 'exit' button is pressed
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            File.Delete(ConstantsDLL.Properties.Resources.loginPath);
+            File.Delete(StringsAndConstants.credentialsFilePath);
             Application.Current.Shutdown();
         }
 

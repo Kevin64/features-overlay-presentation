@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "FOP"
-#define MyAppVersion GetVersionNumbersString('..\bin\Release\FeaturesOverlayPresentation.exe')
+#define MyAppVersion GetVersionNumbersString('..\bin\Release\FOP.exe')
 #define MyAppPublisher "Kevin Vinícius Teixeira Costa"
 #define MyAppURL "https://github.com/Kevin64/FeaturesOverlayPresentation"
-#define MyAppExeName "FeaturesOverlayPresentation.exe"
+#define MyAppExeName "FOP.exe"
 #define RegKey "Software\FOP"
 
 [Setup]
@@ -26,7 +26,7 @@ DisableDirPage=yes
 ;PrivilegesRequired=lowest
 ;PrivilegesRequiredOverridesAllowed=dialog
 OutputBaseFilename=FOPsetupCCSH-{#MyAppVersion}
-OutputDir=..\bin\inno-output
+OutputDir=..\bin\zip\localized\
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -38,42 +38,47 @@ MinVersion=6.1sp1
 Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
 
 [Dirs]
-Name: "{app}\img-windows11"
-Name: "{app}\img-windows10"
-Name: "{app}\img-windows7"
+Name: "{app}\resources"
+Name: "{app}\pt"
 
 [Files]
-Source: "..\bin\Release\BCrypt.Net-Next.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\BCrypt.Net-Next.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\ConstantsDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\Constants.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\INIFileParser.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\INIFileParser.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\JsonFileReaderDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\JsonFileReader.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\LogGeneratorDLL.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\LogGenerator.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\FeaturesOverlayPresentation.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\System.Memory.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\FeaturesOverlayPresentation.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\System.Numerics.Vectors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\System.Buffers.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\img-windows11\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows11"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\bin\release-7z-localized\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\img-windows10\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows10"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\bin\release-7z-localized\FOP.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\img-windows7\*"; DestDir: "{commonpf32}\{#MyAppName}\img-windows7"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\bin\release-7z-localized\FOP.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\Rever tutorial de uso do computador.lnk"; DestDir: "{commondesktop}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\Rever tutorial de uso do computador.lnk"; DestDir: "{commonstartmenu}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\pt\*"; DestDir: "{commonpf32}\{#MyAppName}\pt"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: "..\bin\Release\Rever tutorial de uso do computador.lnk"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\release-7z-localized\resources\*"; DestDir: "{commonpf32}\{#MyAppName}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
+
+Source: "..\bin\release-7z-localized\Rever tutorial de uso do computador.lnk"; DestDir: "{commondesktop}"; Flags: ignoreversion
+
+Source: "..\bin\release-7z-localized\Rever tutorial de uso do computador.lnk"; DestDir: "{commonstartmenu}"; Flags: ignoreversion
+
+Source: "..\bin\release-7z-localized\Rever tutorial de uso do computador.lnk"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 ;[Registry]
@@ -174,6 +179,33 @@ begin
     // see https://docs.microsoft.com/en-us/dotnet/framework/migration-guide/how-to-determine-which-versions-are-installed
     // for details
     result := success and (install = 1) and (release >= 528040);
+end;
+
+function CheckOS(): String;
+var
+    Version: TWindowsVersion;
+begin
+    if Version.Major = 6 then
+    begin
+      if Version.Minor = 1 then
+      begin
+        result := 'windows7';
+        Exit;
+      end;
+    end;
+    if Version.Major = 10 then
+    begin
+      if (Version.Build >= 19041) and (Version.Build < 22000) then
+      begin
+        result := 'windows10';
+        Exit;
+      end;
+      if Version.Build >= 22000 then
+      begin
+        result := 'windows11';
+        Exit;
+      end;
+    end;
 end;
 
 function InitializeSetup(): Boolean;

@@ -1,16 +1,15 @@
 ﻿using System.Reflection;
 using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
 // As informações gerais sobre um assembly são controladas por
 // conjunto de atributos. Altere estes valores de atributo para modificar as informações
 // associada a um assembly.
-[assembly: AssemblyTitle("FeaturesOverlayPresentation")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Features Overlay Presentation")]
+[assembly: AssemblyDescription("Presents steps and information about a subject that is important for user of an organization")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FeaturesOverlayPresentation")]
+[assembly: AssemblyProduct("Features Overlay Presentation")]
 [assembly: AssemblyCopyright("Copyright © 2023 Kevin Vinícius Teixeira Costa")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
