@@ -9,7 +9,7 @@ namespace HardwareInformation
         public AboutBox()
         {
             InitializeComponent();
-            Text = string.Format("Sobre {0}", AssemblyTitle);
+            Text = string.Format("{0} {1}", labelFormTitle.Text, AssemblyTitle);
             labelProductName.Text = AssemblyProduct;
 #if DEBUG
             labelVersion.Text = string.Format("Versão {0}-{1}", AssemblyVersion, Resources.dev_status);
@@ -18,7 +18,7 @@ namespace HardwareInformation
 #endif
             labelCopyright.Text = AssemblyCopyright;
             labelCompanyName.Text = AssemblyCompany;
-            textBoxDescription.Text = AssemblyDescription;
+            textBoxDescription.Text = Strings.description;
             textBoxDescription.LinkClicked += TextBoxDescription_LinkClicked;
         }
 

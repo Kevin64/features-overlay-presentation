@@ -121,6 +121,138 @@
     <value />
     <comment>FeaturesOverlayPresentation.Strings.PT</comment>
   </data>
+  <data name="description" xml:space="preserve">
+    <value>Software criado, desenvolvido e mantido por Kevin Costa. Programado em C# utilizando .NET Framework 4.8. Sistemas com suporte: Windows 7, 10 e 11.
+
+    • Copyright © 2023 Kevin Vinícius Teixeira Costa
+    • URL do projeto: https://github.com/Kevin64/features-overlay-presentation
+    • Licença: (MIT) https://github.com/Kevin64/features-overlay-presentation/blob/master/LICENSE
+
+Este software deve ser usado em conjunto com projeto APCS para funcionar corretamente.
+
+► Asset and Personnel Control System - APCS
+    • Copyright © 2023 Kevin Vinícius Teixeira Costa
+    • URL do projeto: https://github.com/Kevin64/asset-and-personnel-control-system
+    • Licença: (MIT) https://github.com/Kevin64/asset-and-personnel-control-system/blob/main/LICENSE
+
+Este software e suas bibliotecas (DLLs) utilizam artes, bibliotecas Open Source e códigos avulsos de terceiros. Todos os créditos vão para os seus respectivos criadores e mantenedores. Estes componentes estão listados no README na página do projeto no GitHub: https://github.com/Kevin64/Dependencies/blob/main/README.md
+
+► Microsoft.Xaml.Behaviors.Wpf
+    • Copyright © 2015 Microsoft
+    • URL do projeto: https://github.com/Microsoft/XamlBehaviorsWpf
+    • Licença: (MIT) https://github.com/microsoft/XamlBehaviorsWpf/blob/master/LICENSE
+
+► System.Buffers, System.Memory, System.Numerics.Vectors, System.Runtime.CompilerServices.Unsafe
+    • Copyright © .NET Foundation and Contributors
+    • URL do projeto: https://dot.net/
+    • Licença: (MIT) https://github.com/dotnet/corefx/blob/master/LICENSE.TXT
+
+► ini-parser
+    • Copyright © 2008 Ricardo Amores Hernández
+    • URL do projeto: https://github.com/rickyah/ini-parser
+    • Licença: (MIT) https://github.com/rickyah/ini-parser/blob/master/LICENSE
+
+► Newtonsoft.Json
+    • Copyright © 2007 James Newton-King
+    • URL do projeto: https://github.com/JamesNK/Newtonsoft.Json
+    • Licença: (MIT) https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
+
+► BCrypt.Net-Next
+    • Copyright © 2006 Damien Miller djm@mindrot.org (jBCrypt)
+    • Copyright © 2013 Ryan D. Emerle (.Net port)
+    • Copyright © 2016/2021 Chris McKee (.Net-core port / patches)
+    • URL do projeto: https://github.com/BcryptNet/bcrypt.net
+    • Licença: (MIT) https://github.com/BcryptNet/bcrypt.net/blob/main/licence.txt
+</value>
+  </data>
+  <data name="lblFixedAdvancedOptionsText" xml:space="preserve">
+    <value>Opções avançadas</value>
+  </data>
+  <data name="lblFixedAssetNumberText" xml:space="preserve">
+    <value>Número do ativo:</value>
+  </data>
+  <data name="lblFixedButtonAboutText" xml:space="preserve">
+    <value>Sobre</value>
+  </data>
+  <data name="lblFixedButtonAuthenticateText" xml:space="preserve">
+    <value>Autenticar</value>
+  </data>
+  <data name="lblFixedButtonCloseProgramText" xml:space="preserve">
+    <value>Fechar programa</value>
+  </data>
+  <data name="lblFixedButtonExitText" xml:space="preserve">
+    <value>Sair</value>
+  </data>
+  <data name="lblFixedButtonFinishText" xml:space="preserve">
+    <value>Finalizar</value>
+  </data>
+  <data name="lblFixedButtonNextText" xml:space="preserve">
+    <value>Próximo</value>
+  </data>
+  <data name="lblFixedButtonNoText" xml:space="preserve">
+    <value>Não</value>
+  </data>
+  <data name="lblFixedButtonPasswordText" xml:space="preserve">
+    <value>Senha:</value>
+  </data>
+  <data name="lblFixedButtonPreviousText" xml:space="preserve">
+    <value>Anterior</value>
+  </data>
+  <data name="lblFixedButtonSendDataText" xml:space="preserve">
+    <value>Enviar dados de entrega</value>
+  </data>
+  <data name="lblFixedButtonUsernameText" xml:space="preserve">
+    <value>Agente:</value>
+  </data>
+  <data name="lblFixedButtonYesText" xml:space="preserve">
+    <value>Sim</value>
+  </data>
+  <data name="lblFixedCorruptionText" xml:space="preserve">
+    <value>Foi detectado uma corrupção na instalação do programa.
+Por favor, reinstale o programa e o execute novamente.</value>
+  </data>
+  <data name="lblFixedCorruptionTitleText" xml:space="preserve">
+    <value>Erro de instalação</value>
+  </data>
+  <data name="lblFixedEmployeePresentText" xml:space="preserve">
+    <value>Funcionário presente:</value>
+  </data>
+  <data name="lblFixedEmployeeRegistrationNumberText" xml:space="preserve">
+    <value>Matrícula:</value>
+  </data>
+  <data name="lblFixedFormattingText" xml:space="preserve">
+    <value>Formatação</value>
+  </data>
+  <data name="lblFixedIncorrectCredText" xml:space="preserve">
+    <value>Credenciais incorretas!</value>
+  </data>
+  <data name="lblFixedMaintenanceText" xml:space="preserve">
+    <value>Manutenção</value>
+  </data>
+  <data name="lblFixedPageText" xml:space="preserve">
+    <value>Página:</value>
+  </data>
+  <data name="lblFixedRadioAbsentText" xml:space="preserve">
+    <value>Ausente</value>
+  </data>
+  <data name="lblFixedRadioPresentText" xml:space="preserve">
+    <value>Presente</value>
+  </data>
+  <data name="lblFixedRelaunchTitleText" xml:space="preserve">
+    <value>Assistir novamente?</value>
+  </data>
+  <data name="lblFixedSeeAgainText" xml:space="preserve">
+    <value>Deseja visualizar o tutorial novamente?</value>
+  </data>
+  <data name="lblFixedServerIPText" xml:space="preserve">
+    <value>IP:</value>
+  </data>
+  <data name="lblFixedServerPortText" xml:space="preserve">
+    <value>Porta:</value>
+  </data>
+  <data name="lblFixedServiceTypeText" xml:space="preserve">
+    <value>Tipo de serviço:</value>
+  </data>
   <data name="LOG_ADDING_REG" xml:space="preserve">
     <value>Adicionando chaves de registro</value>
   </data>

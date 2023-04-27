@@ -23,9 +23,9 @@ namespace FeaturesOverlayPresentation
         private bool present, isFormat;
         private readonly bool resPass = true;
         private readonly LogGenerator log;
-        private static List<string[]> definitionListSection;
-        private static string[] logLocationSection, logo1URLSection, logo2URLSection, logo3URLSection, agentData = new string[2];
-        private static string logLocationStr, logo1URLStr, logo2URLStr, logo3URLStr;
+        private static List<string[]> parametersListSection;
+        private static string[] logLocationSection, serverIPListSection, serverPortListSection, logo1URLSection, logo2URLSection, logo3URLSection, agentData = new string[2];
+        private static string logLocationStr, serverIPStr, serverPortStr, logo1URLStr, logo2URLStr, logo3URLStr;
         private MainWindow m;
 
         public Relaunch()
@@ -39,22 +39,31 @@ namespace FeaturesOverlayPresentation
                 def = parser.ReadFile(ConstantsDLL.Properties.Resources.defFile, Encoding.UTF8);
 
                 logLocationStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_9];
+                serverIPStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_11];
+                serverPortStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_12];
                 logo1URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_16];
                 logo2URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_17];
                 logo3URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_18];
 
                 logLocationSection = logLocationStr.Split().ToArray();
+                serverIPListSection = serverIPStr.Split(',').ToArray();
+                serverPortListSection = serverPortStr.Split(',').ToArray();
                 logo1URLSection = logo1URLStr.Split().ToArray();
                 logo2URLSection = logo2URLStr.Split().ToArray();
                 logo3URLSection = logo3URLStr.Split().ToArray();
 
-                definitionListSection = new List<string[]>
+                parametersListSection = new List<string[]>
                 {
                     logLocationSection,
                     logo1URLSection,
                     logo2URLSection,
-                    logo3URLSection
+                    logo3URLSection,
+                    serverIPListSection,
+                    serverPortListSection
                 };
+
+                comboBoxServerIP.ItemsSource = serverIPListSection;
+                comboBoxServerPort.ItemsSource = serverPortListSection;
 
                 bool logFileExists = bool.Parse(MiscMethods.CheckIfLogExists(logLocationStr));
 #if DEBUG
@@ -62,8 +71,8 @@ namespace FeaturesOverlayPresentation
                 log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status, logLocationStr, ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status + ConstantsDLL.Properties.Resources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
                 log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_DEBUG_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
 
-                serverDropDown.SelectedIndex = 1;
-                portDropDown.SelectedIndex = 0;
+                comboBoxServerIP.SelectedIndex = 1;
+                comboBoxServerPort.SelectedIndex = 0;
 #else
                 //Create a new log file (or append to a existing one)
                 log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version, logLocationStr, ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + ConstantsDLL.Properties.Resources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
@@ -94,7 +103,7 @@ namespace FeaturesOverlayPresentation
                     if (!MiscMethods.RegCheck())
                     {
                         resPass = MiscMethods.ResolutionError(true);
-                        m = new MainWindow(definitionListSection);
+                        m = new MainWindow(parametersListSection);
                         m.Show();
                         Hide();
                         ShowInTaskbar = false;
@@ -159,7 +168,7 @@ namespace FeaturesOverlayPresentation
             try
             {
                 log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_RUNNING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-                m = new MainWindow(definitionListSection);
+                m = new MainWindow(parametersListSection);
                 m.Show();
                 Hide();
             }
@@ -182,40 +191,39 @@ namespace FeaturesOverlayPresentation
         //If 'send' button is pressed
         private void YesLaterButton_Click(object sender, RoutedEventArgs e)
         {
-            string[] pcPatr;
+            string[] assetJsonStr;
             DateTime dateAndTime = DateTime.Today;
             bool check = false;
-            if (patrimTextBox.Text != string.Empty) //If patrimony textbox is not empty
+            if (textBoxAssetNumber.Text != string.Empty) //If patrimony textbox is not empty
             {
-                if (CredentialsFileReader.CheckHostST(serverDropDown.Text, portDropDown.Text)) //If login succeeded
+                if (CredentialsFileReader.CheckHostST(comboBoxServerIP.Text, comboBoxServerPort.Text)) //If login succeeded
                 {
                     if (!pressed) //If 'send' button is not pressed already
                     {
-                        pcPatr = AssetFileReader.FetchInfoST(patrimTextBox.Text, serverDropDown.Text, portDropDown.Text);
-                        if (pcPatr[0] != "false")
+                        assetJsonStr = AssetFileReader.FetchInfoST(textBoxAssetNumber.Text, comboBoxServerIP.Text, comboBoxServerPort.Text);
+                        if (assetJsonStr[0] != "false")
                         {
-                            if (pcPatr[9] == "1")
+                            if (assetJsonStr[9] == "1")
                             {
                                 log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), ConstantsDLL.Properties.Strings.PC_DROPPED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                                 _ = MessageBox.Show(ConstantsDLL.Properties.Strings.PC_DROPPED, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                             }
                             else
                             {
-                                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_PATR_NUM, patrimTextBox.Text, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
+                                log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_PATR_NUM, textBoxAssetNumber.Text, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                                 if (present == false) //If employee is not present
                                 {
                                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_EMPLOYEEAWAY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-                                    webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + serverDropDown.Text + ":" + portDropDown.Text
-                                + "/" + ConstantsDLL.Properties.Resources.deliveryURL + ".php" + ConstantsDLL.Properties.Resources.phpAssetNumber + patrimTextBox.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryDate + dateAndTime.ToShortDateString() + ConstantsDLL.Properties.Resources.phpDeliveredToRegistrationNumber + ConstantsDLL.Properties.Strings.absent + ConstantsDLL.Properties.Resources.phpLastDeliveryMadeBy + agentData[0]);
+                                    webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + "/" + ConstantsDLL.Properties.Resources.deliveryURL + ".php" + ConstantsDLL.Properties.Resources.phpAssetNumber + textBoxAssetNumber.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryDate + dateAndTime.ToShortDateString() + ConstantsDLL.Properties.Resources.phpDeliveredToRegistrationNumber + ConstantsDLL.Properties.Strings.absent + ConstantsDLL.Properties.Resources.phpLastDeliveryMadeBy + agentData[0]);
                                     check = true;
                                 }
-                                else if (SIAPETextBox.Text != string.Empty) //If employee is present and SIAPE textbox is not empty
+                                else if (textBoxRegistrationNumber.Text != string.Empty) //If employee is present and SIAPE textbox is not empty
                                 {
                                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_EMPLOYEEPRESENT, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-                                    webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + serverDropDown.Text + ":" + portDropDown.Text
-                                + "/" + ConstantsDLL.Properties.Resources.deliveryURL + ".php" + ConstantsDLL.Properties.Resources.phpAssetNumber + patrimTextBox.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryDate + dateAndTime.ToShortDateString() + ConstantsDLL.Properties.Resources.phpDeliveredToRegistrationNumber + SIAPETextBox.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryMadeBy + agentData[0]);
+                                    webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text
+                                + "/" + ConstantsDLL.Properties.Resources.deliveryURL + ".php" + ConstantsDLL.Properties.Resources.phpAssetNumber + textBoxAssetNumber.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryDate + dateAndTime.ToShortDateString() + ConstantsDLL.Properties.Resources.phpDeliveredToRegistrationNumber + textBoxRegistrationNumber.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryMadeBy + agentData[0]);
                                     check = true;
                                 }
                                 else //If employee is present and SIAPE textbox is empty
@@ -236,8 +244,8 @@ namespace FeaturesOverlayPresentation
                     else //If 'send' button is already pressed
                     {
                         log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_NOTSCHEDULING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-                        webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + serverDropDown.Text + ":" + portDropDown.Text
-                    + "/" + ConstantsDLL.Properties.Resources.deliveryURL + ".php" + ConstantsDLL.Properties.Resources.phpAssetNumber + patrimTextBox.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryDate + null + ConstantsDLL.Properties.Resources.phpDeliveredToRegistrationNumber + null + ConstantsDLL.Properties.Resources.phpLastDeliveryMadeBy + null);
+                        webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text
+                    + "/" + ConstantsDLL.Properties.Resources.deliveryURL + ".php" + ConstantsDLL.Properties.Resources.phpAssetNumber + textBoxAssetNumber.Text + ConstantsDLL.Properties.Resources.phpLastDeliveryDate + null + ConstantsDLL.Properties.Resources.phpDeliveredToRegistrationNumber + null + ConstantsDLL.Properties.Resources.phpLastDeliveryMadeBy + null);
                         check = true;
                         if (resPass)
                         {
@@ -286,12 +294,12 @@ namespace FeaturesOverlayPresentation
                     }
 
                     pressed = true;
-                    patrimTextBox.IsEnabled = false;
-                    EmployeePresentRadioNo.IsEnabled = false;
-                    EmployeePresentRadioYes.IsEnabled = false;
-                    FormatRadioButton.IsEnabled = false;
-                    MaintenanceRadioButton.IsEnabled = false;
-                    SIAPETextBox.IsEnabled = false;
+                    textBoxAssetNumber.IsEnabled = false;
+                    radioButtonEmployeePresentNo.IsEnabled = false;
+                    radioButtonEmployeePresentYes.IsEnabled = false;
+                    radioButtonFormatting.IsEnabled = false;
+                    radioButtonMaintenance.IsEnabled = false;
+                    textBoxRegistrationNumber.IsEnabled = false;
                 }
                 else //If 'send' button is pressed
                 {
@@ -315,13 +323,13 @@ namespace FeaturesOverlayPresentation
                     }
 
                     pressed = false;
-                    patrimTextBox.IsEnabled = true;
-                    EmployeePresentRadioNo.IsEnabled = true;
-                    EmployeePresentRadioYes.IsEnabled = true;
-                    FormatRadioButton.IsEnabled = true;
-                    MaintenanceRadioButton.IsEnabled = true;
-                    if (EmployeePresentRadioYes.IsChecked == true)
-                        SIAPETextBox.IsEnabled = true;
+                    textBoxAssetNumber.IsEnabled = true;
+                    radioButtonEmployeePresentNo.IsEnabled = true;
+                    radioButtonEmployeePresentYes.IsEnabled = true;
+                    radioButtonFormatting.IsEnabled = true;
+                    radioButtonMaintenance.IsEnabled = true;
+                    if (radioButtonEmployeePresentYes.IsChecked == true)
+                        textBoxRegistrationNumber.IsEnabled = true;
                 }
             }
         }
@@ -337,14 +345,14 @@ namespace FeaturesOverlayPresentation
         //When clicking the authenticate button
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            if (userTextBox.Text == string.Empty || passwordBox.Password == string.Empty) //If user and password textboxes are empty
+            if (textBoxUsername.Text == string.Empty || textBoxPassword.Password == string.Empty) //If user and password textboxes are empty
             {
                 _ = MessageBox.Show(ConstantsDLL.Properties.Strings.NO_AUTH, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else //... if are not empty
             {
                 log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_INIT_LOGIN, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-                agentData = CredentialsFileReader.FetchInfoST(userTextBox.Text, passwordBox.Password, serverDropDown.Text, portDropDown.Text);
+                agentData = CredentialsFileReader.FetchInfoST(textBoxUsername.Text, textBoxPassword.Password, comboBoxServerIP.Text, comboBoxServerPort.Text);
 
                 if (agentData == null) //If server is not found
                 {
@@ -355,28 +363,28 @@ namespace FeaturesOverlayPresentation
                 {
                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_ERROR), ConstantsDLL.Properties.Strings.LOG_LOGIN_FAILED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
                     warningLabel.Visibility = Visibility.Visible;
-                    passwordBox.SelectAll();
-                    _ = passwordBox.Focus();
+                    textBoxPassword.SelectAll();
+                    _ = textBoxPassword.Focus();
                 }
                 else //If server is found and login succeeds
                 {
                     log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_LOGIN_SUCCESS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutGUI));
-                    patrimLabel.IsEnabled = true;
-                    patrimTextBox.IsEnabled = true;
-                    serverLabel.IsEnabled = false;
-                    serverDropDown.IsEnabled = false;
-                    portLabel.IsEnabled = false;
-                    portDropDown.IsEnabled = false;
+                    lblFixedAssetNumber.IsEnabled = true;
+                    textBoxAssetNumber.IsEnabled = true;
+                    lblFixedServerIP.IsEnabled = false;
+                    comboBoxServerIP.IsEnabled = false;
+                    lblFixedServerPort.IsEnabled = false;
+                    comboBoxServerPort.IsEnabled = false;
                     warningLabel.Visibility = Visibility.Hidden;
-                    userLabel.IsEnabled = false;
-                    userTextBox.IsEnabled = false;
-                    passwordLabel.IsEnabled = false;
-                    passwordBox.IsEnabled = false;
-                    EmployeePresentLabel.IsEnabled = true;
-                    EmployeePresentRadioYes.IsEnabled = true;
-                    EmployeePresentRadioNo.IsEnabled = true;
-                    FormatRadioButton.IsEnabled = true;
-                    MaintenanceRadioButton.IsEnabled = true;
+                    lblFixedUsername.IsEnabled = false;
+                    textBoxUsername.IsEnabled = false;
+                    lblFixedPassword.IsEnabled = false;
+                    textBoxPassword.IsEnabled = false;
+                    lblFixedEmployeePresent.IsEnabled = true;
+                    radioButtonEmployeePresentYes.IsEnabled = true;
+                    radioButtonEmployeePresentNo.IsEnabled = true;
+                    radioButtonFormatting.IsEnabled = true;
+                    radioButtonMaintenance.IsEnabled = true;
                     AuthButton.IsEnabled = false;
                 }
             }
@@ -399,42 +407,42 @@ namespace FeaturesOverlayPresentation
         }
 
         //If 'employee radio button' changes...
-        private void EmployeePresentRadioYes_Checked(object sender, RoutedEventArgs e)
+        private void RadioButtonEmployeePresentYes_Checked(object sender, RoutedEventArgs e)
         {
-            SIAPETextBox.IsEnabled = true;
+            textBoxRegistrationNumber.IsEnabled = true;
             present = true;
-            if (FormatRadioButton.IsChecked == true || MaintenanceRadioButton.IsChecked == true) //... and 'format/maintenance radio button changes
+            if (radioButtonFormatting.IsChecked == true || radioButtonMaintenance.IsChecked == true) //... and 'format/maintenance radio button changes
             {
                 YesLaterButton.IsEnabled = true;
             }
         }
 
         //If 'employee radio button' changes...
-        private void EmployeePresentRadioNo_Checked(object sender, RoutedEventArgs e)
+        private void RadioButtonEmployeePresentNo_Checked(object sender, RoutedEventArgs e)
         {
-            SIAPETextBox.IsEnabled = false;
+            textBoxRegistrationNumber.IsEnabled = false;
             present = false;
-            if (FormatRadioButton.IsChecked == true || MaintenanceRadioButton.IsChecked == true) //... and 'format/maintenance radio button changes
+            if (radioButtonFormatting.IsChecked == true || radioButtonMaintenance.IsChecked == true) //... and 'format/maintenance radio button changes
             {
                 YesLaterButton.IsEnabled = true;
             }
         }
 
         //If 'format/maintenance radio button changes...
-        private void FormatRadioButton_Checked(object sender, RoutedEventArgs e)
+        private void RadioButtonFormatting_Checked(object sender, RoutedEventArgs e)
         {
             isFormat = true;
-            if (EmployeePresentRadioNo.IsChecked == true || EmployeePresentRadioYes.IsChecked == true) //... and 'employee radio button' changes
+            if (radioButtonEmployeePresentNo.IsChecked == true || radioButtonEmployeePresentYes.IsChecked == true) //... and 'employee radio button' changes
             {
                 YesLaterButton.IsEnabled = true;
             }
         }
 
         //If 'format/maintenance radio button changes...
-        private void MaintenanceRadioButton_Checked(object sender, RoutedEventArgs e)
+        private void RadioButtonMaintenance_Checked(object sender, RoutedEventArgs e)
         {
             isFormat = false;
-            if (EmployeePresentRadioNo.IsChecked == true || EmployeePresentRadioYes.IsChecked == true) //... and 'employee radio button' changes
+            if (radioButtonEmployeePresentNo.IsChecked == true || radioButtonEmployeePresentYes.IsChecked == true) //... and 'employee radio button' changes
             {
                 YesLaterButton.IsEnabled = true;
             }

@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "FOP"
-#define MyAppVersion GetVersionNumbersString('..\bin\Release\FOP.exe')
+#define MyAppVersion GetVersionNumbersString('..\bin\release-7z-localized\FOP.exe')
 #define MyAppPublisher "Kevin Vinícius Teixeira Costa"
-#define MyAppURL "https://github.com/Kevin64/FeaturesOverlayPresentation"
+#define MyAppURL "https://github.com/Kevin64/features-overlay-presentation"
 #define MyAppExeName "FOP.exe"
 #define RegKey "Software\FOP"
 
@@ -25,8 +25,8 @@ DisableDirPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 ;PrivilegesRequiredOverridesAllowed=dialog
-OutputBaseFilename=FOPsetupCCSH-{#MyAppVersion}
-OutputDir=..\bin\zip\localized\
+OutputBaseFilename=FOPsetup-{#MyAppVersion}
+OutputDir=..\bin\zip\github
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -42,43 +42,38 @@ Name: "{app}\resources"
 Name: "{app}\pt"
 
 [Files]
-Source: "..\bin\release-7z-localized\BCrypt.Net-Next.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\BCrypt.Net-Next.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\Constants.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\Constants.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\INIFileParser.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\INIFileParser.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\JsonFileReader.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\JsonFileReader.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\LogGenerator.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\LogGenerator.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\System.Memory.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\System.Memory.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\System.Numerics.Vectors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\System.Numerics.Vectors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\System.Buffers.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\System.Buffers.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\FOP.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\FOP.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\FOP.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\FOP.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: "..\bin\Release\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\release-7z-localized\pt\*"; DestDir: "{commonpf32}\{#MyAppName}\pt"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\bin\Release\pt\*"; DestDir: "{commonpf32}\{#MyAppName}\pt"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: "..\bin\release-7z-localized\resources\*"; DestDir: "{commonpf32}\{#MyAppName}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\bin\Release\resources\*"; DestDir: "{commonpf32}\{#MyAppName}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: "..\bin\release-7z-localized\Rever tutorial de uso do computador.lnk"; DestDir: "{commondesktop}"; Flags: ignoreversion
-
-Source: "..\bin\release-7z-localized\Rever tutorial de uso do computador.lnk"; DestDir: "{commonstartmenu}"; Flags: ignoreversion
-
-Source: "..\bin\release-7z-localized\Rever tutorial de uso do computador.lnk"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 ;[Registry]
@@ -181,68 +176,8 @@ begin
     result := success and (install = 1) and (release >= 528040);
 end;
 
-function CheckOS(): String;
-var
-    Version: TWindowsVersion;
-begin
-    if Version.Major = 6 then
-    begin
-      if Version.Minor = 1 then
-      begin
-        result := 'windows7';
-        Exit;
-      end;
-    end;
-    if Version.Major = 10 then
-    begin
-      if (Version.Build >= 19041) and (Version.Build < 22000) then
-      begin
-        result := 'windows10';
-        Exit;
-      end;
-      if Version.Build >= 22000 then
-      begin
-        result := 'windows11';
-        Exit;
-      end;
-    end;
-end;
-
 function InitializeSetup(): Boolean;
-var
-    Version: TWindowsVersion;
-
 begin
-    GetWindowsVersionEx(Version);
-
-    // Disallow installation on Home edition of Windows
-    if Version.SuiteMask and VER_SUITE_PERSONAL <> 0 then
-    begin
-      SuppressibleMsgBox('Este programa não pode ser instalado na versão Home do Windows',
-        mbCriticalError, MB_OK, IDOK);
-      result := False;
-      Exit;
-    end;
-
-    // Disallow installation on Windows 8.x
-    if Version.Major = 6 then
-    begin
-      if Version.Minor = 3 then
-      begin
-        SuppressibleMsgBox('Este programa não pode ser instalado no Windows 8.1',
-          mbCriticalError, MB_OK, IDOK);
-        result := False;
-        Exit;
-      end;
-      if Version.Minor = 2 then
-      begin
-        SuppressibleMsgBox('Este programa não pode ser instalado no Windows 8',
-          mbCriticalError, MB_OK, IDOK);
-        result := False;
-        Exit;
-      end
-    end;
-
     if not IsDotNetDetected() then begin
         MsgBox('Este programa requer o Microsoft .NET Framework 4.8 ou superior.'#13#13
             'Por favor, instale-o e execute este programa novamente.', mbInformation, MB_OK);

@@ -30,7 +30,7 @@ namespace FeaturesOverlayPresentation
         private bool empty = false;
         private string newFilePath;
         private List<string> imgList, labelList;
-        private readonly List<string[]> defList;
+        private readonly List<string[]> parametersList;
         private readonly BlurEffect blurEffect1;
         private ReinstallError e;
         private DispatcherTimer timer;
@@ -43,7 +43,7 @@ namespace FeaturesOverlayPresentation
         private const int WS_EX_APPWINDOW = 0x00040000, WS_EX_TOOLWINDOW = 0x00000080;
 
         //Main Window constructor
-        public MainWindow(List<string[]> definitionListSection)
+        public MainWindow(List<string[]> parametersList)
         {
             InitializeComponent();
             _ = new Microsoft.Xaml.Behaviors.DefaultTriggerAttribute(typeof(Trigger), typeof(Microsoft.Xaml.Behaviors.TriggerBase), null);
@@ -59,8 +59,7 @@ namespace FeaturesOverlayPresentation
             mainImage.Visibility = Visibility.Visible;
             MiscMethods.RegRecreate(empty);
 
-            defList = new List<string[]>();
-            defList = definitionListSection;
+            this.parametersList = parametersList;
 
             try
             {
@@ -328,19 +327,19 @@ namespace FeaturesOverlayPresentation
         //When clicking on the arms pictures, opens its sites
         private void Logo2_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            _ = Process.Start(defList[2][0]);
+            _ = Process.Start(parametersList[2][0]);
         }
 
         //When clicking on the arms pictures, opens its sites
         private void Logo1_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            _ = Process.Start(defList[1][0]);
+            _ = Process.Start(parametersList[1][0]);
         }
 
         //When clicking on the arms pictures, opens its sites
         private void Logo3_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            _ = Process.Start(defList[3][0]);
+            _ = Process.Start(parametersList[3][0]);
         }
 
         //When the 'previous' button is pressed

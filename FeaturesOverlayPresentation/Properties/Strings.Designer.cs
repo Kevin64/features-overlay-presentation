@@ -22,7 +22,7 @@ namespace FeaturesOverlayPresentation.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Strings {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace FeaturesOverlayPresentation.Properties {
         ///   Retorna a instância de ResourceManager armazenada em cache usada por essa classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FeaturesOverlayPresentation.Properties.Strings", typeof(Strings).Assembly);
@@ -51,7 +51,7 @@ namespace FeaturesOverlayPresentation.Properties {
         ///   pesquisas de recursos que usam essa classe de recurso de tipo de alta segurança.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,16 +63,296 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a .
         /// </summary>
-        internal static string aaaPROJECTaaa {
+        public static string aaaPROJECTaaa {
             get {
                 return ResourceManager.GetString("aaaPROJECTaaa", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Software created, developed and maintained by Kevin Costa. Programmed in C# using .NET Framework 4.8. Supported systems: Windows 7, 10 and 11.
+        ///
+        ///    • Copyright © 2023 Kevin Vinícius Teixeira Costa
+        ///    • Project URL: https://github.com/Kevin64/features-overlay-presentation
+        ///    • License: (MIT) https://github.com/Kevin64/features-overlay-presentation/blob/master/LICENSE
+        ///
+        ///This software must be used in conjunction with APCS project to work properly.
+        ///
+        ///► Asset and Personnel Control System - APCS
+        ///    • Co [o restante da cadeia de caracteres foi truncado]&quot;;.
+        /// </summary>
+        public static string description {
+            get {
+                return ResourceManager.GetString("description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Advanced options.
+        /// </summary>
+        public static string lblFixedAdvancedOptionsText {
+            get {
+                return ResourceManager.GetString("lblFixedAdvancedOptionsText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Asset number:.
+        /// </summary>
+        public static string lblFixedAssetNumberText {
+            get {
+                return ResourceManager.GetString("lblFixedAssetNumberText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a About.
+        /// </summary>
+        public static string lblFixedButtonAboutText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonAboutText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Authenticate.
+        /// </summary>
+        public static string lblFixedButtonAuthenticateText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonAuthenticateText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Close program.
+        /// </summary>
+        public static string lblFixedButtonCloseProgramText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonCloseProgramText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Exit.
+        /// </summary>
+        public static string lblFixedButtonExitText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonExitText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Finish.
+        /// </summary>
+        public static string lblFixedButtonFinishText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonFinishText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Next.
+        /// </summary>
+        public static string lblFixedButtonNextText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonNextText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a No.
+        /// </summary>
+        public static string lblFixedButtonNoText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonNoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Password:.
+        /// </summary>
+        public static string lblFixedButtonPasswordText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonPasswordText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Previous.
+        /// </summary>
+        public static string lblFixedButtonPreviousText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonPreviousText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Send delivery data.
+        /// </summary>
+        public static string lblFixedButtonSendDataText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonSendDataText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Agent:.
+        /// </summary>
+        public static string lblFixedButtonUsernameText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonUsernameText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Yes.
+        /// </summary>
+        public static string lblFixedButtonYesText {
+            get {
+                return ResourceManager.GetString("lblFixedButtonYesText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A corruption was detected in the installation of the 
+        ///program. Please reinstall the program and run it again..
+        /// </summary>
+        public static string lblFixedCorruptionText {
+            get {
+                return ResourceManager.GetString("lblFixedCorruptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Installation error.
+        /// </summary>
+        public static string lblFixedCorruptionTitleText {
+            get {
+                return ResourceManager.GetString("lblFixedCorruptionTitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Employee present:.
+        /// </summary>
+        public static string lblFixedEmployeePresentText {
+            get {
+                return ResourceManager.GetString("lblFixedEmployeePresentText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Reg. Number:.
+        /// </summary>
+        public static string lblFixedEmployeeRegistrationNumberText {
+            get {
+                return ResourceManager.GetString("lblFixedEmployeeRegistrationNumberText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Formatting.
+        /// </summary>
+        public static string lblFixedFormattingText {
+            get {
+                return ResourceManager.GetString("lblFixedFormattingText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Incorrect credentials!.
+        /// </summary>
+        public static string lblFixedIncorrectCredText {
+            get {
+                return ResourceManager.GetString("lblFixedIncorrectCredText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Maintenance.
+        /// </summary>
+        public static string lblFixedMaintenanceText {
+            get {
+                return ResourceManager.GetString("lblFixedMaintenanceText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Page:.
+        /// </summary>
+        public static string lblFixedPageText {
+            get {
+                return ResourceManager.GetString("lblFixedPageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Absent.
+        /// </summary>
+        public static string lblFixedRadioAbsentText {
+            get {
+                return ResourceManager.GetString("lblFixedRadioAbsentText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Present.
+        /// </summary>
+        public static string lblFixedRadioPresentText {
+            get {
+                return ResourceManager.GetString("lblFixedRadioPresentText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Watch again?.
+        /// </summary>
+        public static string lblFixedRelaunchTitleText {
+            get {
+                return ResourceManager.GetString("lblFixedRelaunchTitleText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Do you want to view the tutorial again?.
+        /// </summary>
+        public static string lblFixedSeeAgainText {
+            get {
+                return ResourceManager.GetString("lblFixedSeeAgainText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a IP:.
+        /// </summary>
+        public static string lblFixedServerIPText {
+            get {
+                return ResourceManager.GetString("lblFixedServerIPText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Port:.
+        /// </summary>
+        public static string lblFixedServerPortText {
+            get {
+                return ResourceManager.GetString("lblFixedServerPortText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Service type:.
+        /// </summary>
+        public static string lblFixedServiceTypeText {
+            get {
+                return ResourceManager.GetString("lblFixedServiceTypeText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Adding registry keys.
         /// </summary>
-        internal static string LOG_ADDING_REG {
+        public static string LOG_ADDING_REG {
             get {
                 return ResourceManager.GetString("LOG_ADDING_REG", resourceCulture);
             }
@@ -81,7 +361,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Closing program.
         /// </summary>
-        internal static string LOG_CLOSING {
+        public static string LOG_CLOSING {
             get {
                 return ResourceManager.GetString("LOG_CLOSING", resourceCulture);
             }
@@ -90,7 +370,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Detecting operating system.
         /// </summary>
-        internal static string LOG_DETECTING_OS {
+        public static string LOG_DETECTING_OS {
             get {
                 return ResourceManager.GetString("LOG_DETECTING_OS", resourceCulture);
             }
@@ -99,7 +379,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Do not run on boot.
         /// </summary>
-        internal static string LOG_DISABLE_BOOT {
+        public static string LOG_DISABLE_BOOT {
             get {
                 return ResourceManager.GetString("LOG_DISABLE_BOOT", resourceCulture);
             }
@@ -108,7 +388,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Absent employee.
         /// </summary>
-        internal static string LOG_EMPLOYEEAWAY {
+        public static string LOG_EMPLOYEEAWAY {
             get {
                 return ResourceManager.GetString("LOG_EMPLOYEEAWAY", resourceCulture);
             }
@@ -117,7 +397,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Employee present.
         /// </summary>
-        internal static string LOG_EMPLOYEEPRESENT {
+        public static string LOG_EMPLOYEEPRESENT {
             get {
                 return ResourceManager.GetString("LOG_EMPLOYEEPRESENT", resourceCulture);
             }
@@ -126,7 +406,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Gathering image files.
         /// </summary>
-        internal static string LOG_ENUM_FILES {
+        public static string LOG_ENUM_FILES {
             get {
                 return ResourceManager.GetString("LOG_ENUM_FILES", resourceCulture);
             }
@@ -135,7 +415,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Formatting.
         /// </summary>
-        internal static string LOG_FORMAT_SERVICE {
+        public static string LOG_FORMAT_SERVICE {
             get {
                 return ResourceManager.GetString("LOG_FORMAT_SERVICE", resourceCulture);
             }
@@ -144,7 +424,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Found image directory.
         /// </summary>
-        internal static string LOG_IMG_FOUND {
+        public static string LOG_IMG_FOUND {
             get {
                 return ResourceManager.GetString("LOG_IMG_FOUND", resourceCulture);
             }
@@ -153,7 +433,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Image directory not found.
         /// </summary>
-        internal static string LOG_IMG_NOTFOUND {
+        public static string LOG_IMG_NOTFOUND {
             get {
                 return ResourceManager.GetString("LOG_IMG_NOTFOUND", resourceCulture);
             }
@@ -162,7 +442,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Maintenance.
         /// </summary>
-        internal static string LOG_MAINTENANCE_SERVICE {
+        public static string LOG_MAINTENANCE_SERVICE {
             get {
                 return ResourceManager.GetString("LOG_MAINTENANCE_SERVICE", resourceCulture);
             }
@@ -171,7 +451,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Not adding registry keys.
         /// </summary>
-        internal static string LOG_NOT_ADDING_REG {
+        public static string LOG_NOT_ADDING_REG {
             get {
                 return ResourceManager.GetString("LOG_NOT_ADDING_REG", resourceCulture);
             }
@@ -180,7 +460,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Deleting a record in the database.
         /// </summary>
-        internal static string LOG_NOTSCHEDULING {
+        public static string LOG_NOTSCHEDULING {
             get {
                 return ResourceManager.GetString("LOG_NOTSCHEDULING", resourceCulture);
             }
@@ -189,7 +469,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Asset number.
         /// </summary>
-        internal static string LOG_PATR_NUM {
+        public static string LOG_PATR_NUM {
             get {
                 return ResourceManager.GetString("LOG_PATR_NUM", resourceCulture);
             }
@@ -198,7 +478,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Registering delivery.
         /// </summary>
-        internal static string LOG_REGISTERING_DELIVERY {
+        public static string LOG_REGISTERING_DELIVERY {
             get {
                 return ResourceManager.GetString("LOG_REGISTERING_DELIVERY", resourceCulture);
             }
@@ -207,7 +487,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Undoing registry keys.
         /// </summary>
-        internal static string LOG_REMOVING_REG {
+        public static string LOG_REMOVING_REG {
             get {
                 return ResourceManager.GetString("LOG_REMOVING_REG", resourceCulture);
             }
@@ -216,7 +496,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Resolution error.
         /// </summary>
-        internal static string LOG_RESOLUTION_ERROR {
+        public static string LOG_RESOLUTION_ERROR {
             get {
                 return ResourceManager.GetString("LOG_RESOLUTION_ERROR", resourceCulture);
             }
@@ -225,7 +505,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Resolution below requirement.
         /// </summary>
-        internal static string LOG_RESOLUTION_FAILED {
+        public static string LOG_RESOLUTION_FAILED {
             get {
                 return ResourceManager.GetString("LOG_RESOLUTION_FAILED", resourceCulture);
             }
@@ -234,7 +514,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Suitable display resolution.
         /// </summary>
-        internal static string LOG_RESOLUTION_PASSED {
+        public static string LOG_RESOLUTION_PASSED {
             get {
                 return ResourceManager.GetString("LOG_RESOLUTION_PASSED", resourceCulture);
             }
@@ -243,7 +523,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Running main window.
         /// </summary>
-        internal static string LOG_RUNNING {
+        public static string LOG_RUNNING {
             get {
                 return ResourceManager.GetString("LOG_RUNNING", resourceCulture);
             }
@@ -252,7 +532,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Creating boot entry.
         /// </summary>
-        internal static string LOG_SCHEDULING {
+        public static string LOG_SCHEDULING {
             get {
                 return ResourceManager.GetString("LOG_SCHEDULING", resourceCulture);
             }
@@ -261,7 +541,7 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Service type.
         /// </summary>
-        internal static string LOG_SERVICE_TYPE {
+        public static string LOG_SERVICE_TYPE {
             get {
                 return ResourceManager.GetString("LOG_SERVICE_TYPE", resourceCulture);
             }
