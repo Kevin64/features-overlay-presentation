@@ -1,5 +1,4 @@
 ﻿using ConstantsDLL;
-using HardwareInformation;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;

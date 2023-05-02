@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace HardwareInformation
+namespace FeaturesOverlayPresentation
 {
     internal partial class AboutBox : Form
     {

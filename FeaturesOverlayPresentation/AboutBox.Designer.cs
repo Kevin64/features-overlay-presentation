@@ -1,4 +1,4 @@
-﻿namespace HardwareInformation
+﻿namespace FeaturesOverlayPresentation
 {
     partial class AboutBox
     {
