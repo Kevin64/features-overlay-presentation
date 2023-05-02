@@ -76,10 +76,9 @@ namespace FeaturesOverlayPresentation.Properties {
         ///    • Project URL: https://github.com/Kevin64/features-overlay-presentation
         ///    • License: (MIT) https://github.com/Kevin64/features-overlay-presentation/blob/master/LICENSE
         ///
-        ///This software must be used in conjunction with APCS project to work properly.
+        ///This software must be used in conjunction with APCS system and AIR software to work properly.
         ///
-        ///► Asset and Personnel Control System - APCS
-        ///    • Co [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///► Asset and Personnel Control System  [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         public static string description {
             get {

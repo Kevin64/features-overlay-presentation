@@ -205,16 +205,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="fonts\ZHU601BI.TTF" />
-    <Resource Include="fonts\ZHU601DI.TTF" />
-    <Resource Include="fonts\ZHU601UI.TTF" />
-    <Resource Include="fonts\ZHUM601B.TTF" />
-    <Resource Include="fonts\ZHUM601D.TTF" />
-    <Resource Include="fonts\ZHUM601I.TTF" />
-    <Resource Include="fonts\ZHUM601N.TTF" />
-    <Resource Include="fonts\ZHUM601U.TTF" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 e x64%29</ProductName>
@@ -247,6 +237,7 @@
     <Resource Include="icon.ico" />
     <Content Include="installer\installerInno.iss" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y "$(TargetDir)\..\generic-settings\definitions.ini" &amp; xcopy /E /Y "$(TargetDir)\..\generic-settings\resources\*.*" "$(TargetDir)\resources\" &amp; del /F /Q *.xml &amp; del /F /Q *.pdb</PostBuildEvent>

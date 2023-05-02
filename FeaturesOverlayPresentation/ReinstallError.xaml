@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:p = "clr-namespace:FeaturesOverlayPresentation.Properties"
       mc:Ignorable="d"
-      Title="{x:Static p:Strings.lblFixedCorruptionTitleText}"  ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closed="Window_Closed" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="128" Width="331" Foreground="Black" FontFamily="ZapfHumnst BT">
+      Title="{x:Static p:Strings.lblFixedCorruptionTitleText}"  ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closed="Window_Closed" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="128" Width="331" Foreground="Black">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -68,6 +68,6 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Button Style="{DynamicResource ButtonStyle1}" x:Name="closeAppButton" Content="{x:Static p:Strings.lblFixedButtonCloseProgramText}" VerticalAlignment="Top" Click="CloseAppButton_Click" Margin="0,53,0,0" Padding="0" HorizontalAlignment="Center" Width="110" Background="#FF7E7E7E" Foreground="White" Height="17"/>
-        <Label x:Name="labelExplanation" Content="{x:Static p:Strings.lblFixedCorruptionText}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0" Background="#00000000" Foreground="White" FontFamily="ZapfHumnst BT" Height="30" Width="309"/>
+        <Label x:Name="labelExplanation" Content="{x:Static p:Strings.lblFixedCorruptionText}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0" Background="#00000000" Foreground="White" Height="30" Width="309"/>
     </Grid>
 </Window>

@@ -381,7 +381,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
     </Window.Resources>
     <Grid x:Name="MainGrid">
         <Grid.Background>
@@ -403,7 +403,7 @@
                 </VisualBrush.Visual>
             </VisualBrush>
         </Grid.Background>
-        <Button x:Name="ButtonNext" Margin="0,10,10,0" FontSize="24" Click="ButtonNext_Click" FontWeight="Bold" BorderBrush="#00707070" Background="Transparent" Foreground="Black" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0">
+        <Button x:Name="ButtonNext" Margin="0,10,10,0" FontSize="24" Click="ButtonNext_Click" FontWeight="Bold" BorderBrush="#00707070" Background="Transparent" Foreground="Black" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" HorizontalAlignment="Right" VerticalAlignment="Top" Padding="0" FontFamily="Noto Sans Light">
             <Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Setter Property="Template">
@@ -441,7 +441,7 @@
                 </Style>
             </Button.Style>
             <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="nextBlock" Text="{x:Static p:Strings.lblFixedButtonNextText}" Foreground="White" FontSize="48" FontWeight="Normal" FontFamily="ZapfHumnst BT" />
+                <TextBlock x:Name="nextBlock" Text="{x:Static p:Strings.lblFixedButtonNextText}" Foreground="White" FontSize="44" FontWeight="Normal"  />
                 <Image Height="50" Width="66" Source="pack://siteoforigin:,,,/resources/arrowNext.png" RenderOptions.BitmapScalingMode="HighQuality" />
             </StackPanel>
         </Button>
@@ -484,11 +484,11 @@
             </Button.Style>
             <StackPanel Orientation="Horizontal" Width="240">
                 <Image Height="50" Width="66" Source="pack://siteoforigin:,,,/resources/arrowPrevious.png" RenderTransformOrigin="0.5,0.5" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Stretch" />
-                <TextBlock x:Name="previousBlock" Text="{x:Static p:Strings.lblFixedButtonPreviousText}" Foreground="White" FontSize="48" FontWeight="Normal" FontFamily="ZapfHumnst BT" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <TextBlock x:Name="previousBlock" Text="Anterior" Foreground="White" FontSize="44" FontWeight="Normal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Noto Sans Light" />
             </StackPanel>
         </Button>
-        <Label x:Name="LabelPage" Content="" Margin="0,0,10,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="137" Padding="0" FontFamily="ZapfHumnst BT"/>
-        <Label x:Name="LabelPage2" Content="{x:Static p:Strings.lblFixedPageText}" Margin="0,0,147,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="0" FontFamily="ZapfHumnst BT" Height="37.1333333333333" Width="92.6966666666667"/>
+        <Label x:Name="LabelPage" Content="" Margin="0,0,10,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132" Padding="0" Height="36" FontFamily="Noto Sans Light"/>
+        <Label x:Name="LabelPage2" Content="{x:Static p:Strings.lblFixedPageText}" Margin="0,0,142,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="0" Height="36" Width="98" FontFamily="Noto Sans Light"/>
         <Image x:Name="logo1" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="52" Width="142" RenderOptions.BitmapScalingMode="HighQuality" Margin="-500,0,0,24" Source="pack://siteoforigin:,,,/resources/logo1.png" MouseLeftButtonUp="Logo1_MouseLeftButtonUp">
             <Image.Style>
                 <Style TargetType="{x:Type Image}">
@@ -512,9 +512,9 @@
             </Image.Style>
         </Image>
         <Image Margin="202,106,202,122" x:Name="mainImage" />
-        <TextBlock x:Name="TextStandBy" Margin="0,10,10,0" FontSize="48" Foreground="White" FontFamily="ZapfHumnst BT" Width="236" Height="61" Padding="0" TextAlignment="Center" Background="Transparent" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-        <TextBlock x:Name="TextAppVersion" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="60" Height="15" FontSize="10" FontFamily="ZapfHumnst BT"/>
-        <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="ComboBoxNavigate" HorizontalAlignment="Right" Margin="0,0,10,52" VerticalAlignment="Bottom" Width="230" RenderTransformOrigin="0.5,0.5" SelectionChanged="ComboBoxNavigate_SelectionChanged" Foreground="White" FontFamily="ZapfHumnst BT">
+        <TextBlock x:Name="TextStandBy" Margin="0,10,10,0" FontSize="44" Foreground="White"  Width="236" Height="61" Padding="0" TextAlignment="Center" Background="Transparent" HorizontalAlignment="Right" VerticalAlignment="Top" FontFamily="Noto Sans Light"/>
+        <TextBlock x:Name="TextAppVersion" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Padding="0" Width="60" Height="15" FontSize="10" />
+        <ComboBox Style="{DynamicResource ComboBoxStyle1}" x:Name="ComboBoxNavigate" HorizontalAlignment="Right" Margin="0,0,10,52" VerticalAlignment="Bottom" Width="230" RenderTransformOrigin="0.5,0.5" SelectionChanged="ComboBoxNavigate_SelectionChanged" Foreground="White" >
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="ComboBoxItem">
                     <Setter Property="Background" Value="#FF2F2F2F"/>
@@ -530,8 +530,8 @@
                 </TransformGroup>
             </ComboBox.RenderTransform>
         </ComboBox>
-        <Label x:Name="LabelSlideSubtitle" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Width="838" Height="55" Foreground="#FFFFD900" FontSize="36" FontFamily="ZapfHumnst BT" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,10,0,0"/>
-        <Button Style="{DynamicResource ButtonStyle1}" x:Name="ExitPresentationButton" Content="{x:Static p:Strings.lblFixedButtonExitText}" HorizontalAlignment="Left" Margin="14,0,0,14" VerticalAlignment="Bottom" FontFamily="ZapfHumnst BT" Width="67" Background="#FF2F2F2F" Foreground="White" Click="ExitButton_Click" Height="37" RenderTransformOrigin="0.507,0.541" FontSize="18"/>
+        <Label x:Name="LabelSlideSubtitle" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Width="838" Height="55" Foreground="#FFFFD900" FontSize="36"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,10,0,0" FontFamily="Noto Sans Light"/>
+        <Button Style="{DynamicResource ButtonStyle1}" x:Name="ExitPresentationButton" Content="{x:Static p:Strings.lblFixedButtonExitText}" HorizontalAlignment="Left" Margin="14,0,0,14" VerticalAlignment="Bottom"  Width="67" Background="#FF2F2F2F" Foreground="White" Click="ExitButton_Click" Height="37" RenderTransformOrigin="0.507,0.541" FontSize="18" FontFamily="Noto Sans Light"/>
         <Image x:Name="logo2" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="50" Width="256" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,0,24" Source="pack://siteoforigin:,,,/resources/logo2.png" MouseLeftButtonUp="Logo2_MouseLeftButtonUp">
             <Image.Style>
                 <Style TargetType="{x:Type Image}">
@@ -547,6 +547,6 @@
         </Border>
         <Border Name="Border2" BorderThickness="1,2,1,1" Grid.Row="0" BorderBrush="Black" Background="#99000000" Panel.ZIndex="-1" VerticalAlignment="Bottom" Height="85"/>
         <Border x:Name="Border2_Copy" BorderThickness="1,2,1,1" Grid.Row="0" BorderBrush="Black" Background="#66000000" Panel.ZIndex="-1" VerticalAlignment="Top" Height="70"/>
-        <Button Style="{DynamicResource ButtonStyle2}" x:Name="AboutButton" Content="{x:Static p:Strings.lblFixedButtonAboutText}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Button_Click" Margin="86,0,0,14" Height="37" FontFamily="ZapfHumnst BT" Width="67" Background="#FF2F2F2F" Foreground="White" RenderTransformOrigin="0.507,0.541" FontSize="18"/>
+        <Button Style="{DynamicResource ButtonStyle2}" x:Name="AboutButton" Content="{x:Static p:Strings.lblFixedButtonAboutText}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="Button_Click" Margin="86,0,0,14" Height="37"  Width="67" Background="#FF2F2F2F" Foreground="White" RenderTransformOrigin="0.507,0.541" FontSize="18" FontFamily="Noto Sans Light"/>
     </Grid>
 </Window>

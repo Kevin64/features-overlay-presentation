@@ -128,12 +128,17 @@
     • Project URL: https://github.com/Kevin64/features-overlay-presentation
     • License: (MIT) https://github.com/Kevin64/features-overlay-presentation/blob/master/LICENSE
 
-This software must be used in conjunction with APCS project to work properly.
+This software must be used in conjunction with APCS system and AIR software to work properly.
 
 ► Asset and Personnel Control System - APCS
     • Copyright © 2023 Kevin Vinícius Teixeira Costa
     • Project URL: https://github.com/Kevin64/asset-and-personnel-control-system
-    • License: (MIT) https://github.com/Kevin64/asset-and-personnel-control-system/blob/main/LICENSE
+    • License: (MIT) https://github.com/Kevin64/asset-and-personnel-control-system/blob/master/LICENSE
+
+► Asset Information and Registration - AIR
+    • Copyright © 2023 Kevin Vinícius Teixeira Costa
+    • Project URL: https://github.com/Kevin64/asset-information-and-registration
+    • License: (MIT) https://github.com/Kevin64/asset-information-and-registration/blob/master/LICENSE
 
 This software and its libraries (DLLs) use arts, Open Source libraries and loose codes from third parties. All credits go to their respective creators and maintainers. These components are listed in the README on the project's GitHub page: https://github.com/Kevin64/Dependencies/blob/main/README.md
 

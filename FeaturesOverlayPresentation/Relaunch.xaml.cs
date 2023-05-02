@@ -78,8 +78,8 @@ namespace FeaturesOverlayPresentation
                 log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version, logLocationStr, ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + ConstantsDLL.Properties.Resources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
                 log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_RELEASE_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.consoleOutCLI));
 
-                serverDropDown.SelectedIndex = 0;
-                portDropDown.SelectedIndex = 0;
+                comboBoxServerIP.SelectedIndex = 0;
+                comboBoxServerPort.SelectedIndex = 0;
 #endif
                 //Checks if log file exists
                 if (!logFileExists)
