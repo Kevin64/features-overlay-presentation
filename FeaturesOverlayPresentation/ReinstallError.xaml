@@ -67,7 +67,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Style="{DynamicResource ButtonStyle1}" x:Name="closeAppButton" Content="{x:Static p:Strings.lblFixedButtonCloseProgramText}" VerticalAlignment="Top" Click="CloseAppButton_Click" Margin="0,53,0,0" Padding="0" HorizontalAlignment="Center" Width="110" Background="#FF7E7E7E" Foreground="White" Height="17"/>
-        <Label x:Name="labelExplanation" Content="{x:Static p:Strings.lblFixedCorruptionText}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0" Background="#00000000" Foreground="White" Height="30" Width="309"/>
+        <Button Style="{DynamicResource ButtonStyle1}" x:Name="closeAppButton" Content="{x:Static p:Strings.lblFixedButtonCloseProgramText}" VerticalAlignment="Top" Click="CloseAppButton_Click" Margin="0,53,0,0" Padding="0" HorizontalAlignment="Center" Width="110" Background="#FF7E7E7E" Foreground="White" Height="21"/>
+        <Label x:Name="labelExplanation" Content="{x:Static p:Strings.lblFixedCorruptionText}" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0" Background="#00000000" Foreground="White" Height="35" Width="309"/>
     </Grid>
 </Window>

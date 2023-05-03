@@ -123,7 +123,7 @@ namespace FeaturesOverlayPresentation.Properties {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Close program.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Close.
         /// </summary>
         public static string lblFixedButtonCloseProgramText {
             get {

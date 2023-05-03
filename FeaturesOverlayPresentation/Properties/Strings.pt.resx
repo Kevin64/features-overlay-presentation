@@ -183,7 +183,7 @@ Este software e suas bibliotecas (DLLs) utilizam artes, bibliotecas Open Source 
     <value>Autenticar</value>
   </data>
   <data name="lblFixedButtonCloseProgramText" xml:space="preserve">
-    <value>Fechar programa</value>
+    <value>Encerrar</value>
   </data>
   <data name="lblFixedButtonExitText" xml:space="preserve">
     <value>Sair</value>
