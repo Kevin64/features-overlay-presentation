@@ -73,12 +73,11 @@ namespace FeaturesOverlayPresentation.Properties {
         ///   Consulta uma cadeia de caracteres localizada semelhante a Software created, developed and maintained by Kevin Costa. Programmed in C# using .NET Framework 4.8. Supported systems: Windows 7, 10 and 11.
         ///
         ///    • Copyright © 2023 Kevin Vinícius Teixeira Costa
-        ///    • Project URL: https://github.com/Kevin64/features-overlay-presentation
+        ///    • Repository (GitHub): https://github.com/Kevin64/features-overlay-presentation
+        ///    • Dependencies repository (GitHub): https://github.com/Kevin64/Dependencies
         ///    • License: (MIT) https://github.com/Kevin64/features-overlay-presentation/blob/master/LICENSE
         ///
-        ///This software must be used in conjunction with APCS system and AIR software to work properly.
-        ///
-        ///► Asset and Personnel Control System  [o restante da cadeia de caracteres foi truncado]&quot;;.
+        ///This software must be used in conjunction wit [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
         public static string description {
             get {

@@ -125,50 +125,50 @@
     <value>Software criado, desenvolvido e mantido por Kevin Costa. Programado em C# utilizando .NET Framework 4.8. Sistemas com suporte: Windows 7, 10 e 11.
 
     • Copyright © 2023 Kevin Vinícius Teixeira Costa
-    • URL do projeto: https://github.com/Kevin64/features-overlay-presentation
+    • Repositório (GitHub): https://github.com/Kevin64/features-overlay-presentation
+    • Repositório das dependências (GitHub): https://github.com/Kevin64/Dependencies
     • Licença: (MIT) https://github.com/Kevin64/features-overlay-presentation/blob/master/LICENSE
 
 Este software deve ser usado em conjunto com o sistema APCS e o software AIR para funcionar corretamente.
 
 ► Asset and Personnel Control System - APCS
     • Copyright © 2023 Kevin Vinícius Teixeira Costa
-    • URL do projeto: https://github.com/Kevin64/asset-and-personnel-control-system
+    • Repositório (GitHub): https://github.com/Kevin64/asset-and-personnel-control-system
     • Licença: (MIT) https://github.com/Kevin64/asset-and-personnel-control-system/blob/main/LICENSE
 
 ► Asset Information and Registration - AIR
     • Copyright © 2023 Kevin Vinícius Teixeira Costa
-    • URL do projeto: https://github.com/Kevin64/asset-information-and-registration
+    • Repositório (GitHub): https://github.com/Kevin64/asset-information-and-registration
     • Licença: (MIT) https://github.com/Kevin64/asset-information-and-registration/blob/master/LICENSE
 
-Este software e suas bibliotecas (DLLs) utilizam artes, bibliotecas Open Source e códigos avulsos de terceiros. Todos os créditos vão para os seus respectivos criadores e mantenedores. Estes componentes estão listados no README na página do projeto no GitHub: https://github.com/Kevin64/Dependencies/blob/main/README.md
+Este software e suas bibliotecas (DLLs) utilizam artes, bibliotecas Open Source e códigos avulsos de terceiros. Todos os créditos vão para os seus respectivos criadores e mantenedores. Estes componentes estão listados abaixo e no README na página do repositório no GitHub.
 
 ► Microsoft.Xaml.Behaviors.Wpf
     • Copyright © 2015 Microsoft
-    • URL do projeto: https://github.com/Microsoft/XamlBehaviorsWpf
+    • Repositório (GitHub): https://github.com/Microsoft/XamlBehaviorsWpf
     • Licença: (MIT) https://github.com/microsoft/XamlBehaviorsWpf/blob/master/LICENSE
 
 ► System.Buffers, System.Memory, System.Numerics.Vectors, System.Runtime.CompilerServices.Unsafe
     • Copyright © .NET Foundation and Contributors
-    • URL do projeto: https://dot.net/
+    • URL: https://dot.net/
     • Licença: (MIT) https://github.com/dotnet/corefx/blob/master/LICENSE.TXT
 
 ► ini-parser
     • Copyright © 2008 Ricardo Amores Hernández
-    • URL do projeto: https://github.com/rickyah/ini-parser
+    • Repositório (GitHub): https://github.com/rickyah/ini-parser
     • Licença: (MIT) https://github.com/rickyah/ini-parser/blob/master/LICENSE
 
 ► Newtonsoft.Json
     • Copyright © 2007 James Newton-King
-    • URL do projeto: https://github.com/JamesNK/Newtonsoft.Json
+    • Repositório (GitHub): https://github.com/JamesNK/Newtonsoft.Json
     • Licença: (MIT) https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
 
 ► BCrypt.Net-Next
     • Copyright © 2006 Damien Miller djm@mindrot.org (jBCrypt)
     • Copyright © 2013 Ryan D. Emerle (.Net port)
     • Copyright © 2016/2021 Chris McKee (.Net-core port / patches)
-    • URL do projeto: https://github.com/BcryptNet/bcrypt.net
-    • Licença: (MIT) https://github.com/BcryptNet/bcrypt.net/blob/main/licence.txt
-</value>
+    • Repositório (GitHub): https://github.com/BcryptNet/bcrypt.net
+    • Licença: (MIT) https://github.com/BcryptNet/bcrypt.net/blob/main/licence.txt</value>
   </data>
   <data name="lblFixedAdvancedOptionsText" xml:space="preserve">
     <value>Opções avançadas</value>

@@ -49,7 +49,7 @@ using System.Windows;
 // É possível especificar todos os valores ou usar como padrão os Números de Build e da Revisão
 // usando o "*" como mostrado abaixo:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.2305")]
+[assembly: AssemblyFileVersion("2.0.0.2305")]
 [assembly: NeutralResourcesLanguage("")]
 [assembly: Guid("d0e969ec-43c8-4ab6-81c5-eb6e339f3014")]
