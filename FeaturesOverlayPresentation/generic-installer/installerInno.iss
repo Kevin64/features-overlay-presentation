@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "FOP"
-#define MyAppVersion GetVersionNumbersString('..\bin\release-7z-localized\FOP.exe')
+#define MyAppVersion GetVersionNumbersString('..\bin\Release\FOP.exe')
 #define MyAppPublisher "Kevin Vinícius Teixeira Costa"
 #define MyAppURL "https://github.com/Kevin64/features-overlay-presentation"
 #define MyAppExeName "FOP.exe"
