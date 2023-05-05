@@ -73,13 +73,13 @@ namespace FeaturesOverlayPresentation
             //int osBuild = Convert.ToInt32(osFullVer);
             if (osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMajor) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMinor))
             {
-                return current + "\\img" + ConstantsDLL.Properties.Resources.win7imgDir;
+                return current + ConstantsDLL.Properties.Resources.resourcesDir + ConstantsDLL.Properties.Resources.imgDir + ConstantsDLL.Properties.Resources.win7imgDir;
             }
             else
             {
                 return osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.Resources.win10ntBuild) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.Resources.win11ntBuild)
-                ? current + "\\img" + ConstantsDLL.Properties.Resources.win10imgDir
-                : current + "\\img" + ConstantsDLL.Properties.Resources.win11imgDir;
+                ? current + ConstantsDLL.Properties.Resources.resourcesDir + ConstantsDLL.Properties.Resources.imgDir + ConstantsDLL.Properties.Resources.win10imgDir
+                : current + ConstantsDLL.Properties.Resources.resourcesDir + ConstantsDLL.Properties.Resources.imgDir + ConstantsDLL.Properties.Resources.win11imgDir;
             }
         }
 

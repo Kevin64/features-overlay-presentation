@@ -236,7 +236,6 @@
   <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="generic-installer\installerInno.iss" />
   </ItemGroup>
@@ -257,6 +256,6 @@
     $(PostBuildEventDependsOn);
     PostBuildMacros;
   </PostBuildEventDependsOn>
-    <PostBuildEvent>xcopy /Y "$(TargetDir)..\generic-settings\definitions.ini" &amp; xcopy /E /Y "$(TargetDir)..\generic-settings\resources\*.*" "$(TargetDir)resources\" &amp; if $(ConfigurationName) == Release del /F /Q *.xml &amp; del /F /Q *.pdb &amp; iscc "$(ProjectDir)generic-installer\installerInno.iss" &amp; 7z h -scrccrc32 -scrccrc64 -scrcsha1 -scrcsha256 -scrcblake2sp ..\zip\github\$(TargetName)setup-v@(VersionNumber).exe &gt; ..\zip\github\zip-checksum.txt</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetDir)..\localized-settings\definitions.ini" &amp; xcopy /E /Y "$(TargetDir)..\localized-settings\resources\*.*" "$(TargetDir)resources\" &amp; if $(ConfigurationName) == Release del /F /Q *.xml &amp; del /F /Q *.pdb &amp; iscc "$(ProjectDir)bin\localized-installer\installerInno.iss"</PostBuildEvent>
   </PropertyGroup>
 </Project>
