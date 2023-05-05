@@ -126,7 +126,7 @@ namespace FeaturesOverlayPresentation
         public void FindLabels()
         {
             finalCount = 0;
-            string imgDir = Directory.GetCurrentDirectory() + ConstantsDLL.Properties.Resources.resourcesDir + ConstantsDLL.Properties.Resources.imgDir;
+            string imgDir = MiscMethods.OSCheck();
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
@@ -161,7 +161,7 @@ namespace FeaturesOverlayPresentation
         public void FindImages()
         {
             finalCount = 0;
-            string imgDir = Directory.GetCurrentDirectory() + ConstantsDLL.Properties.Resources.resourcesDir + ConstantsDLL.Properties.Resources.imgDir;
+            string imgDir = MiscMethods.OSCheck();
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
