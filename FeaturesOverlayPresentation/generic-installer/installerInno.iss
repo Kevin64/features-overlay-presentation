@@ -25,7 +25,7 @@ DisableDirPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
 ;PrivilegesRequiredOverridesAllowed=dialog
-OutputBaseFilename=FOPsetup-{#MyAppVersion}
+OutputBaseFilename=FOPsetup-v{#MyAppVersion}
 OutputDir=..\bin\zip\github
 Compression=lzma
 SolidCompression=yes
