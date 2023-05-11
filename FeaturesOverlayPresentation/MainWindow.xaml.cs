@@ -49,7 +49,7 @@ namespace FeaturesOverlayPresentation
             blurEffect1 = FindName("BlurImage") as BlurEffect;
             blurEffect1.Radius = 5;
             ButtonPrevious.Visibility = Visibility.Hidden;
-            
+
             TextAppVersion.Text = "v" + MiscMethods.Version;
             FindImages();
             FindLabels();
@@ -119,7 +119,7 @@ namespace FeaturesOverlayPresentation
         //Prints the slide counter on the screen
         private void LabelPrint()
         {
-            LabelPage.Content = counter + 1 + " de " + finalCount;
+            LabelPage.Content = counter + 1 + " " + ConstantsDLL.Properties.Strings.of + " " + finalCount;
         }
 
         //Finds and creates a list of the image file names found inside the specified folder
@@ -269,16 +269,16 @@ namespace FeaturesOverlayPresentation
                     fadeOutAnimation.Completed += (o, e) =>
                     {
                         image.Source = source;
-                        image.BeginAnimation(Image.OpacityProperty, fadeInAnimation);
+                        image.BeginAnimation(OpacityProperty, fadeInAnimation);
                     };
 
-                    image.BeginAnimation(Image.OpacityProperty, fadeOutAnimation);
+                    image.BeginAnimation(OpacityProperty, fadeOutAnimation);
                 }
                 else
                 {
                     image.Opacity = 0d;
                     image.Source = source;
-                    image.BeginAnimation(Image.OpacityProperty, fadeInAnimation);
+                    image.BeginAnimation(OpacityProperty, fadeInAnimation);
                 }
             }
             else

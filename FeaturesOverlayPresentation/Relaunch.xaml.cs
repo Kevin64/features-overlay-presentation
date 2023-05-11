@@ -8,10 +8,12 @@ using LogGeneratorDLL;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 
@@ -30,6 +32,11 @@ namespace FeaturesOverlayPresentation
 
         public Relaunch()
         {
+            //Code for testing string localization for other languages
+            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
+            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
+            //LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+
             try
             {
                 InitializeComponent();
@@ -329,7 +336,9 @@ namespace FeaturesOverlayPresentation
                     radioButtonFormatting.IsEnabled = true;
                     radioButtonMaintenance.IsEnabled = true;
                     if (radioButtonEmployeePresentYes.IsChecked == true)
+                    {
                         textBoxRegistrationNumber.IsEnabled = true;
+                    }
                 }
             }
         }

@@ -484,7 +484,7 @@
             </Button.Style>
             <StackPanel Orientation="Horizontal" Width="240">
                 <Image Height="50" Width="66" Source="pack://siteoforigin:,,,/resources/arrowPrevious.png" RenderTransformOrigin="0.5,0.5" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Stretch" />
-                <TextBlock x:Name="previousBlock" Text="Anterior" Foreground="White" FontSize="44" FontWeight="Normal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Noto Sans Light" />
+                <TextBlock x:Name="previousBlock" Text="{x:Static p:Strings.lblFixedButtonPreviousText}" Foreground="White" FontSize="44" FontWeight="Normal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontFamily="Noto Sans Light" />
             </StackPanel>
         </Button>
         <Label x:Name="LabelPage" Content="" Margin="0,0,10,14" FontSize="30" Background="#7FA0D1FF" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132" Padding="0" Height="36" FontFamily="Noto Sans Light"/>
