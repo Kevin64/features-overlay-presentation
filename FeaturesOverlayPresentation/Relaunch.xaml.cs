@@ -8,12 +8,10 @@ using LogGeneratorDLL;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows;
 using System.Windows.Input;
 
@@ -33,9 +31,9 @@ namespace FeaturesOverlayPresentation
         public Relaunch()
         {
             //Code for testing string localization for other languages
-            //Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
-            //Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
-            //LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(System.Windows.Markup.XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            //System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en");
+            //System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en");
+            //LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(System.Windows.Markup.XmlLanguage.GetLanguage(System.Globalization.CultureInfo.CurrentCulture.IetfLanguageTag)));
 
             try
             {
