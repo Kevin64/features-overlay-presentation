@@ -13,26 +13,26 @@ namespace FeaturesOverlayPresentation
         //Checks via registry if the program was already executed
         public static bool RegCheck()
         {
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FopRegKey);
-            string k = rk.GetValue(ConstantsDLL.Properties.Resources.DidItRunAlready).ToString();
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);
+            string k = rk.GetValue(ConstantsDLL.Properties.Resources.DID_IT_RUN_ALREADY).ToString();
             return k.Equals("1");
         }
 
         //Creates RunOnce and FOP registry keys
         public static void RegCreate()
         {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FopRunOnceKey, true);
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY, true);
             if (Environment.Is64BitOperatingSystem)
             {
-                key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOPx86, RegistryValueKind.String);
+                key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOP_X86, RegistryValueKind.String);
             }
             else
             {
-                key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOPx64, RegistryValueKind.String);
+                key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOP_X64, RegistryValueKind.String);
             }
 
-            RegistryKey key2 = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FopRegKey);
-            key2.SetValue(ConstantsDLL.Properties.Resources.DidItRunAlready, 0, RegistryValueKind.DWord);
+            RegistryKey key2 = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);
+            key2.SetValue(ConstantsDLL.Properties.Resources.DID_IT_RUN_ALREADY, 0, RegistryValueKind.DWord);
         }
 
         //ReCreates RunOnce registry key
@@ -40,16 +40,16 @@ namespace FeaturesOverlayPresentation
         {
             if (!empty && !RegCheck())
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FopRunOnceKey, true);
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY, true);
                 if (!key.GetValueNames().Contains(ConstantsDLL.Properties.Resources.FOP))
                 {
                     if (Environment.Is64BitOperatingSystem)
                     {
-                        key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOPx86, RegistryValueKind.String);
+                        key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOP_X86, RegistryValueKind.String);
                     }
                     else
                     {
-                        key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOPx64, RegistryValueKind.String);
+                        key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOP_X64, RegistryValueKind.String);
                     }
                 }
             }
@@ -58,7 +58,7 @@ namespace FeaturesOverlayPresentation
         //Deletes RunOnce registry key
         public static void RegDelete()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FopRunOnceKey, true);
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY, true);
             if (key.GetValueNames().Contains(ConstantsDLL.Properties.Resources.FOP))
             {
                 key.DeleteValue(ConstantsDLL.Properties.Resources.FOP);
@@ -89,12 +89,12 @@ namespace FeaturesOverlayPresentation
         //Checks the current screen resolution
         public static bool ResolutionError(bool exit)
         {
-            if (SystemParameters.PrimaryScreenWidth < Convert.ToInt32(ConstantsDLL.Properties.Resources.Width) || SystemParameters.PrimaryScreenHeight < Convert.ToInt32(ConstantsDLL.Properties.Resources.Height))
+            if (SystemParameters.PrimaryScreenWidth < Convert.ToInt32(ConstantsDLL.Properties.Resources.WIDTH) || SystemParameters.PrimaryScreenHeight < Convert.ToInt32(ConstantsDLL.Properties.Resources.HEIGHT))
             {
-                _ = MessageBox.Show(string.Format(ConstantsDLL.Properties.Strings.resolutionWarning, ConstantsDLL.Properties.Resources.Width, ConstantsDLL.Properties.Resources.Height), ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(string.Format(ConstantsDLL.Properties.Strings.RESOLUTION_WARNING, ConstantsDLL.Properties.Resources.WIDTH, ConstantsDLL.Properties.Resources.HEIGHT), ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 if (exit)
                 {
-                    File.Delete(StringsAndConstants.credentialsFilePath);
+                    File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
                     Application.Current.Shutdown();
                 }
                 return false;
