@@ -119,7 +119,7 @@ namespace FeaturesOverlayPresentation
         //Prints the slide counter on the screen
         private void LabelPrint()
         {
-            LabelPage.Content = counter + 1 + " " + ConstantsDLL.Properties.Strings.of + " " + finalCount;
+            LabelPage.Content = counter + 1 + " " + ConstantsDLL.Properties.Strings.OF + " " + finalCount;
         }
 
         //Finds and creates a list of the image file names found inside the specified folder
@@ -133,9 +133,9 @@ namespace FeaturesOverlayPresentation
                 labelList = new List<string>();
                 foreach (string filePath in filePathList)
                 {
-                    if (Path.GetFileName(filePath).ToLower().Contains(ConstantsDLL.Properties.Resources.imgExt))
+                    if (Path.GetFileName(filePath).ToLower().Contains(ConstantsDLL.Properties.Resources.IMG_EXT))
                     {
-                        newFilePath = filePath.Replace(ConstantsDLL.Properties.Resources.imgExt, string.Empty);
+                        newFilePath = filePath.Replace(ConstantsDLL.Properties.Resources.IMG_EXT, string.Empty);
                         labelList.Add(Path.GetFileName(newFilePath));
                         finalCount++;
                     }
@@ -168,7 +168,7 @@ namespace FeaturesOverlayPresentation
                 imgList = new List<string>();
                 foreach (string filePath in filePathList)
                 {
-                    if (Path.GetFileName(filePath).ToLower().Contains(ConstantsDLL.Properties.Resources.imgExt))
+                    if (Path.GetFileName(filePath).ToLower().Contains(ConstantsDLL.Properties.Resources.IMG_EXT))
                     {
                         imgList.Add(filePath);
                         finalCount++;
@@ -209,13 +209,13 @@ namespace FeaturesOverlayPresentation
         //Define 'next' button name
         private void NextTextPrint()
         {
-            nextBlock.Text = ConstantsDLL.Properties.Strings.nextText;
+            nextBlock.Text = ConstantsDLL.Properties.Strings.NEXT_TEXT;
         }
 
         //Define 'finish' button name
         private void FinishTextPrint()
         {
-            nextBlock.Text = ConstantsDLL.Properties.Strings.finishText;
+            nextBlock.Text = ConstantsDLL.Properties.Strings.FINISH_TEXT;
         }
 
         //Creates a timer for each slide when running for the first time
@@ -235,12 +235,12 @@ namespace FeaturesOverlayPresentation
         //Runs the previous created timer
         private void TimerTickRun(object sender, EventArgs e)
         {
-            TextStandBy.Text = ConstantsDLL.Properties.Strings.waitText + "(" + timerTickCount.ToString() + ")";
+            TextStandBy.Text = ConstantsDLL.Properties.Strings.WAIT_TEXT + "(" + timerTickCount.ToString() + ")";
             ButtonNext.Visibility = Visibility.Hidden;
             if (--timerTickCount == 0)
             {
                 timer.Stop();
-                TextStandBy.Text = ConstantsDLL.Properties.Strings.waitText + "(" + (tickSeconds + 1) + ")";
+                TextStandBy.Text = ConstantsDLL.Properties.Strings.WAIT_TEXT + "(" + (tickSeconds + 1) + ")";
                 if (counter == finalCount - 1)
                 {
                     FinishTextPrint();
@@ -258,7 +258,7 @@ namespace FeaturesOverlayPresentation
         //Changes the image source, adding fade-in/fade-out animation
         private void ChangeSource(Image image, ImageSource source, TimeSpan fadeOutTime, TimeSpan fadeInTime)
         {
-            if (Environment.OSVersion.Version.Major.ToString().Contains(ConstantsDLL.Properties.Resources.win10ntMajor))
+            if (Environment.OSVersion.Version.Major.ToString().Contains(ConstantsDLL.Properties.Resources.WIN_10_NT_MAJOR))
             {
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(1d, fadeInTime);
 
@@ -316,9 +316,9 @@ namespace FeaturesOverlayPresentation
             else
             {
                 MiscMethods.RegDelete();
-                RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FopRegKey);
-                key.SetValue(ConstantsDLL.Properties.Resources.DidItRunAlready, 1);
-                File.Delete(StringsAndConstants.credentialsFilePath);
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);
+                key.SetValue(ConstantsDLL.Properties.Resources.DID_IT_RUN_ALREADY, 1);
+                File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
                 Application.Current.Shutdown();
             }
         }
@@ -379,7 +379,7 @@ namespace FeaturesOverlayPresentation
         //When the 'exit' button is pressed
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            File.Delete(StringsAndConstants.credentialsFilePath);
+            File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
             Application.Current.Shutdown();
         }
 
