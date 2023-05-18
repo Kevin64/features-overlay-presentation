@@ -71,15 +71,15 @@ namespace FeaturesOverlayPresentation
             string current = Directory.GetCurrentDirectory();
             Version osFullVer = Environment.OSVersion.Version;
             //int osBuild = Convert.ToInt32(osFullVer);
-            if (osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMajor) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMinor))
+            if (osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_7_NT_MAJOR) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_7_NT_MINOR))
             {
-                return current + ConstantsDLL.Properties.Resources.resourcesDir + ConstantsDLL.Properties.Resources.imgDir + ConstantsDLL.Properties.Resources.win7imgDir;
+                return current + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR + ConstantsDLL.Properties.Resources.WIN_7_IMG_DIR;
             }
             else
             {
-                return osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.Resources.win10ntBuild) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.Resources.win11ntBuild)
-                ? current + ConstantsDLL.Properties.Resources.resourcesDir + ConstantsDLL.Properties.Resources.imgDir + ConstantsDLL.Properties.Resources.win10imgDir
-                : current + ConstantsDLL.Properties.Resources.resourcesDir + ConstantsDLL.Properties.Resources.imgDir + ConstantsDLL.Properties.Resources.win11imgDir;
+                return osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_10_NT_BUILD) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_11_NT_BUILD)
+                ? current + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR + ConstantsDLL.Properties.Resources.WIN_10_IMG_DIR
+                : current + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR + ConstantsDLL.Properties.Resources.WIN_11_IMG_DIR;
             }
         }
 
