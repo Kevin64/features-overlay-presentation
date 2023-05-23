@@ -8,9 +8,11 @@ using System.Windows;
 
 namespace FeaturesOverlayPresentation
 {
+    ///<summary>Class for miscelaneous methods</summary>
     internal static class MiscMethods
     {
-        //Checks via registry if the program was already executed
+        ///<summary>Checks via registry if the program was already executed</summary>
+        ///<returns>'true' if already executed, 'false' if not</returns>
         public static bool RegCheck()
         {
             RegistryKey rk = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);
@@ -18,7 +20,7 @@ namespace FeaturesOverlayPresentation
             return k.Equals("1");
         }
 
-        //Creates RunOnce and FOP registry keys
+        ///<summary>Creates RunOnce and FOP registry keys</summary>
         public static void RegCreate()
         {
             RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY, true);
@@ -35,7 +37,7 @@ namespace FeaturesOverlayPresentation
             key2.SetValue(ConstantsDLL.Properties.Resources.DID_IT_RUN_ALREADY, 0, RegistryValueKind.DWord);
         }
 
-        //ReCreates RunOnce registry key
+        ///<summary>ReCreates RunOnce registry key</summary>
         public static void RegRecreate(bool empty)
         {
             if (!empty && !RegCheck())
@@ -55,7 +57,7 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Deletes RunOnce registry key
+        ///<summary>Deletes RunOnce registry key</summary>
         public static void RegDelete()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY, true);
@@ -65,7 +67,8 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Checks OS version
+        ///<summary>Checks OS version</summary>
+        ///<return>The image paths according to OS version</return>
         public static string OSCheck()
         {
             string current = Directory.GetCurrentDirectory();
@@ -83,10 +86,12 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Checks assembly version
+        ///<summary>Checks assembly version</summary>
+        ///<returns>The assembly version</returns>
         public static string Version => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-        //Checks the current screen resolution
+        ///<summary>Checks the current screen resolution</summary>
+        ///<returns>'true' if resolution above minimum, 'false' otherwise</returns>
         public static bool ResolutionError(bool exit)
         {
             if (SystemParameters.PrimaryScreenWidth < Convert.ToInt32(ConstantsDLL.Properties.Resources.WIDTH) || SystemParameters.PrimaryScreenHeight < Convert.ToInt32(ConstantsDLL.Properties.Resources.HEIGHT))
@@ -102,7 +107,9 @@ namespace FeaturesOverlayPresentation
             return true;
         }
 
-        //Checks if logfile exists
+        ///<summary>Checks if logfile exists</summary>
+        ///<param name="path">Path of the log file</param>
+        ///<returns>"true" if exists, "false" otherwise</returns>
         public static string CheckIfLogExists(string path)
         {
             bool b;
