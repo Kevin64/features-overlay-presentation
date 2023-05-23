@@ -324,7 +324,13 @@ namespace FeaturesOverlayPresentation
                         RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY);
                         if (isFormat)
                         {
-                            key.DeleteValue(ConstantsDLL.Properties.Resources.FOP);
+                            try
+                            {
+                                key.DeleteValue(ConstantsDLL.Properties.Resources.FOP);
+                            }
+                            catch
+                            {
+                            }
                         }
 
                         RegistryKey key2 = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);

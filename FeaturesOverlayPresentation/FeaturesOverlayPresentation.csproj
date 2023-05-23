@@ -257,6 +257,6 @@
     $(PostBuildEventDependsOn);
     PostBuildMacros;
   </PostBuildEventDependsOn>
-    <PostBuildEvent>xcopy /Y "$(TargetDir)..\generic-settings\definitions.ini" &amp; rmdir /S /Q "$(TargetDir)resources\img" &amp; xcopy /E /Y "$(TargetDir)..\generic-settings\resources\*.*" "$(TargetDir)resources\" &amp; if $(ConfigurationName) == Release del /F /Q *.xml &amp; del /F /Q *.pdb &amp; iscc "$(ProjectDir)generic-installer\installerInno.iss" &amp; 7z h -scrccrc32 -scrccrc64 -scrcsha1 -scrcsha256 -scrcblake2sp ..\zip\github\$(TargetName)setup-v@(VersionNumber).exe &gt; ..\zip\github\zip-checksum.txt</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetDir)..\generic-settings\definitions.ini" &amp; xcopy /Y "$(TargetDir)..\generic-settings\FOP.lnk" &amp; rmdir /S /Q "$(TargetDir)resources\img" &amp; xcopy /E /Y "$(TargetDir)..\generic-settings\resources\*.*" "$(TargetDir)resources\" &amp; if $(ConfigurationName) == Release del /F /Q *.xml &amp; del /F /Q *.pdb &amp; iscc "$(ProjectDir)generic-installer\installerInno.iss" &amp; 7z h -scrccrc32 -scrccrc64 -scrcsha1 -scrcsha256 -scrcblake2sp ..\zip\github\$(TargetName)setup-v@(VersionNumber).exe &gt; ..\zip\github\zip-checksum.txt</PostBuildEvent>
   </PropertyGroup>
 </Project>
