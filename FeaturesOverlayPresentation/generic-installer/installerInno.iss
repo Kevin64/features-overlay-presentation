@@ -78,7 +78,7 @@ Source: "..\bin\Release\resources\*"; DestDir: "{commonpf32}\{#MyAppName}\resour
 
 Source: "..\bin\Release\FOP.lnk"; DestDir: "{commondesktop}"; Flags: ignoreversion
 
-Source: "..\bin\Release\FOP.lnk"; DestDir: "{commonstartmenu}"; Flags: ignoreversion
+Source: "..\bin\Release\FOP.lnk"; DestDir: "{commonprograms}\"; Flags: ignoreversion
 
 Source: "..\bin\Release\FOP.lnk"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
