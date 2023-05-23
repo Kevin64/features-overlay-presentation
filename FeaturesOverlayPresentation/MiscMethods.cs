@@ -69,22 +69,22 @@ namespace FeaturesOverlayPresentation
 
         ///<summary>Checks OS version</summary>
         ///<return>The image paths according to OS version</return>
-        //public static string OSCheck()
-        //{
-        //    string current = Directory.GetCurrentDirectory();
-        //    Version osFullVer = Environment.OSVersion.Version;
-        //    //int osBuild = Convert.ToInt32(osFullVer);
-        //    if (osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMajor) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.Resources.win7ntMinor))
-        //    {
-        //        return current + "\\img" + ConstantsDLL.Properties.Resources.win7imgDir;
-        //    }
-        //    else
-        //    {
-        //        return osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.Resources.win10ntBuild) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.Resources.win11ntBuild)
-        //        ? current + "\\img" + ConstantsDLL.Properties.Resources.win10imgDir
-        //        : current + "\\img" + ConstantsDLL.Properties.Resources.win11imgDir;
-        //    }
-        //}
+        public static string OSCheck()
+        {
+            string current = Directory.GetCurrentDirectory();
+            Version osFullVer = Environment.OSVersion.Version;
+            //int osBuild = Convert.ToInt32(osFullVer);
+            if (osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_7_NT_MAJOR) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_7_NT_MINOR))
+            {
+                return current + "\\img" + ConstantsDLL.Properties.Resources.WIN_7_IMG_DIR;
+            }
+            else
+            {
+                return osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_10_NT_BUILD) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_11_NT_BUILD)
+                ? current + "\\img" + ConstantsDLL.Properties.Resources.WIN_10_IMG_DIR
+                : current + "\\img" + ConstantsDLL.Properties.Resources.WIN_11_IMG_DIR;
+            }
+        }
 
         ///<summary>Checks assembly version</summary>
         ///<returns>The assembly version</returns>
