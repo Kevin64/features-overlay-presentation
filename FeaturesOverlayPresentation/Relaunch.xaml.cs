@@ -17,6 +17,7 @@ using System.Windows.Input;
 
 namespace FeaturesOverlayPresentation
 {
+    ///<summary>Class for Relaunch.xaml</summary>
     public partial class Relaunch : Window
     {
         private bool pressed = false;
@@ -28,6 +29,7 @@ namespace FeaturesOverlayPresentation
         private static string logLocationStr, serverIPStr, serverPortStr, logo1URLStr, logo2URLStr, logo3URLStr;
         private MainWindow m;
 
+        ///<summary>Relaunch constructor</summary>
         public Relaunch()
         {
             //Code for testing string localization for other languages
@@ -148,7 +150,8 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Returns true if slide folder that contains PNG pictures exist
+        ///<summary>Searches the image files</summary>
+        ///<returns>Returns true if slide folder that contains PNG pictures exist</returns>
         public bool FindFolder()
         {
             log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_DETECTING_OS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
@@ -167,7 +170,9 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //If 'yes' button is pressed
+        ///<summary>If 'yes' button is pressed</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -185,7 +190,9 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //If 'no' button is pressed
+        ///<summary>If 'no' button is pressed</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
             log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
@@ -193,7 +200,9 @@ namespace FeaturesOverlayPresentation
             Application.Current.Shutdown();
         }
 
-        //If 'send' button is pressed
+        ///<summary>If 'send' button is pressed</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void YesLaterButton_Click(object sender, RoutedEventArgs e)
         {
             string[] assetJsonStr;
@@ -341,7 +350,9 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //When closing the window
+        ///<summary>When closing the window</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void Window_Closing(object sender, EventArgs e)
         {
             log.LogWrite(Convert.ToInt32(ConstantsDLL.Properties.Resources.LOG_INFO), Strings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
@@ -349,7 +360,9 @@ namespace FeaturesOverlayPresentation
             Application.Current.Shutdown();
         }
 
-        //When clicking the authenticate button
+        ///<summary>When clicking the authenticate button</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
             if (textBoxUsername.Text == string.Empty || textBoxPassword.Password == string.Empty) //If user and password textboxes are empty
@@ -397,7 +410,9 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Limits textboxes to disallow cut, copy and paste operations
+        ///<summary>Limits textboxes to disallow cut, copy and paste operations</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void TextBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Command == ApplicationCommands.Copy || e.Command == ApplicationCommands.Cut || e.Command == ApplicationCommands.Paste)
@@ -406,14 +421,18 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Limits some textboxes to allow only numerical inputs
+        ///<summary>Limits some textboxes to allow only numerical inputs</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        //If 'employee radio button' changes...
+        ///<summary>If 'employee radio button' changes...</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void RadioButtonEmployeePresentYes_Checked(object sender, RoutedEventArgs e)
         {
             textBoxRegistrationNumber.IsEnabled = true;
@@ -424,7 +443,9 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //If 'employee radio button' changes...
+        ///<summary>If 'employee radio button' changes...</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void RadioButtonEmployeePresentNo_Checked(object sender, RoutedEventArgs e)
         {
             textBoxRegistrationNumber.IsEnabled = false;
@@ -435,7 +456,9 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //If 'format/maintenance radio button changes...
+        ///<summary>If 'format/maintenance radio button changes...</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void RadioButtonFormatting_Checked(object sender, RoutedEventArgs e)
         {
             isFormat = true;
@@ -445,7 +468,9 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //If 'format/maintenance radio button changes...
+        ///<summary>If 'format/maintenance radio button changes...</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void RadioButtonMaintenance_Checked(object sender, RoutedEventArgs e)
         {
             isFormat = false;

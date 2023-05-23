@@ -18,9 +18,7 @@ using System.Windows.Threading;
 
 namespace FeaturesOverlayPresentation
 {
-    /// <summary>
-    /// Interação lógica para MainWindow.xaml
-    /// </summary>
+    ///<summary>Class for MainWindow.xaml</summary>
     public partial class MainWindow : Window
     {
         private int furthestCount = 0, counter = 0;
@@ -41,7 +39,8 @@ namespace FeaturesOverlayPresentation
         private const int GWL_EX_STYLE = -20;
         private const int WS_EX_APPWINDOW = 0x00040000, WS_EX_TOOLWINDOW = 0x00000080;
 
-        //Main Window constructor
+        ///<summary>Main Window constructor</summary>
+        ///<param name="parametersList">List containing data from [Parameters]</param>
         public MainWindow(List<string[]> parametersList)
         {
             InitializeComponent();
@@ -78,7 +77,9 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Form loaded event handler
+        ///<summary>Form loaded event handler</summary>
+        ///<param name="sender"></param>
+        ///<param name="args"></param>
         private void FormLoaded(object sender, RoutedEventArgs args)
         {
             if (!MiscMethods.RegCheck())
@@ -107,7 +108,9 @@ namespace FeaturesOverlayPresentation
 
         }
 
-        //Deny Alt+F4 exiting
+        ///<summary>Deny Alt+F4 exiting</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.System && e.SystemKey == Key.F4)
@@ -116,13 +119,13 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Prints the slide counter on the screen
+        ///<summary>Prints the slide counter on the screen</summary>
         private void LabelPrint()
         {
             LabelPage.Content = counter + 1 + " " + ConstantsDLL.Properties.Strings.OF + " " + finalCount;
         }
 
-        //Finds and creates a list of the image file names found inside the specified folder
+        ///<summary>Finds and creates a list of the image file names found inside the specified folder</summary>
         public void FindLabels()
         {
             finalCount = 0;
@@ -157,7 +160,7 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Finds and creates a list of the slide images found inside the specified folder
+        ///<summary>Finds and creates a list of the slide images found inside the specified folder</summary>
         public void FindImages()
         {
             finalCount = 0;
@@ -191,13 +194,15 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Prints filename label next to each slide
-        private void SlideSubTitlePrint(int counter, bool flag)
+        ///<summary>Prints filename label next to each slide</summary>
+        ///<param name="index">Image index inside the Combobox</param>
+        ///<param name="flag">Indicates whether the slide subtitle will be shown</param>
+        private void SlideSubTitlePrint(int index, bool flag)
         {
             string str;
             if (flag)
             {
-                str = ComboBoxNavigate.Items.GetItemAt(counter).ToString();
+                str = ComboBoxNavigate.Items.GetItemAt(index).ToString();
                 LabelSlideSubtitle.Content = str;
             }
             else
@@ -206,19 +211,19 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Define 'next' button name
+        ///<summary>Define 'next' button name</summary>
         private void NextTextPrint()
         {
             nextBlock.Text = ConstantsDLL.Properties.Strings.NEXT_TEXT;
         }
 
-        //Define 'finish' button name
+        /// <summary>Define 'finish' button name</summary>
         private void FinishTextPrint()
         {
             nextBlock.Text = ConstantsDLL.Properties.Strings.FINISH_TEXT;
         }
 
-        //Creates a timer for each slide when running for the first time
+        ///<summary>Creates a timer for each slide when running for the first time</summary>
         private void TimerTickCreation()
         {
             timerTickCount = tickSeconds;
@@ -232,7 +237,9 @@ namespace FeaturesOverlayPresentation
             TextStandBy.Visibility = Visibility.Visible;
         }
 
-        //Runs the previous created timer
+        ///<summary>Runs the previously created timer</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void TimerTickRun(object sender, EventArgs e)
         {
             TextStandBy.Text = ConstantsDLL.Properties.Strings.WAIT_TEXT + "(" + timerTickCount.ToString() + ")";
@@ -255,7 +262,11 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //Changes the image source, adding fade-in/fade-out animation
+        ///<summary>Changes the image source, adding fade-in/fade-out animation</summary>
+        ///<param name="image">Image object</param>
+        ///<param name="source">Image source</param>
+        ///<param name="fadeOutTime">Fade-out time</param>
+        ///<param name="fadeInTime">Fade-in time</param>
         private void ChangeSource(Image image, ImageSource source, TimeSpan fadeOutTime, TimeSpan fadeInTime)
         {
             if (Environment.OSVersion.Version.Major.ToString().Contains(ConstantsDLL.Properties.Resources.WIN_10_NT_MAJOR))
@@ -287,7 +298,9 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //When the 'next' button is pressed
+        ///<summary>When the 'next' button is pressed</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
             if (counter == furthestCount && !MiscMethods.RegCheck())
@@ -323,25 +336,33 @@ namespace FeaturesOverlayPresentation
             }
         }
 
-        //When clicking on the arms pictures, opens its sites
+        ///<summary>When clicking on the arms pictures, opens its sites</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void Logo2_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             _ = Process.Start(parametersList[2][0]);
         }
 
-        //When clicking on the arms pictures, opens its sites
+        ///<summary>When clicking on the arms pictures, opens its sites</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void Logo1_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             _ = Process.Start(parametersList[1][0]);
         }
 
-        //When clicking on the arms pictures, opens its sites
+        ///<summary>When clicking on the arms pictures, opens its sites</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void Logo3_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             _ = Process.Start(parametersList[3][0]);
         }
 
-        //When the 'previous' button is pressed
+        ///<summary>When the 'previous' button is pressed</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
         {
             if (counter > 1)
@@ -376,14 +397,18 @@ namespace FeaturesOverlayPresentation
             _ = aboutForm.ShowDialog();
         }
 
-        //When the 'exit' button is pressed
+        ///<summary>When the 'exit' button is pressed</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
             Application.Current.Shutdown();
         }
 
-        //When a combobox item is selected
+        ///<summary>When a combobox item is selected</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void ComboBoxNavigate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             counter = ComboBoxNavigate.SelectedIndex;

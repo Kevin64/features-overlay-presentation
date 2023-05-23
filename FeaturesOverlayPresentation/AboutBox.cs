@@ -4,8 +4,10 @@ using System.Windows.Forms;
 
 namespace FeaturesOverlayPresentation
 {
+    ///<summary>Class for About box</summary>
     internal partial class AboutBox : Form
     {
+        ///<summary>About form constructor</summary>
         public AboutBox()
         {
             InitializeComponent();
@@ -22,6 +24,9 @@ namespace FeaturesOverlayPresentation
             textBoxDescription.LinkClicked += TextBoxDescription_LinkClicked;
         }
 
+        ///<summary>Handles link clicks inside the Description box</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
         private void TextBoxDescription_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             _ = System.Diagnostics.Process.Start(e.LinkText);
