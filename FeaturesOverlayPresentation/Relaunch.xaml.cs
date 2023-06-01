@@ -229,7 +229,11 @@ namespace FeaturesOverlayPresentation
                                 {
                                     log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_EMPLOYEEAWAY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
                                     log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                                    webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + "/" + ConstantsDLL.Properties.Resources.DELIVERY_URL + ".php" + ConstantsDLL.Properties.Resources.PHP_ASSET_NUMBER + textBoxAssetNumber.Text + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_DATE + dateAndTime.ToShortDateString() + ConstantsDLL.Properties.Resources.PHP_DELIVERED_TO_REGISTRATION_NUMBER + ConstantsDLL.Properties.Strings.ABSENT + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_MADE_BY + agentData[0]);
+                                    webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + "/" + ConstantsDLL.Properties.Resources.DELIVERY_URL + ".php"
+                                        + ConstantsDLL.Properties.Resources.PHP_ASSET_NUMBER + textBoxAssetNumber.Text
+                                        + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_DATE + dateAndTime.ToString(ConstantsDLL.Properties.Resources.DATE_FORMAT).Substring(0, 10)
+                                        + ConstantsDLL.Properties.Resources.PHP_DELIVERED_TO_REGISTRATION_NUMBER + ConstantsDLL.Properties.Strings.ABSENT
+                                        + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_MADE_BY + agentData[0]);
                                     check = true;
                                 }
                                 else if (textBoxRegistrationNumber.Text != string.Empty) //If employee is present and SIAPE textbox is not empty
@@ -237,7 +241,11 @@ namespace FeaturesOverlayPresentation
                                     log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_EMPLOYEEPRESENT, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
                                     log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
                                     webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text
-                                + "/" + ConstantsDLL.Properties.Resources.DELIVERY_URL + ".php" + ConstantsDLL.Properties.Resources.PHP_ASSET_NUMBER + textBoxAssetNumber.Text + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_DATE + dateAndTime.ToShortDateString() + ConstantsDLL.Properties.Resources.PHP_DELIVERED_TO_REGISTRATION_NUMBER + textBoxRegistrationNumber.Text + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_MADE_BY + agentData[0]);
+                                + "/" + ConstantsDLL.Properties.Resources.DELIVERY_URL + ".php"
+                                + ConstantsDLL.Properties.Resources.PHP_ASSET_NUMBER + textBoxAssetNumber.Text
+                                + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_DATE + dateAndTime.ToString(ConstantsDLL.Properties.Resources.DATE_FORMAT).Substring(0, 10)
+                                + ConstantsDLL.Properties.Resources.PHP_DELIVERED_TO_REGISTRATION_NUMBER + textBoxRegistrationNumber.Text
+                                + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_MADE_BY + agentData[0]);
                                     check = true;
                                 }
                                 else //If employee is present and SIAPE textbox is empty
