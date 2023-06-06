@@ -1,15 +1,20 @@
 ﻿using FeaturesOverlayPresentation.Properties;
+using FeaturesOverlayPresentation.Updater;
+using LogGeneratorDLL;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace FeaturesOverlayPresentation
+namespace FeaturesOverlayPresentation.Forms
 {
     ///<summary>Class for About box</summary>
     internal partial class AboutBox : Form
     {
+        private readonly LogGenerator log;
+
         ///<summary>About form constructor</summary>
-        public AboutBox()
+        public AboutBox(LogGenerator log)
         {
+            this.log = log;
             InitializeComponent();
             Text = string.Format("{0} {1}", labelFormTitle.Text, AssemblyTitle);
             labelProductName.Text = AssemblyProduct;
@@ -89,5 +94,13 @@ namespace FeaturesOverlayPresentation
             }
         }
         #endregion
+
+        ///<summary>Triggers an update check</summary>
+        ///<param name="sender"></param>
+        ///<param name="e"></param>
+        private void CheckUpdateButton_Click(object sender, System.EventArgs e)
+        {
+            UpdateChecker.Check(log, false);
+        }
     }
 }

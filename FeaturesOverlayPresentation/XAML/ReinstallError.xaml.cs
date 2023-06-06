@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Windows;
 
-namespace FeaturesOverlayPresentation
+namespace FeaturesOverlayPresentation.XAML
 {
     ///<summary>Class for ReinstallError.xaml</summary>
     public partial class ReinstallError : Window

@@ -7,7 +7,7 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 
-namespace FeaturesOverlayPresentation
+namespace FeaturesOverlayPresentation.Misc
 {
     //Class for implementing a blur effect on the image
     public class BlurBackgroundBehavior : Behavior<Shape>

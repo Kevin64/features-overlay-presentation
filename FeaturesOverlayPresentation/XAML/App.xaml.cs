@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace FeaturesOverlayPresentation
+namespace FeaturesOverlayPresentation.XAML
 {
     /// <summary>
     /// Interação lógica para App.xaml

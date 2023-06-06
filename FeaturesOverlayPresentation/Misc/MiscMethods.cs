@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 
-namespace FeaturesOverlayPresentation
+namespace FeaturesOverlayPresentation.Misc
 {
     ///<summary>Class for miscelaneous methods</summary>
     internal static class MiscMethods
@@ -88,7 +88,7 @@ namespace FeaturesOverlayPresentation
 
         ///<summary>Checks assembly version</summary>
         ///<returns>The assembly version</returns>
-        public static string Version => System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        public static string Version => "v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
         ///<summary>Checks the current screen resolution</summary>
         ///<returns>'true' if resolution above minimum, 'false' otherwise</returns>
