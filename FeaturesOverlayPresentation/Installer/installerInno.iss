@@ -58,6 +58,8 @@ Source: "..\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#
 
 Source: "..\bin\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
+Source: "..\bin\Release\Octokit.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+
 Source: "..\bin\Release\System.Memory.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
 Source: "..\bin\Release\System.Numerics.Vectors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
