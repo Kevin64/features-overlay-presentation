@@ -168,7 +168,12 @@ Este software e suas bibliotecas (DLLs) utilizam artes, bibliotecas Open Source 
     • Copyright © 2013 Ryan D. Emerle (.Net port)
     • Copyright © 2016/2021 Chris McKee (.Net-core port / patches)
     • Repositório (GitHub): https://github.com/BcryptNet/bcrypt.net
-    • Licença: (MIT) https://github.com/BcryptNet/bcrypt.net/blob/main/licence.txt</value>
+    • Licença: (MIT) https://github.com/BcryptNet/bcrypt.net/blob/main/licence.txt
+
+► Octokit
+    • Copyright © 2017 GitHub, Inc.
+    • Repositório (GitHub): https://github.com/octokit/octokit.net
+    • Licença: (MIT) https://github.com/octokit/octokit.net/blob/main/LICENSE.txt</value>
   </data>
   <data name="lblFixedAdvancedOptionsText" xml:space="preserve">
     <value>Opções avançadas</value>
