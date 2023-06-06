@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p = "clr-namespace:FeaturesOverlayPresentation.Properties"
-        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" x:Class="FeaturesOverlayPresentation.Relaunch"
+        xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero" x:Class="FeaturesOverlayPresentation.XAML.Relaunch"
         mc:Ignorable="d"
         Closing="Window_Closing" 
         Title="{x:Static p:Strings.lblFixedRelaunchTitleText}" Height="Auto" Width="Auto" SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
@@ -343,7 +343,6 @@
                                 <Setter Property="BorderBrush" TargetName="border" Value="#00276b"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="border" Value="#FF2F2F2F"/>
                                 <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
                                 <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
                             </Trigger>
@@ -408,44 +407,36 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Height="Auto" Background="#FF2F2F2F">
-        <Label Content="{x:Static p:Strings.lblFixedSeeAgainText}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,8,0,0" Width="216" Foreground="White" Grid.ColumnSpan="2"/>
-        <Button Style="{DynamicResource ButtonStyle1}" x:Name="YesButton" Content="{x:Static p:Strings.lblFixedButtonYesText}" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Width="90" Click="YesButton_Click" TabIndex="0" Background="#FF7E7E7E" Foreground="White" Grid.ColumnSpan="2"/>
-        <Button Style="{DynamicResource ButtonStyle2}" x:Name="NoButton" Content="{x:Static p:Strings.lblFixedButtonNoText}" HorizontalAlignment="Left" Margin="110,39,0,0" VerticalAlignment="Top" Width="90" Click="NoButton_Click" TabIndex="1" Background="#FF7E7E7E" Foreground="White" Grid.Column="1"/>
-        <Expander Header="{x:Static p:Strings.lblFixedAdvancedOptionsText}" HorizontalAlignment="Left" Height="Auto" Margin="10,64,0,0" VerticalAlignment="Top" Width="Auto" TabIndex="2" Foreground="White" Grid.ColumnSpan="2">
+    <Grid Height="Auto">
+        <Label Content="{x:Static p:Strings.lblFixedSeeAgainText}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,8,0,0" Width="216" Grid.ColumnSpan="2"/>
+        <Button Style="{DynamicResource ButtonStyle1}" x:Name="YesButton" Content="{x:Static p:Strings.lblFixedButtonYesText}" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top" Width="90" Click="YesButton_Click" TabIndex="0" Grid.ColumnSpan="2"/>
+        <Button Style="{DynamicResource ButtonStyle2}" x:Name="NoButton" Content="{x:Static p:Strings.lblFixedButtonNoText}" HorizontalAlignment="Left" Margin="110,39,0,0" VerticalAlignment="Top" Width="90" Click="NoButton_Click" TabIndex="1" Grid.Column="1"/>
+        <Expander Header="{x:Static p:Strings.lblFixedAdvancedOptionsText}" HorizontalAlignment="Left" Height="Auto" Margin="10,64,0,0" VerticalAlignment="Top" Width="Auto" TabIndex="2" Grid.ColumnSpan="2">
             <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Width="Auto">
-                <ComboBox x:Name="comboBoxServerIP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Margin="82,53,0,0" IsEnabled="True" TabIndex="5" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}" Background="#FF7E7E7E" Foreground="White" Style="{DynamicResource ComboBoxStyle1}" ItemContainerStyle="{DynamicResource ComboBoxItemStyle1}" IsEditable="True">
-                </ComboBox>
-                <ComboBox x:Name="comboBoxServerPort" HorizontalAlignment="Left" Margin="82,78,0,0" VerticalAlignment="Top" Width="110" IsEditable="True" IsEnabled="True" TabIndex="6" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}" Background="#FF7E7E7E" Foreground="White" Style="{DynamicResource ComboBoxStyle1}">
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem">
-                            <Setter Property="Background" Value="#FF7E7E7E"/>
-                            <Setter Property="BorderBrush" Value="#FF7E7E7E"/>
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
-                </ComboBox>
-                <Button Style="{DynamicResource ButtonStyle1}" x:Name="YesLaterButton" Margin="0,284,12,0" VerticalAlignment="Top" Click="YesLaterButton_Click" IsEnabled="False" TabIndex="14" Background="#FF7E7E7E" Foreground="White" Height="42" HorizontalAlignment="Right" Width="192">
+                <ComboBox x:Name="comboBoxServerIP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="110" Margin="82,53,0,0" IsEnabled="True" TabIndex="5" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}" IsEditable="True"/>
+                <ComboBox x:Name="comboBoxServerPort" HorizontalAlignment="Left" Margin="82,78,0,0" VerticalAlignment="Top" Width="110" IsEditable="True" IsEnabled="True" TabIndex="6" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}"/>
+                <Button x:Name="YesLaterButton" Margin="0,284,12,0" VerticalAlignment="Top" Click="YesLaterButton_Click" IsEnabled="False" TabIndex="14" Height="42" HorizontalAlignment="Right" Width="192">
                     <TextBlock x:Name="YesLaterButtonTB" Text="{x:Static p:Strings.lblFixedButtonSendDataText}" TextWrapping="Wrap" TextAlignment="Center"/>
                 </Button>
-                <TextBox x:Name="textBoxAssetNumber" HorizontalAlignment="Left" Height="22" Margin="108,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="84" IsEnabled="False" TabIndex="8" MaxLines="1" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}" PreviewTextInput="TextBox_PreviewTextInput" MaxLength="6" Background="#FF7E7E7E" Foreground="White"/>
-                <Label x:Name="lblFixedAssetNumber1" Content="{x:Static p:Strings.lblFixedAssetNumberText}" HorizontalAlignment="Left" Margin="1,161,0,0" VerticalAlignment="Top" Width="101" IsEnabled="False"  Foreground="White" Height="24"/>
-                <Label x:Name="lblFixedServerIP" Content="{x:Static p:Strings.lblFixedServerIPText}" HorizontalAlignment="Left" Margin="1,51,0,0" VerticalAlignment="Top" Width="76" IsEnabled="False"  Foreground="White"/>
-                <Label x:Name="lblFixedServerPort" Content="{x:Static p:Strings.lblFixedServerPortText}" HorizontalAlignment="Left" Margin="1,76,0,0" VerticalAlignment="Top" IsEnabled="False"  Foreground="White" Width="76"/>
-                <TextBox x:Name="textBoxUsername" HorizontalAlignment="Left" Height="22" Margin="82,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" TabIndex="3" MaxLines="1" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}" Background="#FF7E7E7E" Foreground="White"/>
-                <Button Style="{DynamicResource ButtonStyle1}" x:Name="AuthButton" Content="{x:Static p:Strings.lblFixedButtonAuthenticateText}" HorizontalAlignment="Right" Margin="0,133,12,0" VerticalAlignment="Top" Width="192" Click="AuthButton_Click" TabIndex="7" IsDefault="True" Background="#FF7E7E7E" Foreground="White"/>
-                <PasswordBox x:Name="textBoxPassword" HorizontalAlignment="Left" Margin="82,27,0,0" VerticalAlignment="Top" Width="110" Height="22" TabIndex="4" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}" Background="#FF7E7E7E" Foreground="White"/>
-                <Label x:Name="lblFixedUsername" Content="{x:Static p:Strings.lblFixedButtonUsernameText}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Margin="1,1,0,0"  Foreground="White"/>
-                <Label x:Name="lblFixedPassword" Content="{x:Static p:Strings.lblFixedButtonPasswordText}" HorizontalAlignment="Left" Margin="1,26,0,0" VerticalAlignment="Top" Width="76"  Foreground="White"/>
+                <TextBox x:Name="textBoxAssetNumber" HorizontalAlignment="Left" Height="22" Margin="108,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="84" IsEnabled="False" TabIndex="8" MaxLines="1" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}" PreviewTextInput="TextBox_PreviewTextInput" MaxLength="6"/>
+                <Label x:Name="lblFixedAssetNumber1" Content="{x:Static p:Strings.lblFixedAssetNumberText}" HorizontalAlignment="Left" Margin="1,161,0,0" VerticalAlignment="Top" Width="101" IsEnabled="False" Height="24"/>
+                <Label x:Name="lblFixedServerIP" Content="{x:Static p:Strings.lblFixedServerIPText}" HorizontalAlignment="Left" Margin="1,51,0,0" VerticalAlignment="Top" Width="76" IsEnabled="False"/>
+                <Label x:Name="lblFixedServerPort" Content="{x:Static p:Strings.lblFixedServerPortText}" HorizontalAlignment="Left" Margin="1,76,0,0" VerticalAlignment="Top" IsEnabled="False" Width="76"/>
+                <TextBox x:Name="textBoxUsername" HorizontalAlignment="Left" Height="22" Margin="82,2,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" TabIndex="3" MaxLines="1" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}"/>
+                <Button Style="{DynamicResource ButtonStyle1}" x:Name="AuthButton" Content="{x:Static p:Strings.lblFixedButtonAuthenticateText}" HorizontalAlignment="Right" Margin="0,133,12,0" VerticalAlignment="Top" Width="192" Click="AuthButton_Click" TabIndex="7" IsDefault="True" />
+                <PasswordBox x:Name="textBoxPassword" HorizontalAlignment="Left" Margin="82,27,0,0" VerticalAlignment="Top" Width="110" Height="22" TabIndex="4" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}"/>
+                <Label x:Name="lblFixedUsername" Content="{x:Static p:Strings.lblFixedButtonUsernameText}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="76" Margin="1,1,0,0"/>
+                <Label x:Name="lblFixedPassword" Content="{x:Static p:Strings.lblFixedButtonPasswordText}" HorizontalAlignment="Left" Margin="1,26,0,0" VerticalAlignment="Top" Width="76"/>
                 <Label x:Name="warningLabel" Content="{x:Static p:Strings.lblFixedIncorrectCredText}" VerticalAlignment="Top" Height="24" Foreground="Red" HorizontalContentAlignment="Center" Margin="6,106,6,0" Visibility="Hidden" />
                 <WebBrowser x:Name="webBrowser1" HorizontalAlignment="Left" Height="36" Margin="1,207,0,0" VerticalAlignment="Top" Width="203" Visibility="Hidden"/>
-                <TextBox x:Name="textBoxRegistrationNumber" HorizontalAlignment="Left" Height="22" Margin="82,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" IsEnabled="False" TabIndex="12" MaxLines="1" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}" PreviewTextInput="TextBox_PreviewTextInput" MaxLength="8" Background="#FF7E7E7E" Foreground="White"/>
-                <Label x:Name="lblFixedAssetNumber" Content="{x:Static p:Strings.lblFixedEmployeeRegistrationNumberText}" HorizontalAlignment="Left" Margin="1,256,0,0" VerticalAlignment="Top" Width="76" IsEnabled="False"  Foreground="White" Height="24"/>
-                <RadioButton x:Name="radioButtonEmployeePresentYes" GroupName="IsPresent" Content="{x:Static p:Strings.lblFixedRadioPresentText}" HorizontalAlignment="Left" Margin="126,225,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False" Checked="RadioButtonEmployeePresentYes_Checked" TabIndex="11"/>
-                <RadioButton x:Name="radioButtonEmployeePresentNo" GroupName="IsPresent" Content="{x:Static p:Strings.lblFixedRadioAbsentText}" HorizontalAlignment="Left" Margin="126,239,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False" Checked="RadioButtonEmployeePresentNo_Checked" TabIndex="12"/>
-                <Label x:Name="lblFixedEmployeePresent" Content="{x:Static p:Strings.lblFixedEmployeePresentText}" HorizontalAlignment="Left" Margin="1,225,0,0" VerticalAlignment="Top" Width="116" IsEnabled="False"  Foreground="White" Height="28"/>
-                <RadioButton x:Name="radioButtonFormatting" GroupName="ServiceType" Content="{x:Static p:Strings.lblFixedFormattingText}" HorizontalAlignment="Left" Margin="108,187,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False" Checked="RadioButtonFormatting_Checked" TabIndex="9"/>
-                <RadioButton x:Name="radioButtonMaintenance" GroupName="ServiceType" Content="{x:Static p:Strings.lblFixedMaintenanceText}" HorizontalAlignment="Left" Margin="108,201,0,0" VerticalAlignment="Top" Foreground="White" IsEnabled="False" Checked="RadioButtonMaintenance_Checked" TabIndex="2"/>
-                <Label x:Name="lblFixedServiceType" Content="{x:Static p:Strings.lblFixedServiceTypeText}" HorizontalAlignment="Left" Margin="1,187,0,0" VerticalAlignment="Top" Width="101" IsEnabled="False"  Foreground="White" Height="28"/>
+                <TextBox x:Name="textBoxRegistrationNumber" HorizontalAlignment="Left" Height="22" Margin="82,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" IsEnabled="False" TabIndex="12" MaxLines="1" CommandManager.PreviewExecuted="TextBox_PreviewExecuted" ContextMenu="{x:Null}" PreviewTextInput="TextBox_PreviewTextInput" MaxLength="8"/>
+                <Label x:Name="lblFixedAssetNumber" Content="{x:Static p:Strings.lblFixedEmployeeRegistrationNumberText}" HorizontalAlignment="Left" Margin="1,256,0,0" VerticalAlignment="Top" Width="76" IsEnabled="False" Height="24"/>
+                <RadioButton x:Name="radioButtonEmployeePresentYes" GroupName="IsPresent" Content="{x:Static p:Strings.lblFixedRadioPresentText}" HorizontalAlignment="Left" Margin="126,225,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="RadioButtonEmployeePresentYes_Checked" TabIndex="11"/>
+                <RadioButton x:Name="radioButtonEmployeePresentNo" GroupName="IsPresent" Content="{x:Static p:Strings.lblFixedRadioAbsentText}" HorizontalAlignment="Left" Margin="126,239,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="RadioButtonEmployeePresentNo_Checked" TabIndex="12"/>
+                <Label x:Name="lblFixedEmployeePresent" Content="{x:Static p:Strings.lblFixedEmployeePresentText}" HorizontalAlignment="Left" Margin="1,225,0,0" VerticalAlignment="Top" Width="116" IsEnabled="False" Height="28"/>
+                <RadioButton x:Name="radioButtonFormatting" GroupName="ServiceType" Content="{x:Static p:Strings.lblFixedFormattingText}" HorizontalAlignment="Left" Margin="108,187,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="RadioButtonFormatting_Checked" TabIndex="9"/>
+                <RadioButton x:Name="radioButtonMaintenance" GroupName="ServiceType" Content="{x:Static p:Strings.lblFixedMaintenanceText}" HorizontalAlignment="Left" Margin="108,201,0,0" VerticalAlignment="Top" IsEnabled="False" Checked="RadioButtonMaintenance_Checked" TabIndex="2"/>
+                <Label x:Name="lblFixedServiceType" Content="{x:Static p:Strings.lblFixedServiceTypeText}" HorizontalAlignment="Left" Margin="1,187,0,0" VerticalAlignment="Top" Width="101" IsEnabled="False" Height="28"/>
             </Grid>
         </Expander>
     </Grid>

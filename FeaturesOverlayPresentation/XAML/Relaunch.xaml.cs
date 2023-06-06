@@ -1,9 +1,9 @@
 ﻿using ConstantsDLL;
+using FeaturesOverlayPresentation.Misc;
 using FeaturesOverlayPresentation.Properties;
 using IniParser;
 using IniParser.Exceptions;
 using IniParser.Model;
-using JsonFileReaderDLL;
 using LogGeneratorDLL;
 using Microsoft.Win32;
 using System;
@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 
-namespace FeaturesOverlayPresentation
+namespace FeaturesOverlayPresentation.XAML
 {
     ///<summary>Class for Relaunch.xaml</summary>
     public partial class Relaunch : Window
@@ -110,7 +110,7 @@ namespace FeaturesOverlayPresentation
                     if (!MiscMethods.RegCheck())
                     {
                         resPass = MiscMethods.ResolutionError(true);
-                        m = new MainWindow(parametersListSection);
+                        m = new MainWindow(log, parametersListSection);
                         m.Show();
                         Hide();
                         ShowInTaskbar = false;
@@ -178,7 +178,7 @@ namespace FeaturesOverlayPresentation
             try
             {
                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_RUNNING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                m = new MainWindow(parametersListSection);
+                m = new MainWindow(log, parametersListSection);
                 m.Show();
                 Hide();
             }
@@ -210,11 +210,11 @@ namespace FeaturesOverlayPresentation
             bool check = false;
             if (textBoxAssetNumber.Text != string.Empty) //If patrimony textbox is not empty
             {
-                if (CredentialsFileReader.CheckHostST(comboBoxServerIP.Text, comboBoxServerPort.Text)) //If login succeeded
+                if (JsonFileReaderDLL.CredentialsFileReader.CheckHostST(comboBoxServerIP.Text, comboBoxServerPort.Text)) //If login succeeded
                 {
                     if (!pressed) //If 'send' button is not pressed already
                     {
-                        assetJsonStr = AssetFileReader.FetchInfoST(textBoxAssetNumber.Text, comboBoxServerIP.Text, comboBoxServerPort.Text);
+                        assetJsonStr = JsonFileReaderDLL.AssetFileReader.FetchInfoST(textBoxAssetNumber.Text, comboBoxServerIP.Text, comboBoxServerPort.Text);
                         if (assetJsonStr[0] != "false")
                         {
                             if (assetJsonStr[9] == "1")
@@ -386,7 +386,7 @@ namespace FeaturesOverlayPresentation
             else //... if are not empty
             {
                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_INIT_LOGIN, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                agentData = CredentialsFileReader.FetchInfoST(textBoxUsername.Text, textBoxPassword.Password, comboBoxServerIP.Text, comboBoxServerPort.Text);
+                agentData = JsonFileReaderDLL.CredentialsFileReader.FetchInfoST(textBoxUsername.Text, textBoxPassword.Password, comboBoxServerIP.Text, comboBoxServerPort.Text);
 
                 if (agentData == null) //If server is not found
                 {

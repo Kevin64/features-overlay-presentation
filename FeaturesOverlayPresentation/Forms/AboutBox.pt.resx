@@ -807,4 +807,7 @@
   <data name="labelFormTitle.Text" xml:space="preserve">
     <value>Sobre</value>
   </data>
+  <data name="checkUpdateButton.Text" xml:space="preserve">
+    <value>Verificar atualizações</value>
+  </data>
 </root>

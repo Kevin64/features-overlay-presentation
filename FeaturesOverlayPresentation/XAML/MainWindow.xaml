@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:p = "clr-namespace:FeaturesOverlayPresentation.Properties"
-        x:Name="MainWindow1" x:Class="FeaturesOverlayPresentation.MainWindow"
+        x:Name="MainWindow1" x:Class="FeaturesOverlayPresentation.XAML.MainWindow"
         mc:Ignorable="d"
         Title="FeatureOverlayPresentation" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowState="Maximized" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Width="1366" Height="768" Topmost="True" ShowInTaskbar="False" WindowStyle="None" Loaded="FormLoaded"
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">

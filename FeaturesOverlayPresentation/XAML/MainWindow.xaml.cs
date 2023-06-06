@@ -1,4 +1,7 @@
 ﻿using ConstantsDLL;
+using FeaturesOverlayPresentation.Forms;
+using FeaturesOverlayPresentation.Misc;
+using LogGeneratorDLL;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -16,7 +19,7 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
-namespace FeaturesOverlayPresentation
+namespace FeaturesOverlayPresentation.XAML
 {
     ///<summary>Class for MainWindow.xaml</summary>
     public partial class MainWindow : Window
@@ -31,6 +34,7 @@ namespace FeaturesOverlayPresentation
         private readonly BlurEffect blurEffect1;
         private ReinstallError e;
         private DispatcherTimer timer;
+        private readonly LogGenerator log;
 
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
@@ -41,15 +45,16 @@ namespace FeaturesOverlayPresentation
 
         ///<summary>Main Window constructor</summary>
         ///<param name="parametersList">List containing data from [Parameters]</param>
-        public MainWindow(List<string[]> parametersList)
+        public MainWindow(LogGenerator log, List<string[]> parametersList)
         {
+            this.log = log;
             InitializeComponent();
             _ = new Microsoft.Xaml.Behaviors.DefaultTriggerAttribute(typeof(Trigger), typeof(Microsoft.Xaml.Behaviors.TriggerBase), null);
             blurEffect1 = FindName("BlurImage") as BlurEffect;
             blurEffect1.Radius = 5;
             ButtonPrevious.Visibility = Visibility.Hidden;
 
-            TextAppVersion.Text = "v" + MiscMethods.Version;
+            TextAppVersion.Text = MiscMethods.Version;
             FindImages();
             FindLabels();
             LabelPrint();
@@ -393,7 +398,7 @@ namespace FeaturesOverlayPresentation
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AboutBox aboutForm = new AboutBox();
+            AboutBox aboutForm = new AboutBox(log);
             _ = aboutForm.ShowDialog();
         }
 
