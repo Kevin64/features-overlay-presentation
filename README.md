@@ -22,6 +22,8 @@ For IT admins: FOP allows to register in [APCS](https://github.com/Kevin64/asset
 
 ## Setting the installer
 
+TO-DO
+
 ## Build from scratch
 
-If you want to build AIR from source code, you'll also need to clone its [Dependencies](https://github.com/Kevin64/Dependencies).
+If you want to build FOP from source code, you'll also need to clone its [Dependencies](https://github.com/Kevin64/Dependencies).
