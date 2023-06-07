@@ -21,3 +21,7 @@ For IT admins: FOP allows to register in [APCS](https://github.com/Kevin64/asset
 ![firefox_T2CDYRNzh1](https://github.com/Kevin64/features-overlay-presentation/assets/1903028/e41ebc19-fe98-4721-b123-77f16d7dc138)
 
 ## Setting the installer
+
+## Build from scratch
+
+If you want to build AIR from source code, you'll also need to clone its [Dependencies](https://github.com/Kevin64/Dependencies).
