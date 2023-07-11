@@ -9,7 +9,9 @@ using System.Windows.Shapes;
 
 namespace FeaturesOverlayPresentation.Misc
 {
-    //Class for implementing a blur effect on the image
+    /// <summary>
+    /// Class for implementing a blur effect on the image
+    /// </summary>
     public class BlurBackgroundBehavior : Behavior<Shape>
     {
         public static readonly DependencyProperty BlurContainerProperty

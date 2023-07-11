@@ -1,5 +1,6 @@
 ﻿using ConstantsDLL;
 using FeaturesOverlayPresentation.Properties;
+using FeaturesOverlayPresentation.Updater;
 using Microsoft.Win32;
 using System;
 using System.IO;
@@ -8,11 +9,50 @@ using System.Windows;
 
 namespace FeaturesOverlayPresentation.Misc
 {
-    ///<summary>Class for miscelaneous methods</summary>
+    /// <summary> 
+    /// Class for miscelaneous methods
+    /// </summary>
     internal static class MiscMethods
     {
-        ///<summary>Checks via registry if the program was already executed</summary>
-        ///<returns>'true' if already executed, 'false' if not</returns>
+        /// <summary> 
+        /// Creates registrys keys when a successful update check is made
+        /// </summary>
+        /// <param name="ui">An UpdateInfo object to write into the registry</param>
+        internal static void RegCreateUpdateData(UpdateInfo ui)
+        {
+            RegistryKey rk = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY, true);
+            rk.SetValue(ConstantsDLL.Properties.Resources.ETAG, ui.ETag, RegistryValueKind.String);
+            rk.SetValue(ConstantsDLL.Properties.Resources.TAG_NAME, ui.TagName, RegistryValueKind.String);
+            rk.SetValue(ConstantsDLL.Properties.Resources.BODY, ui.Body, RegistryValueKind.String);
+            rk.SetValue(ConstantsDLL.Properties.Resources.HTML_URL, ui.HtmlUrl, RegistryValueKind.String);
+        }
+
+        /// <summary>
+        /// Checks the registry for existing update metadata
+        /// </summary>
+        /// <returns>An UpdateInfo object containing the ETag, TagName, Body and HtmlURL</returns>
+        internal static UpdateInfo RegCheckUpdateData()
+        {
+            UpdateInfo ui = new UpdateInfo();
+            try
+            {
+                RegistryKey rk = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);
+                ui.ETag = rk.GetValue(ConstantsDLL.Properties.Resources.ETAG).ToString();
+                ui.TagName = rk.GetValue(ConstantsDLL.Properties.Resources.TAG_NAME).ToString();
+                ui.Body = rk.GetValue(ConstantsDLL.Properties.Resources.BODY).ToString();
+                ui.HtmlUrl = rk.GetValue(ConstantsDLL.Properties.Resources.HTML_URL).ToString();
+                return ui;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        /// <summary> 
+        /// Checks via registry if the program was already executed
+        /// </summary>
+        /// <returns>'true' if already executed, 'false' if not</returns>
         public static bool RegCheck()
         {
             RegistryKey rk = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);
@@ -20,7 +60,9 @@ namespace FeaturesOverlayPresentation.Misc
             return k.Equals("1");
         }
 
-        ///<summary>Creates RunOnce and FOP registry keys</summary>
+        /// <summary> 
+        /// Creates RunOnce and FOP registry keys
+        /// </summary>
         public static void RegCreate()
         {
             RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY, true);
@@ -37,7 +79,10 @@ namespace FeaturesOverlayPresentation.Misc
             key2.SetValue(ConstantsDLL.Properties.Resources.DID_IT_RUN_ALREADY, 0, RegistryValueKind.DWord);
         }
 
-        ///<summary>ReCreates RunOnce registry key</summary>
+        /// <summary> 
+        /// ReCreates RunOnce registry key
+        /// </summary>
+        /// <param name="empty"></param>
         public static void RegRecreate(bool empty)
         {
             if (!empty && !RegCheck())
@@ -57,7 +102,9 @@ namespace FeaturesOverlayPresentation.Misc
             }
         }
 
-        ///<summary>Deletes RunOnce registry key</summary>
+        /// <summary> 
+        /// Deletes RunOnce registry key
+        /// </summary>
         public static void RegDelete()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY, true);
@@ -67,31 +114,33 @@ namespace FeaturesOverlayPresentation.Misc
             }
         }
 
-        ///<summary>Checks OS version</summary>
-        ///<return>The image paths according to OS version</return>
+        /// <summary> 
+        /// Checks OS version
+        /// </summary>
+        /// <return>The image paths according to OS version</return>
         public static string OSCheck()
         {
             string current = Directory.GetCurrentDirectory();
             Version osFullVer = Environment.OSVersion.Version;
             //int osBuild = Convert.ToInt32(osFullVer);
-            if (osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_7_NT_MAJOR) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_7_NT_MINOR))
-            {
-                return current + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR + ConstantsDLL.Properties.Resources.WIN_7_IMG_DIR;
-            }
-            else
-            {
-                return osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_10_NT_BUILD) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_11_NT_BUILD)
+            return osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_7_NT_MAJOR) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_7_NT_MINOR)
+                ? current + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR + ConstantsDLL.Properties.Resources.WIN_7_IMG_DIR
+                : osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_10_NT_BUILD) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_11_NT_BUILD)
                 ? current + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR + ConstantsDLL.Properties.Resources.WIN_10_IMG_DIR
                 : current + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR + ConstantsDLL.Properties.Resources.WIN_11_IMG_DIR;
-            }
         }
 
-        ///<summary>Checks assembly version</summary>
-        ///<returns>The assembly version</returns>
+        /// <summary> 
+        /// Checks assembly version
+        /// </summary>
+        /// <returns>The assembly version</returns>
         public static string Version => "v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-        ///<summary>Checks the current screen resolution</summary>
-        ///<returns>'true' if resolution above minimum, 'false' otherwise</returns>
+        /// <summary> 
+        /// Checks the current screen resolution
+        /// </summary>
+        /// <param name="exit"></param>
+        /// <returns>'true' if resolution above minimum, 'false' otherwise</returns>
         public static bool ResolutionError(bool exit)
         {
             if (SystemParameters.PrimaryScreenWidth < Convert.ToInt32(ConstantsDLL.Properties.Resources.WIDTH) || SystemParameters.PrimaryScreenHeight < Convert.ToInt32(ConstantsDLL.Properties.Resources.HEIGHT))
@@ -107,9 +156,11 @@ namespace FeaturesOverlayPresentation.Misc
             return true;
         }
 
-        ///<summary>Checks if logfile exists</summary>
-        ///<param name="path">Path of the log file</param>
-        ///<returns>"true" if exists, "false" otherwise</returns>
+        /// <summary> 
+        /// Checks if logfile exists
+        /// </summary>
+        /// <param name="path">Path of the log file</param>
+        /// <returns>"true" if exists, "false" otherwise</returns>
         public static string CheckIfLogExists(string path)
         {
             bool b;

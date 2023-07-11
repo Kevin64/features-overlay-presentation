@@ -6,14 +6,20 @@ using System.Windows.Forms;
 
 namespace FeaturesOverlayPresentation.Forms
 {
-    ///<summary>Class for About box</summary>
+    /// <summary> 
+    /// Class for About box
+    /// </summary>
     internal partial class AboutBox : Form
     {
         private readonly LogGenerator log;
+        private readonly Octokit.GitHubClient ghc;
 
-        ///<summary>About form constructor</summary>
-        public AboutBox(LogGenerator log)
+        /// <summary> 
+        /// About form constructor
+        /// </summary>
+        public AboutBox(Octokit.GitHubClient ghc, LogGenerator log)
         {
+            this.ghc = ghc;
             this.log = log;
             InitializeComponent();
             Text = string.Format("{0} {1}", labelFormTitle.Text, AssemblyTitle);
@@ -29,12 +35,24 @@ namespace FeaturesOverlayPresentation.Forms
             textBoxDescription.LinkClicked += TextBoxDescription_LinkClicked;
         }
 
-        ///<summary>Handles link clicks inside the Description box</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// Handles link clicks inside the Description box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBoxDescription_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             _ = System.Diagnostics.Process.Start(e.LinkText);
+        }
+
+        /// <summary> 
+        /// Triggers an update check
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CheckUpdateButton_Click(object sender, System.EventArgs e)
+        {
+            UpdateChecker.Check(ghc, log);
         }
 
         #region Acessório de Atributos do Assembly
@@ -94,13 +112,5 @@ namespace FeaturesOverlayPresentation.Forms
             }
         }
         #endregion
-
-        ///<summary>Triggers an update check</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
-        private void CheckUpdateButton_Click(object sender, System.EventArgs e)
-        {
-            UpdateChecker.Check(log, false);
-        }
     }
 }

@@ -21,7 +21,9 @@ using System.Windows.Threading;
 
 namespace FeaturesOverlayPresentation.XAML
 {
-    ///<summary>Class for MainWindow.xaml</summary>
+    /// <summary> 
+    /// Class for MainWindow.xaml
+    /// </summary>
     public partial class MainWindow : Window
     {
         private int furthestCount = 0, counter = 0;
@@ -35,6 +37,7 @@ namespace FeaturesOverlayPresentation.XAML
         private ReinstallError e;
         private DispatcherTimer timer;
         private readonly LogGenerator log;
+        private readonly Octokit.GitHubClient ghc;
 
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
@@ -43,8 +46,11 @@ namespace FeaturesOverlayPresentation.XAML
         private const int GWL_EX_STYLE = -20;
         private const int WS_EX_APPWINDOW = 0x00040000, WS_EX_TOOLWINDOW = 0x00000080;
 
-        ///<summary>Main Window constructor</summary>
-        ///<param name="parametersList">List containing data from [Parameters]</param>
+        /// <summary> 
+        /// Main Window constructor
+        /// </summary>
+        /// <param name="log">Log file object</param>
+        /// <param name="parametersList">List containing data from [Parameters]</param>
         public MainWindow(LogGenerator log, List<string[]> parametersList)
         {
             this.log = log;
@@ -61,6 +67,7 @@ namespace FeaturesOverlayPresentation.XAML
             ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
             mainImage.Visibility = Visibility.Visible;
             MiscMethods.RegRecreate(empty);
+            ghc = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(ConstantsDLL.Properties.Resources.GITHUB_REPO_FOP));
 
             this.parametersList = parametersList;
 
@@ -82,9 +89,11 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>Form loaded event handler</summary>
-        ///<param name="sender"></param>
-        ///<param name="args"></param>
+        /// <summary> 
+        /// Form loaded event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void FormLoaded(object sender, RoutedEventArgs args)
         {
             if (!MiscMethods.RegCheck())
@@ -113,9 +122,11 @@ namespace FeaturesOverlayPresentation.XAML
 
         }
 
-        ///<summary>Deny Alt+F4 exiting</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// Deny Alt+F4 exiting
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.System && e.SystemKey == Key.F4)
@@ -124,13 +135,17 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>Prints the slide counter on the screen</summary>
+        /// <summary> 
+        /// Prints the slide counter on the screen
+        /// </summary>
         private void LabelPrint()
         {
             LabelPage.Content = counter + 1 + " " + ConstantsDLL.Properties.Strings.OF + " " + finalCount;
         }
 
-        ///<summary>Finds and creates a list of the image file names found inside the specified folder</summary>
+        /// <summary> 
+        /// Finds and creates a list of the image file names found inside the specified folder
+        /// </summary>
         public void FindLabels()
         {
             finalCount = 0;
@@ -165,7 +180,9 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>Finds and creates a list of the slide images found inside the specified folder</summary>
+        /// <summary> 
+        /// Finds and creates a list of the slide images found inside the specified folder
+        /// </summary>
         public void FindImages()
         {
             finalCount = 0;
@@ -199,9 +216,11 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>Prints filename label next to each slide</summary>
-        ///<param name="index">Image index inside the Combobox</param>
-        ///<param name="flag">Indicates whether the slide subtitle will be shown</param>
+        /// <summary> 
+        /// Prints filename label next to each slide
+        /// </summary>
+        /// <param name="index">Image index inside the Combobox</param>
+        /// <param name="flag">Indicates whether the slide subtitle will be shown</param>
         private void SlideSubTitlePrint(int index, bool flag)
         {
             string str;
@@ -216,19 +235,25 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>Define 'next' button name</summary>
+        /// <summary> 
+        /// Define 'next' button name
+        /// </summary>
         private void NextTextPrint()
         {
             nextBlock.Text = ConstantsDLL.Properties.Strings.NEXT_TEXT;
         }
 
-        /// <summary>Define 'finish' button name</summary>
+        /// <summary> 
+        /// Define 'finish' button name
+        /// </summary>
         private void FinishTextPrint()
         {
             nextBlock.Text = ConstantsDLL.Properties.Strings.FINISH_TEXT;
         }
 
-        ///<summary>Creates a timer for each slide when running for the first time</summary>
+        /// <summary> 
+        /// Creates a timer for each slide when running for the first time
+        /// </summary>
         private void TimerTickCreation()
         {
             timerTickCount = tickSeconds;
@@ -242,9 +267,11 @@ namespace FeaturesOverlayPresentation.XAML
             TextStandBy.Visibility = Visibility.Visible;
         }
 
-        ///<summary>Runs the previously created timer</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// Runs the previously created timer
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TimerTickRun(object sender, EventArgs e)
         {
             TextStandBy.Text = ConstantsDLL.Properties.Strings.WAIT_TEXT + "(" + timerTickCount.ToString() + ")";
@@ -267,11 +294,13 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>Changes the image source, adding fade-in/fade-out animation</summary>
-        ///<param name="image">Image object</param>
-        ///<param name="source">Image source</param>
-        ///<param name="fadeOutTime">Fade-out time</param>
-        ///<param name="fadeInTime">Fade-in time</param>
+        /// <summary> 
+        /// Changes the image source, adding fade-in/fade-out animation
+        /// </summary>
+        /// <param name="image">Image object</param>
+        /// <param name="source">Image source</param>
+        /// <param name="fadeOutTime">Fade-out time</param>
+        /// <param name="fadeInTime">Fade-in time</param>
         private void ChangeSource(Image image, ImageSource source, TimeSpan fadeOutTime, TimeSpan fadeInTime)
         {
             if (Environment.OSVersion.Version.Major.ToString().Contains(ConstantsDLL.Properties.Resources.WIN_10_NT_MAJOR))
@@ -303,9 +332,11 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>When the 'next' button is pressed</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// When the 'next' button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonNext_Click(object sender, RoutedEventArgs e)
         {
             if (counter == furthestCount && !MiscMethods.RegCheck())
@@ -341,33 +372,41 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>When clicking on the arms pictures, opens its sites</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// When clicking on the arms pictures, opens its sites
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Logo2_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             _ = Process.Start(parametersList[2][0]);
         }
 
-        ///<summary>When clicking on the arms pictures, opens its sites</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// When clicking on the arms pictures, opens its sites
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Logo1_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             _ = Process.Start(parametersList[1][0]);
         }
 
-        ///<summary>When clicking on the arms pictures, opens its sites</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// When clicking on the arms pictures, opens its sites
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Logo3_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
             _ = Process.Start(parametersList[3][0]);
         }
 
-        ///<summary>When the 'previous' button is pressed</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// When the 'previous' button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ButtonPrevious_Click(object sender, RoutedEventArgs e)
         {
             if (counter > 1)
@@ -398,22 +437,26 @@ namespace FeaturesOverlayPresentation.XAML
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AboutBox aboutForm = new AboutBox(log);
+            AboutBox aboutForm = new AboutBox(ghc, log);
             _ = aboutForm.ShowDialog();
         }
 
-        ///<summary>When the 'exit' button is pressed</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// When the 'exit' button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
             Application.Current.Shutdown();
         }
 
-        ///<summary>When a combobox item is selected</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// When a combobox item is selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ComboBoxNavigate_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             counter = ComboBoxNavigate.SelectedIndex;
