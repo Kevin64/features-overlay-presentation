@@ -63,9 +63,9 @@ namespace FeaturesOverlayPresentation.Properties {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a beta.
         /// </summary>
-        internal static string dev_status {
+        internal static string DEV_STATUS {
             get {
-                return ResourceManager.GetString("dev_status", resourceCulture);
+                return ResourceManager.GetString("DEV_STATUS", resourceCulture);
             }
         }
     }

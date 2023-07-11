@@ -113,6 +113,7 @@
             this.ShowInTaskbar = false;
             this.ResumeLayout(false);
             this.PerformLayout();
+            this.Load += new System.EventHandler(this.UpdateCheckerForm_Load);
 
         }
 

@@ -121,7 +121,7 @@
     <value />
     <comment>FeaturesOverlayPresentation.Strings.Generic</comment>
   </data>
-  <data name="description" xml:space="preserve">
+  <data name="DESCRIPTION" xml:space="preserve">
     <value>Software created, developed and maintained by Kevin Costa. Programmed in C# using .NET Framework 4.8. Supported systems: Windows 7, 10 and 11.
 
     • Copyright © 2023 Kevin Vinícius Teixeira Costa

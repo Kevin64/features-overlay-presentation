@@ -121,7 +121,7 @@
     <value />
     <comment>FeaturesOverlayPresentation.Strings.PT</comment>
   </data>
-  <data name="description" xml:space="preserve">
+  <data name="DESCRIPTION" xml:space="preserve">
     <value>Software criado, desenvolvido e mantido por Kevin Costa. Programado em C# utilizando .NET Framework 4.8. Sistemas com suporte: Windows 7, 10 e 11.
 
     • Copyright © 2023 Kevin Vinícius Teixeira Costa
