@@ -79,9 +79,9 @@ namespace FeaturesOverlayPresentation.Properties {
         ///
         ///This software must be used in conjunction wit [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
-        public static string description {
+        public static string DESCRIPTION {
             get {
-                return ResourceManager.GetString("description", resourceCulture);
+                return ResourceManager.GetString("DESCRIPTION", resourceCulture);
             }
         }
         

@@ -95,7 +95,7 @@
             // okButton
             // 
             resources.ApplyResources(this.okButton, "okButton");
-            this.okButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.okButton.Name = "okButton";
             this.okButton.UseVisualStyleBackColor = true;
             // 
@@ -106,7 +106,6 @@
             // 
             // checkUpdateButton
             // 
-            this.checkUpdateButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.checkUpdateButton, "checkUpdateButton");
             this.checkUpdateButton.Name = "checkUpdateButton";
             this.checkUpdateButton.UseVisualStyleBackColor = true;
@@ -124,6 +123,7 @@
             this.Name = "AboutBox";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.Load += new System.EventHandler(this.AboutBox_Load);
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.logoPictureBox)).EndInit();

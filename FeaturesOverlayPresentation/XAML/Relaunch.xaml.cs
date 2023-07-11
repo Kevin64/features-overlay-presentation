@@ -17,7 +17,9 @@ using System.Windows.Input;
 
 namespace FeaturesOverlayPresentation.XAML
 {
-    ///<summary>Class for Relaunch.xaml</summary>
+    /// <summary> 
+    /// Class for Relaunch.xaml
+    /// </summary>
     public partial class Relaunch : Window
     {
         private bool pressed = false;
@@ -29,7 +31,9 @@ namespace FeaturesOverlayPresentation.XAML
         private static string logLocationStr, serverIPStr, serverPortStr, logo1URLStr, logo2URLStr, logo3URLStr;
         private MainWindow m;
 
-        ///<summary>Relaunch constructor</summary>
+        /// <summary> 
+        /// Relaunch constructor
+        /// </summary>
         public Relaunch()
         {
             //Code for testing string localization for other languages
@@ -75,7 +79,7 @@ namespace FeaturesOverlayPresentation.XAML
                 bool logFileExists = bool.Parse(MiscMethods.CheckIfLogExists(logLocationStr));
 #if DEBUG
                 //Create a new log file (or append to an existing one)
-                log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status, logLocationStr, ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.dev_status + ConstantsDLL.Properties.Resources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_CLI));
+                log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.DEV_STATUS, logLocationStr, ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.DEV_STATUS + ConstantsDLL.Properties.Resources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_CLI));
                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_DEBUG_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_CLI));
 
                 comboBoxServerIP.SelectedIndex = 1;
@@ -150,8 +154,10 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>Searches the image files</summary>
-        ///<returns>Returns true if slide folder that contains PNG pictures exist</returns>
+        /// <summary>
+        /// Searches the image files
+        /// </summary>
+        /// <returns>Returns true if slide folder that contains PNG pictures exist</returns>
         public bool FindFolder()
         {
             log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_DETECTING_OS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
@@ -170,9 +176,11 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>If 'yes' button is pressed</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary>
+        /// If 'yes' button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -190,9 +198,11 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>If 'no' button is pressed</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// If 'no' button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
             log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
@@ -200,9 +210,11 @@ namespace FeaturesOverlayPresentation.XAML
             Application.Current.Shutdown();
         }
 
-        ///<summary>If 'send' button is pressed</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary>
+        /// If 'send' button is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void YesLaterButton_Click(object sender, RoutedEventArgs e)
         {
             string[] assetJsonStr;
@@ -364,9 +376,11 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>When closing the window</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// When closing the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, EventArgs e)
         {
             log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
@@ -374,9 +388,11 @@ namespace FeaturesOverlayPresentation.XAML
             Application.Current.Shutdown();
         }
 
-        ///<summary>When clicking the authenticate button</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// When clicking the authenticate button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AuthButton_Click(object sender, RoutedEventArgs e)
         {
             if (textBoxUsername.Text == string.Empty || textBoxPassword.Password == string.Empty) //If user and password textboxes are empty
@@ -424,9 +440,11 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>Limits textboxes to disallow cut, copy and paste operations</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// Limits textboxes to disallow cut, copy and paste operations
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBox_PreviewExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Command == ApplicationCommands.Copy || e.Command == ApplicationCommands.Cut || e.Command == ApplicationCommands.Paste)
@@ -435,18 +453,22 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>Limits some textboxes to allow only numerical inputs</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// Limits some textboxes to allow only numerical inputs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        ///<summary>If 'employee radio button' changes...</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// If 'employee radio button' changes...
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RadioButtonEmployeePresentYes_Checked(object sender, RoutedEventArgs e)
         {
             textBoxRegistrationNumber.IsEnabled = true;
@@ -457,9 +479,11 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>If 'employee radio button' changes...</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// If 'employee radio button' changes...
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RadioButtonEmployeePresentNo_Checked(object sender, RoutedEventArgs e)
         {
             textBoxRegistrationNumber.IsEnabled = false;
@@ -470,9 +494,11 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>If 'format/maintenance radio button changes...</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// If 'format/maintenance radio button changes...
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RadioButtonFormatting_Checked(object sender, RoutedEventArgs e)
         {
             isFormat = true;
@@ -482,9 +508,11 @@ namespace FeaturesOverlayPresentation.XAML
             }
         }
 
-        ///<summary>If 'format/maintenance radio button changes...</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// If 'format/maintenance radio button changes...
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RadioButtonMaintenance_Checked(object sender, RoutedEventArgs e)
         {
             isFormat = false;

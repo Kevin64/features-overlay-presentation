@@ -1,40 +1,82 @@
 ﻿using FeaturesOverlayPresentation.Properties;
 using FeaturesOverlayPresentation.Updater;
 using LogGeneratorDLL;
+using Microsoft.Win32;
+using System;
 using System.Reflection;
 using System.Windows.Forms;
 
 namespace FeaturesOverlayPresentation.Forms
 {
-    ///<summary>Class for About box</summary>
+    /// <summary> 
+    /// Class for About box
+    /// </summary>
     internal partial class AboutBox : Form
     {
         private readonly LogGenerator log;
+        private readonly Octokit.GitHubClient ghc;
 
-        ///<summary>About form constructor</summary>
-        public AboutBox(LogGenerator log)
+        /// <summary> 
+        /// About form constructor
+        /// </summary>
+        public AboutBox(Octokit.GitHubClient ghc, LogGenerator log)
         {
+            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_OPENING_ABOUTBOX, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+
+            this.ghc = ghc;
             this.log = log;
             InitializeComponent();
             Text = string.Format("{0} {1}", labelFormTitle.Text, AssemblyTitle);
             labelProductName.Text = AssemblyProduct;
 #if DEBUG
-            labelVersion.Text = string.Format("Versão {0}-{1}", AssemblyVersion, Resources.dev_status);
+            labelVersion.Text = string.Format("Versão {0}-{1}", AssemblyVersion, Resources.DEV_STATUS);
 #else
             labelVersion.Text = string.Format("Versão {0}", AssemblyVersion);
 #endif
             labelCopyright.Text = AssemblyCopyright;
             labelCompanyName.Text = AssemblyCompany;
-            textBoxDescription.Text = Strings.description;
+            textBoxDescription.Text = Strings.DESCRIPTION;
             textBoxDescription.LinkClicked += TextBoxDescription_LinkClicked;
         }
 
-        ///<summary>Handles link clicks inside the Description box</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
+        /// <summary> 
+        /// Handles link clicks inside the Description box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBoxDescription_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             _ = System.Diagnostics.Process.Start(e.LinkText);
+        }
+
+        /// <summary> 
+        /// Triggers an update check
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CheckUpdateButton_Click(object sender, System.EventArgs e)
+        {
+            UpdateChecker.Check(ghc, log);
+        }
+
+        /// <summary> 
+        /// Handles the closing of the current form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AboutBox_Closing(object sender, FormClosingEventArgs e)
+        {
+            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_CLOSING_ABOUTBOX, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+        }
+
+        /// <summary> 
+        /// Loads the form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AboutBox_Load(object sender, EventArgs e)
+        {
+            FormClosing += AboutBox_Closing;
         }
 
         #region Acessório de Atributos do Assembly
@@ -94,13 +136,5 @@ namespace FeaturesOverlayPresentation.Forms
             }
         }
         #endregion
-
-        ///<summary>Triggers an update check</summary>
-        ///<param name="sender"></param>
-        ///<param name="e"></param>
-        private void CheckUpdateButton_Click(object sender, System.EventArgs e)
-        {
-            UpdateChecker.Check(log, false);
-        }
     }
 }

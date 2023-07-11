@@ -2,41 +2,85 @@
 using LogGeneratorDLL;
 using Octokit;
 using System;
-using System.Collections.Generic;
+using System.Net.Http;
 using System.Windows.Forms;
 
 namespace FeaturesOverlayPresentation.Updater
 {
-    ///<summary>Class for handling update checking tasks and UI</summary>
+    /// <summary> 
+    /// Template class for 'Updater'
+    /// </summary>
+    public class UpdateInfo
+    {
+        public string ETag { get; set; }
+        public string TagName { get; set; }
+        public string Body { get; set; }
+        public string HtmlUrl { get; set; }
+    }
+    /// <summary> 
+    /// Class for handling update checking tasks and UI
+    /// </summary>
     internal static class UpdateChecker
     {
-        ///<summary>Checks for updates on GitHub repo</summary>
-        ///<param name="parametersList">List containing data from [Parameters]</param>
-        ///<param name="themeBool">Theme mode</param>
-        internal static async void Check(LogGenerator log, bool autoCheck)
+        private static HttpClient httpHeader;
+        private static HttpRequestMessage request;
+        private static HttpResponseMessage response;
+        private static Release releases;
+        private static UpdateInfo ui;
+
+        /// <summary> 
+        /// Checks for updates on GitHub repo
+        /// </summary>
+        /// <param name="client">Octokit GitHub object</param>
+        /// <param name="log">Log file object</param>
+        internal static async void Check(GitHubClient client, LogGenerator log)
         {
             try
             {
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_CONNECTING_GITHUB, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                GitHubClient client = new GitHubClient(new ProductHeaderValue(ConstantsDLL.Properties.Resources.GITHUB_REPO_FOP));
-                Release releases = await client.Repository.Release.GetLatest(ConstantsDLL.Properties.Resources.GITHUB_OWNER_FOP, ConstantsDLL.Properties.Resources.GITHUB_REPO_FOP);
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.Strings.LOG_CONNECTING_GITHUB, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
 
-                UpdateCheckerForm uForm = new UpdateCheckerForm(log, releases);
-                bool isUpdated = uForm.IsThereANewVersion();
-                if((!isUpdated && !autoCheck) || isUpdated)
+                httpHeader = new HttpClient();
+                request = new HttpRequestMessage(HttpMethod.Head, ConstantsDLL.Properties.Resources.FOP_API_URL);
+                request.Headers.Add("User-Agent", "Other");
+                ui = Misc.MiscMethods.RegCheckUpdateData();
+                if (ui != null)
                 {
-                    _ = uForm.ShowDialog();
+                    request.Headers.Add("If-None-Match", "\"" + ui.ETag + "\"");
                 }
+                response = await httpHeader.SendAsync(request);
+                if (!((int)response.StatusCode).Equals(304))
+                {
+                    releases = await client.Repository.Release.GetLatest(ConstantsDLL.Properties.Resources.GITHUB_OWNER_FOP, ConstantsDLL.Properties.Resources.GITHUB_REPO_FOP);
+                    ui = new UpdateInfo
+                    {
+                        ETag = response.Headers.ETag.ToString().Substring(3, response.Headers.ETag.ToString().Length - 4),
+                        TagName = releases.TagName,
+                        Body = releases.Body,
+                        HtmlUrl = releases.HtmlUrl
+                    };
+                    Misc.MiscMethods.RegCreateUpdateData(ui);
+                }
+                else
+                {
+                    ui = new UpdateInfo
+                    {
+                        ETag = Misc.MiscMethods.RegCheckUpdateData().ETag,
+                        TagName = Misc.MiscMethods.RegCheckUpdateData().TagName,
+                        Body = Misc.MiscMethods.RegCheckUpdateData().Body,
+                        HtmlUrl = Misc.MiscMethods.RegCheckUpdateData().HtmlUrl
+                    };
+                }
+
+
+                UpdaterForm uForm = new UpdaterForm(log, ui);
+                bool isNotUpdated = uForm.IsThereANewVersion();
+                _ = uForm.ShowDialog();
             }
-            catch (ApiException e)
+            catch (Exception e) when (e is ApiException || e is HttpRequestException)
             {
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.Strings.LOG_GITHUB_UNREACHABLE, e.Message, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.Strings.LOG_GITHUB_UNREACHABLE, e.Message, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.Strings.LOG_UPDATE_CHECK_IMPOSSIBLE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
                 _ = MessageBox.Show(ConstantsDLL.Properties.Strings.LOG_UPDATE_CHECK_IMPOSSIBLE, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception e)
-            {
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_WARNING), ConstantsDLL.Properties.Strings.LOG_NO_INTERNET_AVAILABLE, e.Message, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                _ = MessageBox.Show(ConstantsDLL.Properties.Strings.LOG_NO_INTERNET_AVAILABLE, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }
