@@ -4,7 +4,7 @@
 ; GENERIC INSTALLER
 
 #define MyAppName "FOP"
-#define MyAppVersion GetVersionNumbersString('..\bin\Release\FOP.exe')
+#define MyAppVersion GetVersionNumbersString('.\Release\FOP.exe')
 #define MyAppPublisher "Kevin Vinícius Teixeira Costa"
 #define MyAppURL "https://github.com/Kevin64/features-overlay-presentation"
 #define MyAppExeName "FOP.exe"
@@ -28,7 +28,7 @@ DisableDirPage=yes
 ;PrivilegesRequired=lowest
 ;PrivilegesRequiredOverridesAllowed=dialog
 OutputBaseFilename=FOPsetup-v{#MyAppVersion}
-OutputDir=..\bin\zip\github
+OutputDir=.
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -44,45 +44,45 @@ Name: "{app}\resources"
 Name: "{app}\pt"
 
 [Files]
-Source: "..\bin\Release\BCrypt.Net-Next.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\BCrypt.Net-Next.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\Constants.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\Constants.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\INIFileParser.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\INIFileParser.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\JsonFileReader.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\JsonFileReader.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\LogGenerator.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\LogGenerator.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\Newtonsoft.Json.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\Octokit.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\Octokit.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\System.Memory.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\System.Memory.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\System.Numerics.Vectors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\System.Numerics.Vectors.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\System.Buffers.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\System.Buffers.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\FOP.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\FOP.exe.config"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\FOP.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\FOP.exe"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\definitions.ini"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
-Source: "..\bin\Release\pt\*"; DestDir: "{commonpf32}\{#MyAppName}\pt"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ".\Release\pt\*"; DestDir: "{commonpf32}\{#MyAppName}\pt"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: "..\bin\Release\resources\*"; DestDir: "{commonpf32}\{#MyAppName}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ".\Release\resources\*"; DestDir: "{commonpf32}\{#MyAppName}\resources"; Flags: ignoreversion recursesubdirs createallsubdirs
 
-Source: "..\bin\Release\FOP.lnk"; DestDir: "{commondesktop}"; Flags: ignoreversion
+Source: ".\Release\FOP.lnk"; DestDir: "{commondesktop}"; Flags: ignoreversion
 
-Source: "..\bin\Release\FOP.lnk"; DestDir: "{commonprograms}\"; Flags: ignoreversion
+Source: ".\Release\FOP.lnk"; DestDir: "{commonprograms}\"; Flags: ignoreversion
 
-Source: "..\bin\Release\FOP.lnk"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
+Source: ".\Release\FOP.lnk"; DestDir: "{commonpf32}\{#MyAppName}"; Flags: ignoreversion
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
