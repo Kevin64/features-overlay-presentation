@@ -67,7 +67,7 @@ namespace FeaturesOverlayPresentation.XAML
             ChangeSource(mainImage, new BitmapImage(new Uri(imgList[counter])), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME), TimeSpan.FromSeconds(StringsAndConstants.FADE_TIME));
             mainImage.Visibility = Visibility.Visible;
             MiscMethods.RegRecreate(empty);
-            ghc = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(ConstantsDLL.Properties.Resources.GITHUB_REPO_FOP));
+            ghc = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(ConstantsDLL.Properties.GenericResources.GITHUB_REPO_FOP));
 
             this.parametersList = parametersList;
 
@@ -140,7 +140,7 @@ namespace FeaturesOverlayPresentation.XAML
         /// </summary>
         private void LabelPrint()
         {
-            LabelPage.Content = counter + 1 + " " + ConstantsDLL.Properties.Strings.OF + " " + finalCount;
+            LabelPage.Content = counter + 1 + " " + ConstantsDLL.Properties.UIStrings.OF + " " + finalCount;
         }
 
         /// <summary> 
@@ -149,16 +149,16 @@ namespace FeaturesOverlayPresentation.XAML
         public void FindLabels()
         {
             finalCount = 0;
-            string imgDir = Directory.GetCurrentDirectory() + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR;
+            string imgDir = Directory.GetCurrentDirectory() + ConstantsDLL.Properties.GenericResources.FOP_RESOURCES_DIR + ConstantsDLL.Properties.GenericResources.FOP_IMG_DIR;
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
                 labelList = new List<string>();
                 foreach (string filePath in filePathList)
                 {
-                    if (Path.GetFileName(filePath).ToLower().Contains(ConstantsDLL.Properties.Resources.IMG_EXT))
+                    if (Path.GetFileName(filePath).ToLower().Contains(ConstantsDLL.Properties.GenericResources.FOP_IMG_EXT))
                     {
-                        newFilePath = filePath.Replace(ConstantsDLL.Properties.Resources.IMG_EXT, string.Empty);
+                        newFilePath = filePath.Replace(ConstantsDLL.Properties.GenericResources.FOP_IMG_EXT, string.Empty);
                         labelList.Add(Path.GetFileName(newFilePath));
                         finalCount++;
                     }
@@ -186,14 +186,14 @@ namespace FeaturesOverlayPresentation.XAML
         public void FindImages()
         {
             finalCount = 0;
-            string imgDir = Directory.GetCurrentDirectory() + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR;
+            string imgDir = Directory.GetCurrentDirectory() + ConstantsDLL.Properties.GenericResources.FOP_RESOURCES_DIR + ConstantsDLL.Properties.GenericResources.FOP_IMG_DIR;
             try
             {
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
                 imgList = new List<string>();
                 foreach (string filePath in filePathList)
                 {
-                    if (Path.GetFileName(filePath).ToLower().Contains(ConstantsDLL.Properties.Resources.IMG_EXT))
+                    if (Path.GetFileName(filePath).ToLower().Contains(ConstantsDLL.Properties.GenericResources.FOP_IMG_EXT))
                     {
                         imgList.Add(filePath);
                         finalCount++;
@@ -240,7 +240,7 @@ namespace FeaturesOverlayPresentation.XAML
         /// </summary>
         private void NextTextPrint()
         {
-            nextBlock.Text = ConstantsDLL.Properties.Strings.NEXT_TEXT;
+            nextBlock.Text = ConstantsDLL.Properties.UIStrings.NEXT_TEXT;
         }
 
         /// <summary> 
@@ -248,7 +248,7 @@ namespace FeaturesOverlayPresentation.XAML
         /// </summary>
         private void FinishTextPrint()
         {
-            nextBlock.Text = ConstantsDLL.Properties.Strings.FINISH_TEXT;
+            nextBlock.Text = ConstantsDLL.Properties.UIStrings.FINISH_TEXT;
         }
 
         /// <summary> 
@@ -274,12 +274,12 @@ namespace FeaturesOverlayPresentation.XAML
         /// <param name="e"></param>
         private void TimerTickRun(object sender, EventArgs e)
         {
-            TextStandBy.Text = ConstantsDLL.Properties.Strings.WAIT_TEXT + "(" + timerTickCount.ToString() + ")";
+            TextStandBy.Text = ConstantsDLL.Properties.UIStrings.WAIT_TEXT + "(" + timerTickCount.ToString() + ")";
             ButtonNext.Visibility = Visibility.Hidden;
             if (--timerTickCount == 0)
             {
                 timer.Stop();
-                TextStandBy.Text = ConstantsDLL.Properties.Strings.WAIT_TEXT + "(" + (tickSeconds + 1) + ")";
+                TextStandBy.Text = ConstantsDLL.Properties.UIStrings.WAIT_TEXT + "(" + (tickSeconds + 1) + ")";
                 if (counter == finalCount - 1)
                 {
                     FinishTextPrint();
@@ -303,7 +303,7 @@ namespace FeaturesOverlayPresentation.XAML
         /// <param name="fadeInTime">Fade-in time</param>
         private void ChangeSource(Image image, ImageSource source, TimeSpan fadeOutTime, TimeSpan fadeInTime)
         {
-            if (Environment.OSVersion.Version.Major.ToString().Contains(ConstantsDLL.Properties.Resources.WIN_10_NT_MAJOR))
+            if (Environment.OSVersion.Version.Major.ToString().Contains(ConstantsDLL.Properties.GenericResources.WIN_10_NT_MAJOR))
             {
                 DoubleAnimation fadeInAnimation = new DoubleAnimation(1d, fadeInTime);
 
@@ -365,9 +365,8 @@ namespace FeaturesOverlayPresentation.XAML
             else
             {
                 MiscMethods.RegDelete();
-                RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);
-                key.SetValue(ConstantsDLL.Properties.Resources.DID_IT_RUN_ALREADY, 1);
-                File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.GenericResources.REGISTRY_FOP_REG_KEY);
+                key.SetValue(ConstantsDLL.Properties.GenericResources.REGISTRY_DID_IT_RUN_ALREADY, 1);
                 Application.Current.Shutdown();
             }
         }
@@ -448,7 +447,6 @@ namespace FeaturesOverlayPresentation.XAML
         /// <param name="e"></param>
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
             Application.Current.Shutdown();
         }
 

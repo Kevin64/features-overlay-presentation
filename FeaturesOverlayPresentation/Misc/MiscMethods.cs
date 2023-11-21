@@ -1,5 +1,4 @@
-﻿using ConstantsDLL;
-using FeaturesOverlayPresentation.Properties;
+﻿using ConstantsDLL.Properties;
 using FeaturesOverlayPresentation.Updater;
 using Microsoft.Win32;
 using System;
@@ -20,11 +19,11 @@ namespace FeaturesOverlayPresentation.Misc
         /// <param name="ui">An UpdateInfo object to write into the registry</param>
         internal static void RegCreateUpdateData(UpdateInfo ui)
         {
-            RegistryKey rk = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY, true);
-            rk.SetValue(ConstantsDLL.Properties.Resources.ETAG, ui.ETag, RegistryValueKind.String);
-            rk.SetValue(ConstantsDLL.Properties.Resources.TAG_NAME, ui.TagName, RegistryValueKind.String);
-            rk.SetValue(ConstantsDLL.Properties.Resources.BODY, ui.Body, RegistryValueKind.String);
-            rk.SetValue(ConstantsDLL.Properties.Resources.HTML_URL, ui.HtmlUrl, RegistryValueKind.String);
+            RegistryKey rk = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.GenericResources.REGISTRY_FOP_REG_KEY, true);
+            rk.SetValue(ConstantsDLL.Properties.GenericResources.GITHUB_ETAG, ui.ETag, RegistryValueKind.String);
+            rk.SetValue(ConstantsDLL.Properties.GenericResources.GITHUB_TAG_NAME, ui.TagName, RegistryValueKind.String);
+            rk.SetValue(ConstantsDLL.Properties.GenericResources.GITHUB_BODY, ui.Body, RegistryValueKind.String);
+            rk.SetValue(ConstantsDLL.Properties.GenericResources.GITHUB_HTML_URL, ui.HtmlUrl, RegistryValueKind.String);
         }
 
         /// <summary>
@@ -36,11 +35,11 @@ namespace FeaturesOverlayPresentation.Misc
             UpdateInfo ui = new UpdateInfo();
             try
             {
-                RegistryKey rk = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);
-                ui.ETag = rk.GetValue(ConstantsDLL.Properties.Resources.ETAG).ToString();
-                ui.TagName = rk.GetValue(ConstantsDLL.Properties.Resources.TAG_NAME).ToString();
-                ui.Body = rk.GetValue(ConstantsDLL.Properties.Resources.BODY).ToString();
-                ui.HtmlUrl = rk.GetValue(ConstantsDLL.Properties.Resources.HTML_URL).ToString();
+                RegistryKey rk = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.GenericResources.REGISTRY_FOP_REG_KEY);
+                ui.ETag = rk.GetValue(ConstantsDLL.Properties.GenericResources.GITHUB_ETAG).ToString();
+                ui.TagName = rk.GetValue(ConstantsDLL.Properties.GenericResources.GITHUB_TAG_NAME).ToString();
+                ui.Body = rk.GetValue(ConstantsDLL.Properties.GenericResources.GITHUB_BODY).ToString();
+                ui.HtmlUrl = rk.GetValue(ConstantsDLL.Properties.GenericResources.GITHUB_HTML_URL).ToString();
                 return ui;
             }
             catch
@@ -55,8 +54,8 @@ namespace FeaturesOverlayPresentation.Misc
         /// <returns>'true' if already executed, 'false' if not</returns>
         public static bool RegCheck()
         {
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);
-            string k = rk.GetValue(ConstantsDLL.Properties.Resources.DID_IT_RUN_ALREADY).ToString();
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.GenericResources.REGISTRY_FOP_REG_KEY);
+            string k = rk.GetValue(ConstantsDLL.Properties.GenericResources.REGISTRY_DID_IT_RUN_ALREADY).ToString();
             return k.Equals("1");
         }
 
@@ -65,18 +64,18 @@ namespace FeaturesOverlayPresentation.Misc
         /// </summary>
         public static void RegCreate()
         {
-            RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY, true);
+            RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.GenericResources.REGISTRY_FOP_RUN_ONCE_KEY, true);
             if (Environment.Is64BitOperatingSystem)
             {
-                key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOP_X86, RegistryValueKind.String);
+                key.SetValue(ConstantsDLL.Properties.GenericResources.FOP_NAME, ConstantsDLL.Properties.GenericResources.INSTALL_PATH_FOP_X86, RegistryValueKind.String);
             }
             else
             {
-                key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOP_X64, RegistryValueKind.String);
+                key.SetValue(ConstantsDLL.Properties.GenericResources.FOP_NAME, ConstantsDLL.Properties.GenericResources.INSTALL_PATH_FOP_X64, RegistryValueKind.String);
             }
 
-            RegistryKey key2 = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);
-            key2.SetValue(ConstantsDLL.Properties.Resources.DID_IT_RUN_ALREADY, 0, RegistryValueKind.DWord);
+            RegistryKey key2 = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.GenericResources.REGISTRY_FOP_REG_KEY);
+            key2.SetValue(ConstantsDLL.Properties.GenericResources.REGISTRY_DID_IT_RUN_ALREADY, 0, RegistryValueKind.DWord);
         }
 
         /// <summary> 
@@ -87,16 +86,16 @@ namespace FeaturesOverlayPresentation.Misc
         {
             if (!empty && !RegCheck())
             {
-                RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY, true);
-                if (!key.GetValueNames().Contains(ConstantsDLL.Properties.Resources.FOP))
+                RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.GenericResources.REGISTRY_FOP_RUN_ONCE_KEY, true);
+                if (!key.GetValueNames().Contains(ConstantsDLL.Properties.GenericResources.FOP_NAME))
                 {
                     if (Environment.Is64BitOperatingSystem)
                     {
-                        key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOP_X86, RegistryValueKind.String);
+                        key.SetValue(ConstantsDLL.Properties.GenericResources.FOP_NAME, ConstantsDLL.Properties.GenericResources.INSTALL_PATH_FOP_X86, RegistryValueKind.String);
                     }
                     else
                     {
-                        key.SetValue(ConstantsDLL.Properties.Resources.FOP, ConstantsDLL.Properties.Resources.FOP_X64, RegistryValueKind.String);
+                        key.SetValue(ConstantsDLL.Properties.GenericResources.FOP_NAME, ConstantsDLL.Properties.GenericResources.INSTALL_PATH_FOP_X64, RegistryValueKind.String);
                     }
                 }
             }
@@ -107,10 +106,10 @@ namespace FeaturesOverlayPresentation.Misc
         /// </summary>
         public static void RegDelete()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY, true);
-            if (key.GetValueNames().Contains(ConstantsDLL.Properties.Resources.FOP))
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(ConstantsDLL.Properties.GenericResources.REGISTRY_FOP_RUN_ONCE_KEY, true);
+            if (key.GetValueNames().Contains(ConstantsDLL.Properties.GenericResources.FOP_NAME))
             {
-                key.DeleteValue(ConstantsDLL.Properties.Resources.FOP);
+                key.DeleteValue(ConstantsDLL.Properties.GenericResources.FOP_NAME);
             }
         }
 
@@ -123,18 +122,24 @@ namespace FeaturesOverlayPresentation.Misc
             string current = Directory.GetCurrentDirectory();
             Version osFullVer = Environment.OSVersion.Version;
             //int osBuild = Convert.ToInt32(osFullVer);
-            return osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_7_NT_MAJOR) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_7_NT_MINOR)
-                ? current + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR + ConstantsDLL.Properties.Resources.WIN_7_IMG_DIR
-                : osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_10_NT_BUILD) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.Resources.WIN_11_NT_BUILD)
-                ? current + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR + ConstantsDLL.Properties.Resources.WIN_10_IMG_DIR
-                : current + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR + ConstantsDLL.Properties.Resources.WIN_11_IMG_DIR;
+            return osFullVer.Major == Convert.ToInt32(ConstantsDLL.Properties.GenericResources.WIN_7_NT_MAJOR) && osFullVer.Minor == Convert.ToInt32(ConstantsDLL.Properties.GenericResources.WIN_7_NT_MINOR)
+                ? current + ConstantsDLL.Properties.GenericResources.FOP_RESOURCES_DIR + ConstantsDLL.Properties.GenericResources.FOP_IMG_DIR + ConstantsDLL.Properties.GenericResources.WIN_7_FOP_IMG_DIR
+                : osFullVer.Build >= Convert.ToInt32(ConstantsDLL.Properties.GenericResources.WIN_10_NT_BUILD) && osFullVer.Build < Convert.ToInt32(ConstantsDLL.Properties.GenericResources.WIN_11_NT_BUILD)
+                ? current + ConstantsDLL.Properties.GenericResources.FOP_RESOURCES_DIR + ConstantsDLL.Properties.GenericResources.FOP_IMG_DIR + ConstantsDLL.Properties.GenericResources.WIN_10_FOP_IMG_DIR
+                : current + ConstantsDLL.Properties.GenericResources.FOP_RESOURCES_DIR + ConstantsDLL.Properties.GenericResources.FOP_IMG_DIR + ConstantsDLL.Properties.GenericResources.WIN_11_FOP_IMG_DIR;
         }
 
         /// <summary> 
         /// Checks assembly version
         /// </summary>
         /// <returns>The assembly version</returns>
-        public static string Version => "v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        public static string Version
+        {
+            get
+            {
+                return "v" + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            }
+        }
 
         /// <summary> 
         /// Checks the current screen resolution
@@ -143,12 +148,11 @@ namespace FeaturesOverlayPresentation.Misc
         /// <returns>'true' if resolution above minimum, 'false' otherwise</returns>
         public static bool ResolutionError(bool exit)
         {
-            if (SystemParameters.PrimaryScreenWidth < Convert.ToInt32(ConstantsDLL.Properties.Resources.WIDTH) || SystemParameters.PrimaryScreenHeight < Convert.ToInt32(ConstantsDLL.Properties.Resources.HEIGHT))
+            if (SystemParameters.PrimaryScreenWidth < Convert.ToInt32(ConstantsDLL.Properties.GenericResources.FOP_MIN_SCREEN_WIDTH) || SystemParameters.PrimaryScreenHeight < Convert.ToInt32(ConstantsDLL.Properties.GenericResources.FOP_MIN_SCREEN_HEIGHT))
             {
-                _ = MessageBox.Show(string.Format(ConstantsDLL.Properties.Strings.RESOLUTION_WARNING, ConstantsDLL.Properties.Resources.WIDTH, ConstantsDLL.Properties.Resources.HEIGHT), ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                _ = MessageBox.Show(string.Format(ConstantsDLL.Properties.UIStrings.RESOLUTION_WARNING, ConstantsDLL.Properties.GenericResources.FOP_MIN_SCREEN_WIDTH, ConstantsDLL.Properties.GenericResources.FOP_MIN_SCREEN_HEIGHT), ConstantsDLL.Properties.UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                 if (exit)
                 {
-                    File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
                     Application.Current.Shutdown();
                 }
                 return false;
@@ -168,10 +172,10 @@ namespace FeaturesOverlayPresentation.Misc
             {
 #if DEBUG
                 //Checks if log directory exists
-                b = File.Exists(path + ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Resources.DEV_STATUS + ConstantsDLL.Properties.Resources.LOG_FILE_EXT);
+                b = File.Exists(path + ConstantsDLL.Properties.GenericResources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + GenericResources.DEV_STATUS_BETA + ConstantsDLL.Properties.GenericResources.LOG_FILE_EXT);
 #else
                 //Checks if log file exists
-                b = File.Exists(path + ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + ConstantsDLL.Properties.Resources.LOG_FILE_EXT);
+                b = File.Exists(path + ConstantsDLL.Properties.GenericResources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + ConstantsDLL.Properties.GenericResources.LOG_FILE_EXT);
 #endif
                 //If not, creates a new directory
                 if (!b)

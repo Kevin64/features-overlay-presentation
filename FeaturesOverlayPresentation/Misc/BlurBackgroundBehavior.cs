@@ -30,14 +30,28 @@ namespace FeaturesOverlayPresentation.Misc
 
         private VisualBrush Brush
         {
-            get => (VisualBrush)GetValue(BrushProperty);
-            set => SetValue(BrushProperty, value);
+            get
+            {
+                return (VisualBrush)GetValue(BrushProperty);
+            }
+
+            set
+            {
+                SetValue(BrushProperty, value);
+            }
         }
 
         public UIElement BlurContainer
         {
-            get => (UIElement)GetValue(BlurContainerProperty);
-            set => SetValue(BlurContainerProperty, value);
+            get
+            {
+                return (UIElement)GetValue(BlurContainerProperty);
+            }
+
+            set
+            {
+                SetValue(BlurContainerProperty, value);
+            }
         }
 
         protected override void OnAttached()

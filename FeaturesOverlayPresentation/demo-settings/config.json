@@ -1,0 +1,16 @@
+{
+    "Definitions": {
+        "LogLocation": "C:\\AppLog\\",
+        "ServerIP": [
+            "192.168.1.1",
+            "localhost"
+        ],
+        "ServerPort": [
+            "8080",
+            "80"
+        ],
+        "Logo1URL": "http://www.example.site1.com",
+        "Logo2URL": "http://www.example.site2.com",
+        "Logo3URL": "http://www.example.site3.com"
+    }
+}
