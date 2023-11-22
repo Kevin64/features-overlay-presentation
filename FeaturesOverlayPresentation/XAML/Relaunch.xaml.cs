@@ -240,7 +240,7 @@ namespace FeaturesOverlayPresentation.XAML
         /// <param name="e"></param>
         private async void YesLaterButton_Click(object sender, RoutedEventArgs e)
         {
-            _ = DateTime.Today;
+            DateTime dateAndTime = DateTime.Today;
             bool check = false;
             if (textBoxAssetNumber.Text != string.Empty) //If asset number textbox is not empty
             {
@@ -248,7 +248,7 @@ namespace FeaturesOverlayPresentation.XAML
                 {
                     try
                     {
-                        existingAsset = await AssetHandler.GetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_ASSET_URL + textBoxUsername.Text);
+                        existingAsset = await AssetHandler.GetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_ASSET_URL + textBoxAssetNumber.Text);
 
                         if (existingAsset.discarded == "1")
                         {
@@ -257,22 +257,28 @@ namespace FeaturesOverlayPresentation.XAML
                         }
                         else
                         {
+                            newAsset.assetNumber = textBoxAssetNumber.Text;
+                            newAsset.location.lastDeliveryDate = dateAndTime.ToString(ConstantsDLL.Properties.GenericResources.DATE_FORMAT).Substring(0, 10);
+                            newAsset.location.lastDeliveryMadeBy = agent.id;
+
                             log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_PATR_NUM, textBoxAssetNumber.Text, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                             if (present == false) //If employee is not present
                             {
+                                newAsset.location.deliveredToRegistrationNumber = UIStrings.ABSENT;
                                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_EMPLOYEEAWAY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
-                                System.Net.HttpStatusCode v = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_ASSET_URL, newAsset);
+                                System.Net.HttpStatusCode v = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_DELIVERY_URL, newAsset);
                                 check = true;
                             }
-                            else if (textBoxRegistrationNumber.Text != string.Empty) //If employee is present and SIAPE textbox is not empty
+                            else if (textBoxRegistrationNumber.Text != string.Empty) //If employee is present and registration number textbox is not empty
                             {
+                                newAsset.location.deliveredToRegistrationNumber = textBoxRegistrationNumber.Text;
                                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_EMPLOYEEPRESENT, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
-                                System.Net.HttpStatusCode v = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_ASSET_URL, newAsset);
+                                System.Net.HttpStatusCode v = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_DELIVERY_URL, newAsset);
                                 check = true;
                             }
-                            else //If employee is present and SIAPE textbox is empty
+                            else //If employee is present and registration number textbox is empty
                             {
                                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.UIStrings.FILL_FORM, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                                 _ = System.Windows.MessageBox.Show(ConstantsDLL.Properties.UIStrings.FILL_FORM, ConstantsDLL.Properties.UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -316,7 +322,7 @@ namespace FeaturesOverlayPresentation.XAML
                     newLocation.deliveredToRegistrationNumber = null;
                     newLocation.lastDeliveryDate = null;
                     newLocation.lastDeliveryMadeBy = null;
-                    _ = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_ASSET_URL, newAsset);
+                    _ = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_DELIVERY_URL, newAsset);
                     check = true;
                     if (resPass)
                         YesButton.IsEnabled = true;
@@ -449,11 +455,14 @@ namespace FeaturesOverlayPresentation.XAML
                     textBoxUsername.IsEnabled = false;
                     lblFixedPassword.IsEnabled = false;
                     textBoxPassword.IsEnabled = false;
+                    lblFixedAssetNumber.IsEnabled = true;
+                    lblFixedServiceType.IsEnabled = true;
                     lblFixedEmployeePresent.IsEnabled = true;
                     radioButtonEmployeePresentYes.IsEnabled = true;
                     radioButtonEmployeePresentNo.IsEnabled = true;
                     radioButtonFormatting.IsEnabled = true;
                     radioButtonMaintenance.IsEnabled = true;
+                    lblFixedRegistrationNumber.IsEnabled = true;
                     AuthButton.IsEnabled = false;
                 }
             }
