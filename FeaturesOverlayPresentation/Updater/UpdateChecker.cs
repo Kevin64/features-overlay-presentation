@@ -37,10 +37,10 @@ namespace FeaturesOverlayPresentation.Updater
         {
             try
             {
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.Strings.LOG_CONNECTING_GITHUB, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.LogStrings.LOG_CONNECTING_GITHUB, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
 
                 httpHeader = new HttpClient();
-                request = new HttpRequestMessage(HttpMethod.Head, ConstantsDLL.Properties.Resources.FOP_API_URL);
+                request = new HttpRequestMessage(HttpMethod.Head, ConstantsDLL.Properties.GenericResources.GITHUB_FOP_API_URL);
                 request.Headers.Add("User-Agent", "Other");
                 ui = Misc.MiscMethods.RegCheckUpdateData();
                 if (ui != null)
@@ -50,7 +50,7 @@ namespace FeaturesOverlayPresentation.Updater
                 response = await httpHeader.SendAsync(request);
                 if (!((int)response.StatusCode).Equals(304))
                 {
-                    releases = await client.Repository.Release.GetLatest(ConstantsDLL.Properties.Resources.GITHUB_OWNER_FOP, ConstantsDLL.Properties.Resources.GITHUB_REPO_FOP);
+                    releases = await client.Repository.Release.GetLatest(ConstantsDLL.Properties.GenericResources.GITHUB_OWNER_FOP, ConstantsDLL.Properties.GenericResources.GITHUB_REPO_FOP);
                     ui = new UpdateInfo
                     {
                         ETag = response.Headers.ETag.ToString().Substring(3, response.Headers.ETag.ToString().Length - 4),
@@ -78,9 +78,9 @@ namespace FeaturesOverlayPresentation.Updater
             }
             catch (Exception e) when (e is ApiException || e is HttpRequestException)
             {
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.Strings.LOG_GITHUB_UNREACHABLE, e.Message, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.Strings.LOG_UPDATE_CHECK_IMPOSSIBLE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                _ = MessageBox.Show(ConstantsDLL.Properties.Strings.LOG_UPDATE_CHECK_IMPOSSIBLE, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.LogStrings.LOG_GITHUB_UNREACHABLE, e.Message, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.LogStrings.LOG_UPDATE_CHECK_IMPOSSIBLE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                _ = MessageBox.Show(ConstantsDLL.Properties.LogStrings.LOG_UPDATE_CHECK_IMPOSSIBLE, ConstantsDLL.Properties.UIStrings.ERROR_WINDOWTITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

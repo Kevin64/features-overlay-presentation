@@ -44,16 +44,16 @@ namespace FeaturesOverlayPresentation.Forms
             switch (newVersion.CompareTo(currentVersion))
             {
                 case 1:
-                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.Strings.NEW_VERSION_AVAILABLE, newVersion, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                    lblUpdateAnnoucement.Text = ConstantsDLL.Properties.Strings.NEW_VERSION_AVAILABLE;
+                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.UIStrings.NEW_VERSION_AVAILABLE, newVersion, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                    lblUpdateAnnoucement.Text = ConstantsDLL.Properties.UIStrings.NEW_VERSION_AVAILABLE;
                     changelogTextBox.Text = changelog;
                     lblFixedNewVersion.Visible = true;
                     lblNewVersion.Visible = true;
                     downloadButton.Visible = true;
                     return true;
                 default:
-                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.Strings.NO_NEW_VERSION_AVAILABLE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                    lblUpdateAnnoucement.Text = ConstantsDLL.Properties.Strings.NO_NEW_VERSION_AVAILABLE;
+                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_MISC), ConstantsDLL.Properties.UIStrings.NO_NEW_VERSION_AVAILABLE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                    lblUpdateAnnoucement.Text = ConstantsDLL.Properties.UIStrings.NO_NEW_VERSION_AVAILABLE;
                     changelogTextBox.Text = changelog;
                     lblFixedNewVersion.Visible = false;
                     lblNewVersion.Visible = false;
@@ -69,7 +69,7 @@ namespace FeaturesOverlayPresentation.Forms
         /// <param name="e"></param>
         private void DownloadButton_Click(object sender, EventArgs e)
         {
-            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_OPENING_GITHUB, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.LogStrings.LOG_OPENING_GITHUB, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
             _ = System.Diagnostics.Process.Start(url);
         }
 
@@ -90,7 +90,7 @@ namespace FeaturesOverlayPresentation.Forms
         /// <param name="e"></param>
         private void UpdaterCheckerForm_Closing(object sender, FormClosingEventArgs e)
         {
-            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_CLOSING_UPDATER_FORM, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.LogStrings.LOG_CLOSING_UPDATER_FORM, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
         }
 
         /// <summary> 

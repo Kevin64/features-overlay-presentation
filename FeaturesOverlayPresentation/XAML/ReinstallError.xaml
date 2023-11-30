@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:p = "clr-namespace:FeaturesOverlayPresentation.Properties"
       mc:Ignorable="d"
-      Title="{x:Static p:Strings.lblFixedCorruptionTitleText}"  ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closed="Window_Closed" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="128" Width="331" Foreground="Black">
+      Title="{x:Static p:FopStrings.lblFixedCorruptionTitleText}"  ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" Closed="Window_Closed" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" Height="128" Width="331" Foreground="Black">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -67,7 +67,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Style="{DynamicResource ButtonStyle1}" x:Name="closeAppButton" Content="{x:Static p:Strings.lblFixedButtonCloseProgramText}" VerticalAlignment="Top" Click="CloseAppButton_Click" Margin="0,53,0,0" Padding="0" HorizontalAlignment="Center" Width="110" Height="21"/>
-        <Label x:Name="labelExplanation" Content="{x:Static p:Strings.lblFixedCorruptionText}" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0" Height="35" Width="309"/>
+        <Button Style="{DynamicResource ButtonStyle1}" x:Name="closeAppButton" Content="{x:Static p:FopStrings.lblFixedButtonCloseProgramText}" VerticalAlignment="Top" Click="CloseAppButton_Click" Margin="0,53,0,0" Padding="0" HorizontalAlignment="Center" Width="110" Height="21"/>
+        <Label x:Name="labelExplanation" Content="{x:Static p:FopStrings.lblFixedCorruptionText}" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Padding="0" Height="35" Width="309"/>
     </Grid>
 </Window>

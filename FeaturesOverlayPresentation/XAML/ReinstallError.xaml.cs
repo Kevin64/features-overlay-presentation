@@ -1,6 +1,4 @@
-﻿using ConstantsDLL;
-using System;
-using System.IO;
+﻿using System;
 using System.Windows;
 
 namespace FeaturesOverlayPresentation.XAML
@@ -25,7 +23,6 @@ namespace FeaturesOverlayPresentation.XAML
         /// <param name="e"></param>
         private void CloseAppButton_Click(object sender, RoutedEventArgs e)
         {
-            File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
             Application.Current.Shutdown();
         }
 
@@ -36,7 +33,6 @@ namespace FeaturesOverlayPresentation.XAML
         /// <param name="e"></param>
         private void Window_Closed(object sender, EventArgs e)
         {
-            File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
             Application.Current.Shutdown();
         }
     }

@@ -1,16 +1,14 @@
 ﻿using ConstantsDLL;
-using FeaturesOverlayPresentation.Misc;
-using FeaturesOverlayPresentation.Properties;
-using IniParser;
-using IniParser.Exceptions;
-using IniParser.Model;
+using ConstantsDLL.Properties;
 using LogGeneratorDLL;
 using Microsoft.Win32;
+using Newtonsoft.Json;
+using RestApiDLL;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
@@ -25,11 +23,34 @@ namespace FeaturesOverlayPresentation.XAML
         private bool pressed = false;
         private bool present, isFormat;
         private readonly bool resPass = true;
-        private readonly LogGenerator log;
-        private static List<string[]> parametersListSection;
-        private static string[] logLocationSection, serverIPListSection, serverPortListSection, logo1URLSection, logo2URLSection, logo3URLSection, agentData = new string[2];
-        private static string logLocationStr, serverIPStr, serverPortStr, logo1URLStr, logo2URLStr, logo3URLStr;
+        private static readonly List<string[]> parametersListSection;
+        private static readonly string logLocationStr;
+        private static string jsonFile;
         private MainWindow m;
+
+        private static Agent agent;
+        private static Asset existingAsset, newAsset;
+        private static location newLocation;
+        private static Definitions definitions;
+        private static HttpClient client;
+        private static LogGenerator log;
+        private static StreamReader fileC;
+        private static ServerParam serverParam;
+
+        public class ConfigurationOptions
+        {
+            public Definitions Definitions { get; set; }
+        }
+
+        public class Definitions
+        {
+            public string LogLocation { get; set; }
+            public List<string> ServerIP { get; set; }
+            public List<string> ServerPort { get; set; }
+            public string Logo1URL { get; set; }
+            public string Logo2URL { get; set; }
+            public string Logo3URL { get; set; }
+        }
 
         /// <summary> 
         /// Relaunch constructor
@@ -44,43 +65,37 @@ namespace FeaturesOverlayPresentation.XAML
             try
             {
                 InitializeComponent();
-                IniData def = null;
-                FileIniDataParser parser = new FileIniDataParser();
-                //Parses the INI file
-                def = parser.ReadFile(ConstantsDLL.Properties.Resources.DEF_FILE, Encoding.UTF8);
 
-                logLocationStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_9];
-                serverIPStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_11];
-                serverPortStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_12];
-                logo1URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_16];
-                logo2URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_17];
-                logo3URLStr = def[ConstantsDLL.Properties.Resources.INI_SECTION_1][ConstantsDLL.Properties.Resources.INI_SECTION_1_18];
-
-                logLocationSection = logLocationStr.Split().ToArray();
-                serverIPListSection = serverIPStr.Split(',').ToArray();
-                serverPortListSection = serverPortStr.Split(',').ToArray();
-                logo1URLSection = logo1URLStr.Split().ToArray();
-                logo2URLSection = logo2URLStr.Split().ToArray();
-                logo3URLSection = logo3URLStr.Split().ToArray();
-
-                parametersListSection = new List<string[]>
+                newLocation = new location();
+                newAsset = new Asset()
                 {
-                    logLocationSection,
-                    logo1URLSection,
-                    logo2URLSection,
-                    logo3URLSection,
-                    serverIPListSection,
-                    serverPortListSection
+                    location = newLocation
                 };
 
-                comboBoxServerIP.ItemsSource = serverIPListSection;
-                comboBoxServerPort.ItemsSource = serverPortListSection;
+                fileC = new StreamReader(GenericResources.CONFIG_FILE);
+                jsonFile = fileC.ReadToEnd();
+                ConfigurationOptions jsonParse = JsonConvert.DeserializeObject<ConfigurationOptions>(@jsonFile);
+                fileC.Close();
 
-                bool logFileExists = bool.Parse(MiscMethods.CheckIfLogExists(logLocationStr));
+                //Creates 'Definitions' JSON section object
+                definitions = new Definitions()
+                {
+                    LogLocation = jsonParse.Definitions.LogLocation,
+                    ServerIP = jsonParse.Definitions.ServerIP,
+                    ServerPort = jsonParse.Definitions.ServerPort,
+                    Logo1URL = jsonParse.Definitions.Logo1URL,
+                    Logo2URL = jsonParse.Definitions.Logo2URL,
+                    Logo3URL = jsonParse.Definitions.Logo3URL
+                };
+
+                comboBoxServerIP.ItemsSource = definitions.ServerIP;
+                comboBoxServerPort.ItemsSource = definitions.ServerPort;
+
+                bool logFileExists = bool.Parse(Misc.MiscMethods.CheckIfLogExists(definitions.LogLocation));
 #if DEBUG
                 //Create a new log file (or append to an existing one)
-                log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.DEV_STATUS, logLocationStr, ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + Properties.Resources.DEV_STATUS + ConstantsDLL.Properties.Resources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_CLI));
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_DEBUG_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_CLI));
+                log = new LogGenerator(System.Windows.Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + System.Windows.Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + GenericResources.DEV_STATUS_BETA, logLocationStr, ConstantsDLL.Properties.GenericResources.LOG_FILENAME_FOP + "-v" + System.Windows.Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + GenericResources.DEV_STATUS_BETA + ConstantsDLL.Properties.GenericResources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_CLI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.LogStrings.LOG_DEBUG_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_CLI));
 
                 comboBoxServerIP.SelectedIndex = 1;
                 comboBoxServerPort.SelectedIndex = 0;
@@ -95,14 +110,14 @@ namespace FeaturesOverlayPresentation.XAML
                 //Checks if log file exists
                 if (!logFileExists)
                 {
-                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOGFILE_NOTEXISTS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_CLI));
+                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.UIStrings.LOGFILE_NOTEXISTS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_CLI));
                 }
                 else
                 {
-                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOGFILE_EXISTS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_CLI));
+                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.UIStrings.LOGFILE_EXISTS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_CLI));
                 }
 
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_DEFFILE_FOUND, Directory.GetCurrentDirectory() + "\\" + ConstantsDLL.Properties.Resources.DEF_FILE, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_CLI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.LogStrings.LOG_PARAMETER_FILE_FOUND, Directory.GetCurrentDirectory() + "\\" + ConstantsDLL.Properties.GenericResources.CONFIG_FILE, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_CLI));
 
                 try
                 {
@@ -111,9 +126,9 @@ namespace FeaturesOverlayPresentation.XAML
                         throw new Exception();
                     }
 
-                    if (!MiscMethods.RegCheck())
+                    if (!Misc.MiscMethods.RegCheck())
                     {
-                        resPass = MiscMethods.ResolutionError(true);
+                        resPass = Misc.MiscMethods.ResolutionError(true);
                         m = new MainWindow(log, parametersListSection);
                         m.Show();
                         Hide();
@@ -121,10 +136,10 @@ namespace FeaturesOverlayPresentation.XAML
                     }
                     else
                     {
-                        resPass = MiscMethods.ResolutionError(false);
+                        resPass = Misc.MiscMethods.ResolutionError(false);
                         if (!resPass)
                         {
-                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), Strings.LOG_RESOLUTION_ERROR, SystemParameters.PrimaryScreenWidth.ToString() + 'x' + SystemParameters.PrimaryScreenHeight.ToString(), Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), LogStrings.LOG_RESOLUTION_ERROR, SystemParameters.PrimaryScreenWidth.ToString() + 'x' + SystemParameters.PrimaryScreenHeight.ToString(), Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                             YesButton.IsEnabled = false;
                         }
                         Show();
@@ -138,17 +153,19 @@ namespace FeaturesOverlayPresentation.XAML
                     r.Show();
                 }
             }
-            catch (ParsingException e) //If definition file was not found
+            //If config file is malformed
+            catch (Exception e) when (e is JsonReaderException || e is JsonSerializationException || e is FormatException)
             {
-                Console.WriteLine(ConstantsDLL.Properties.Strings.LOG_DEFFILE_NOT_FOUND + ": " + e.Message);
-                Console.WriteLine(ConstantsDLL.Properties.Strings.KEY_FINISH);
+                Console.WriteLine(UIStrings.PARAMETER_ERROR + ": " + e.Message);
+                Console.WriteLine(UIStrings.KEY_FINISH);
                 Console.ReadLine();
                 Environment.Exit(Convert.ToInt32(ExitCodes.ERROR));
             }
-            catch (FormatException e) //If definition file was malformed, but the logfile is not created (log path is undefined)
+            //If config file is not found
+            catch (FileNotFoundException e)
             {
-                Console.WriteLine(ConstantsDLL.Properties.Strings.PARAMETER_ERROR + ": " + e.Message);
-                Console.WriteLine(ConstantsDLL.Properties.Strings.KEY_FINISH);
+                Console.WriteLine(LogStrings.LOG_PARAMETER_FILE_NOT_FOUND + ": " + e.Message);
+                Console.WriteLine(UIStrings.KEY_FINISH);
                 Console.ReadLine();
                 Environment.Exit(Convert.ToInt32(ExitCodes.ERROR));
             }
@@ -160,18 +177,18 @@ namespace FeaturesOverlayPresentation.XAML
         /// <returns>Returns true if slide folder that contains PNG pictures exist</returns>
         public bool FindFolder()
         {
-            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_DETECTING_OS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-            string imgDir = Directory.GetCurrentDirectory() + ConstantsDLL.Properties.Resources.RESOURCES_DIR + ConstantsDLL.Properties.Resources.IMG_DIR;
+            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_DETECTING_OS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+            string imgDir = Directory.GetCurrentDirectory() + ConstantsDLL.Properties.GenericResources.FOP_RESOURCES_DIR + ConstantsDLL.Properties.GenericResources.FOP_IMG_DIR;
             try
             {
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_ENUM_FILES, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_ENUM_FILES, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                 List<string> filePathList = Directory.GetFiles(imgDir).ToList();
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_IMG_FOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_IMG_FOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                 return true;
             }
             catch
             {
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), Strings.LOG_IMG_NOTFOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), LogStrings.LOG_IMG_NOTFOUND, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                 return false;
             }
         }
@@ -185,14 +202,14 @@ namespace FeaturesOverlayPresentation.XAML
         {
             try
             {
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_RUNNING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_RUNNING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                 m = new MainWindow(log, parametersListSection);
                 m.Show();
                 Hide();
             }
             catch
             {
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                 Close();
                 m.Close();
             }
@@ -205,9 +222,8 @@ namespace FeaturesOverlayPresentation.XAML
         /// <param name="e"></param>
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
-            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-            File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
-            Application.Current.Shutdown();
+            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+            System.Windows.Application.Current.Shutdown();
         }
 
         /// <summary>
@@ -215,88 +231,100 @@ namespace FeaturesOverlayPresentation.XAML
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void YesLaterButton_Click(object sender, RoutedEventArgs e)
+        private async void YesLaterButton_Click(object sender, RoutedEventArgs e)
         {
-            string[] assetJsonStr;
             DateTime dateAndTime = DateTime.Today;
             bool check = false;
-            if (textBoxAssetNumber.Text != string.Empty) //If patrimony textbox is not empty
+            if (textBoxAssetNumber.Text != string.Empty) //If asset number textbox is not empty
             {
-                if (JsonFileReaderDLL.CredentialsFileReader.CheckHostST(comboBoxServerIP.Text, comboBoxServerPort.Text)) //If login succeeded
+                if (!pressed) //If 'send' button is not pressed already
                 {
-                    if (!pressed) //If 'send' button is not pressed already
+                    try
                     {
-                        assetJsonStr = JsonFileReaderDLL.AssetFileReader.FetchInfoST(textBoxAssetNumber.Text, comboBoxServerIP.Text, comboBoxServerPort.Text);
-                        if (assetJsonStr[0] != "false")
+                        existingAsset = await AssetHandler.GetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_ASSET_NUMBER_URL + textBoxAssetNumber.Text);
+
+                        if (existingAsset.discarded == "1")
                         {
-                            if (assetJsonStr[9] == "1")
-                            {
-                                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.Strings.ASSET_DROPPED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                                _ = MessageBox.Show(ConstantsDLL.Properties.Strings.ASSET_DROPPED, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                            }
-                            else
-                            {
-                                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_PATR_NUM, textBoxAssetNumber.Text, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                                if (present == false) //If employee is not present
-                                {
-                                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_EMPLOYEEAWAY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                                    webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + "/" + ConstantsDLL.Properties.Resources.DELIVERY_URL + ".php"
-                                        + ConstantsDLL.Properties.Resources.PHP_ASSET_NUMBER + textBoxAssetNumber.Text
-                                        + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_DATE + dateAndTime.ToString(ConstantsDLL.Properties.Resources.DATE_FORMAT).Substring(0, 10)
-                                        + ConstantsDLL.Properties.Resources.PHP_DELIVERED_TO_REGISTRATION_NUMBER + ConstantsDLL.Properties.Strings.ABSENT
-                                        + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_MADE_BY + agentData[0]);
-                                    check = true;
-                                }
-                                else if (textBoxRegistrationNumber.Text != string.Empty) //If employee is present and SIAPE textbox is not empty
-                                {
-                                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_EMPLOYEEPRESENT, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                                    webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text
-                                + "/" + ConstantsDLL.Properties.Resources.DELIVERY_URL + ".php"
-                                + ConstantsDLL.Properties.Resources.PHP_ASSET_NUMBER + textBoxAssetNumber.Text
-                                + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_DATE + dateAndTime.ToString(ConstantsDLL.Properties.Resources.DATE_FORMAT).Substring(0, 10)
-                                + ConstantsDLL.Properties.Resources.PHP_DELIVERED_TO_REGISTRATION_NUMBER + textBoxRegistrationNumber.Text
-                                + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_MADE_BY + agentData[0]);
-                                    check = true;
-                                }
-                                else //If employee is present and SIAPE textbox is empty
-                                {
-                                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.Strings.FILL_FORM, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                                    _ = MessageBox.Show(ConstantsDLL.Properties.Strings.FILL_FORM, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                                    check = false;
-                                }
-                                YesButton.IsEnabled = false;
-                            }
+                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.UIStrings.ASSET_DROPPED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                            _ = System.Windows.MessageBox.Show(ConstantsDLL.Properties.UIStrings.ASSET_DROPPED, ConstantsDLL.Properties.UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                         else
                         {
-                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.Strings.ASSET_NOT_REGISTERED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                            _ = MessageBox.Show(ConstantsDLL.Properties.Strings.ASSET_NOT_REGISTERED, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                            newAsset.assetNumber = textBoxAssetNumber.Text;
+                            newAsset.location.locLastDeliveryDate = dateAndTime.ToString(ConstantsDLL.Properties.GenericResources.DATE_FORMAT).Substring(0, 10);
+                            newAsset.location.locLastDeliveryMadeBy = agent.id;
+
+                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_PATR_NUM, textBoxAssetNumber.Text, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                            if (present == false) //If employee is not present
+                            {
+                                newAsset.location.locDeliveredToRegistrationNumber = UIStrings.ABSENT;
+                                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_EMPLOYEEAWAY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                                System.Net.HttpStatusCode v = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_DELIVERY_URL, newAsset);
+                                check = true;
+                            }
+                            else if (textBoxRegistrationNumber.Text != string.Empty) //If employee is present and registration number textbox is not empty
+                            {
+                                newAsset.location.locDeliveredToRegistrationNumber = textBoxRegistrationNumber.Text;
+                                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_EMPLOYEEPRESENT, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                                System.Net.HttpStatusCode v = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_DELIVERY_URL, newAsset);
+                                check = true;
+                            }
+                            else //If employee is present and registration number textbox is empty
+                            {
+                                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.UIStrings.FILL_FORM, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                                _ = System.Windows.MessageBox.Show(ConstantsDLL.Properties.UIStrings.FILL_FORM, ConstantsDLL.Properties.UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                                check = false;
+                            }
+                            YesButton.IsEnabled = false;
                         }
                     }
-                    else //If 'send' button is already pressed
+                    //If asset does not exist on the database
+                    catch (UnregisteredAssetException ex)
                     {
-                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_NOTSCHEDULING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                        webBrowser1.Navigate(ConstantsDLL.Properties.Resources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text
-                    + "/" + ConstantsDLL.Properties.Resources.DELIVERY_URL + ".php" + ConstantsDLL.Properties.Resources.PHP_ASSET_NUMBER + textBoxAssetNumber.Text + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_DATE + null + ConstantsDLL.Properties.Resources.PHP_DELIVERED_TO_REGISTRATION_NUMBER + null + ConstantsDLL.Properties.Resources.PHP_LAST_DELIVERY_MADE_BY + null);
-                        check = true;
-                        if (resPass)
-                        {
-                            YesButton.IsEnabled = true;
-                        }
+                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ex.Message, string.Empty, Convert.ToBoolean(GenericResources.CONSOLE_OUT_GUI));
+                        _ = System.Windows.MessageBox.Show(ConstantsDLL.Properties.UIStrings.ASSET_NOT_REGISTERED, ConstantsDLL.Properties.UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                    catch (InvalidRestApiCallException ex)
+                    {
+                        //Shows a message about an error in the APCS web service
+                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ex.Message, string.Empty, Convert.ToBoolean(GenericResources.CONSOLE_OUT_GUI));
+                        _ = System.Windows.MessageBox.Show(UIStrings.SERVER_ERROR, UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        Environment.Exit(Convert.ToInt32(ExitCodes.ERROR));
+                    }
+                    catch (InvalidAgentException ex)
+                    {
+                        //Shows a message about an error of the agent credentials
+                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ex.Message, string.Empty, Convert.ToBoolean(GenericResources.CONSOLE_OUT_GUI));
+                        _ = System.Windows.MessageBox.Show(UIStrings.INVALID_CREDENTIALS, UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                        Environment.Exit(Convert.ToInt32(ExitCodes.ERROR));
+                    }
+                    //If server is unreachable
+                    catch (HttpRequestException)
+                    {
+                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), UIStrings.DATABASE_REACH_ERROR, string.Empty, Convert.ToBoolean(GenericResources.CONSOLE_OUT_GUI));
+                        _ = System.Windows.MessageBox.Show(UIStrings.DATABASE_REACH_ERROR, UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
                 }
-                else //If login fails
+                else //If 'send' button is already pressed
                 {
-                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.Strings.SERVER_NOT_FOUND_ERROR, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                    _ = MessageBox.Show(ConstantsDLL.Properties.Strings.SERVER_NOT_FOUND_ERROR, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_NOTSCHEDULING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+
+                    newLocation.locDeliveredToRegistrationNumber = null;
+                    newLocation.locLastDeliveryDate = null;
+                    newLocation.locLastDeliveryMadeBy = null;
+                    _ = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_DELIVERY_URL, newAsset);
+                    check = true;
+                    if (resPass)
+                        YesButton.IsEnabled = true;
                 }
             }
-            else //If patrimony textbox is empty
+            else //If asset number textbox is empty
             {
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.Strings.FILL_FORM, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                _ = MessageBox.Show(ConstantsDLL.Properties.Strings.FILL_FORM, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.UIStrings.FILL_FORM, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                _ = System.Windows.MessageBox.Show(ConstantsDLL.Properties.UIStrings.FILL_FORM, ConstantsDLL.Properties.UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             //Do registry stuff, and handles control states
@@ -306,25 +334,25 @@ namespace FeaturesOverlayPresentation.XAML
                 {
                     if (resPass) //If screen resolution passes the requirement
                     {
-                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_RESOLUTION_PASSED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_RESOLUTION_PASSED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                         if (isFormat == true) //If service type is 'format'
                         {
-                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_SERVICE_TYPE, Strings.LOG_FORMAT_SERVICE, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_SCHEDULING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_ADDING_REG, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                            MiscMethods.RegCreate();
+                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_SERVICE_TYPE, LogStrings.LOG_FORMAT_SERVICE, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_SCHEDULING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_ADDING_REG, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                            Misc.MiscMethods.RegCreate();
                         }
                         else //If service type is 'maintenance'
                         {
-                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_SERVICE_TYPE, Strings.LOG_MAINTENANCE_SERVICE, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_NOT_ADDING_REG, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_SERVICE_TYPE, LogStrings.LOG_MAINTENANCE_SERVICE, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_NOT_ADDING_REG, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                         }
-                        YesLaterButtonTB.Text = ConstantsDLL.Properties.Strings.CANCEL_EXECUTION;
+                        YesLaterButtonTB.Text = ConstantsDLL.Properties.UIStrings.CANCEL_EXECUTION;
                     }
                     else  //If screen resolution fails the requirement
                     {
-                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_WARNING), Strings.LOG_RESOLUTION_FAILED, Strings.LOG_DISABLE_BOOT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                        YesLaterButtonTB.Text = ConstantsDLL.Properties.Strings.CANCEL_EXECUTION_RES_ERROR;
+                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_WARNING), LogStrings.LOG_RESOLUTION_FAILED, LogStrings.LOG_DISABLE_BOOT, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                        YesLaterButtonTB.Text = ConstantsDLL.Properties.UIStrings.CANCEL_EXECUTION_RES_ERROR;
                     }
 
                     pressed = true;
@@ -339,27 +367,27 @@ namespace FeaturesOverlayPresentation.XAML
                 {
                     if (resPass) //If screen resolution passes the requirement
                     {
-                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_RESOLUTION_PASSED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_REMOVING_REG, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                        RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_RUN_ONCE_KEY);
+                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_RESOLUTION_PASSED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                        log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_REMOVING_REG, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+                        RegistryKey key = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.GenericResources.REGISTRY_FOP_RUN_ONCE_KEY);
                         if (isFormat)
                         {
                             try
                             {
-                                key.DeleteValue(ConstantsDLL.Properties.Resources.FOP);
+                                key.DeleteValue(ConstantsDLL.Properties.GenericResources.FOP_NAME);
                             }
                             catch
                             {
                             }
                         }
 
-                        RegistryKey key2 = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.Resources.FOP_REG_KEY);
-                        key2.SetValue(ConstantsDLL.Properties.Resources.DID_IT_RUN_ALREADY, 1, RegistryValueKind.DWord);
-                        YesLaterButtonTB.Text = ConstantsDLL.Properties.Strings.DO_EXECUTION;
+                        RegistryKey key2 = Registry.CurrentUser.CreateSubKey(ConstantsDLL.Properties.GenericResources.REGISTRY_FOP_REG_KEY);
+                        key2.SetValue(ConstantsDLL.Properties.GenericResources.REGISTRY_DID_IT_RUN_ALREADY, 1, RegistryValueKind.DWord);
+                        YesLaterButtonTB.Text = ConstantsDLL.Properties.UIStrings.DO_EXECUTION;
                     }
                     else //If screen resolution fails the requirement
                     {
-                        YesLaterButtonTB.Text = ConstantsDLL.Properties.Strings.DO_EXECUTION_RES_ERROR;
+                        YesLaterButtonTB.Text = ConstantsDLL.Properties.UIStrings.DO_EXECUTION_RES_ERROR;
                     }
 
                     pressed = false;
@@ -383,9 +411,8 @@ namespace FeaturesOverlayPresentation.XAML
         /// <param name="e"></param>
         private void Window_Closing(object sender, EventArgs e)
         {
-            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), Strings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-            File.Delete(StringsAndConstants.CREDENTIALS_FILE_PATH);
-            Application.Current.Shutdown();
+            log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_CLOSING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
+            System.Windows.Application.Current.Shutdown();
         }
 
         /// <summary> 
@@ -393,32 +420,25 @@ namespace FeaturesOverlayPresentation.XAML
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AuthButton_Click(object sender, RoutedEventArgs e)
+        private async void AuthButton_Click(object sender, RoutedEventArgs e)
         {
-            if (textBoxUsername.Text == string.Empty || textBoxPassword.Password == string.Empty) //If user and password textboxes are empty
+            try
             {
-                _ = MessageBox.Show(ConstantsDLL.Properties.Strings.NO_AUTH, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else //... if are not empty
-            {
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_INIT_LOGIN, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                agentData = JsonFileReaderDLL.CredentialsFileReader.FetchInfoST(textBoxUsername.Text, textBoxPassword.Password, comboBoxServerIP.Text, comboBoxServerPort.Text);
+                if (textBoxUsername.Text == string.Empty || textBoxPassword.Password == string.Empty) //If user and password textboxes are empty
+                {
+                    _ = System.Windows.MessageBox.Show(ConstantsDLL.Properties.UIStrings.FILL_IN_YOUR_CREDENTIALS, ConstantsDLL.Properties.UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else //... if are not empty
+                {
+                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.LogStrings.LOG_AUTH_USER, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
 
-                if (agentData == null) //If server is not found
-                {
-                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.Strings.SERVER_NOT_FOUND_ERROR, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                    _ = MessageBox.Show(ConstantsDLL.Properties.Strings.SERVER_NOT_FOUND_ERROR, ConstantsDLL.Properties.Strings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else if (agentData[0] == "false") //If server is found but login fails
-                {
-                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ConstantsDLL.Properties.Strings.LOG_LOGIN_FAILED, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
-                    warningLabel.Visibility = Visibility.Visible;
-                    textBoxPassword.SelectAll();
-                    _ = textBoxPassword.Focus();
-                }
-                else //If server is found and login succeeds
-                {
-                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_LOGIN_SUCCESS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_GUI));
+                    client = RestApiDLL.MiscMethods.SetHttpClient(comboBoxServerIP.Text, comboBoxServerPort.Text, GenericResources.HTTP_CONTENT_TYPE_JSON, textBoxUsername.Text, textBoxPassword.Password);
+
+                    serverParam = await ParameterHandler.GetParameterAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_PARAMETERS_URL);
+
+                    agent = await AuthenticationHandler.GetAgentAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_AGENT_ID_URL + textBoxUsername.Text);
+
+                    log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.LogStrings.LOG_LOGIN_SUCCESS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                     lblFixedAssetNumber.IsEnabled = true;
                     textBoxAssetNumber.IsEnabled = true;
                     lblFixedServerIP.IsEnabled = false;
@@ -430,13 +450,45 @@ namespace FeaturesOverlayPresentation.XAML
                     textBoxUsername.IsEnabled = false;
                     lblFixedPassword.IsEnabled = false;
                     textBoxPassword.IsEnabled = false;
+                    textBoxAssetNumber.MaxLength = serverParam.Parameters.AssetNumberDigitLimit;
+                    lblFixedAssetNumber.IsEnabled = true;
+                    lblFixedServiceType.IsEnabled = true;
                     lblFixedEmployeePresent.IsEnabled = true;
                     radioButtonEmployeePresentYes.IsEnabled = true;
                     radioButtonEmployeePresentNo.IsEnabled = true;
                     radioButtonFormatting.IsEnabled = true;
                     radioButtonMaintenance.IsEnabled = true;
+                    lblFixedRegistrationNumber.IsEnabled = true;
+                    textBoxRegistrationNumber.MaxLength = serverParam.Parameters.DeliveryRegistrationNumberDigitLimit;
                     AuthButton.IsEnabled = false;
                 }
+            }
+            //If URI is invalid
+            catch (UriFormatException ex)
+            {
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ex.Message, string.Empty, Convert.ToBoolean(GenericResources.CONSOLE_OUT_GUI));
+                _ = System.Windows.MessageBox.Show(UIStrings.FILL_IN_SERVER_DETAILS, UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            //If Agent does not exist because there is no internet connection
+            catch (HttpRequestException ex)
+            {
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ex.Message, string.Empty, Convert.ToBoolean(GenericResources.CONSOLE_OUT_GUI));
+                _ = System.Windows.MessageBox.Show(UIStrings.INTRANET_REQUIRED, UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            //If Agent does not exist, but the connection succeeded
+            catch (InvalidAgentException ex)
+            {
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ex.Message, string.Empty, Convert.ToBoolean(GenericResources.CONSOLE_OUT_GUI));
+                warningLabel.Visibility = Visibility.Visible;
+                _ = System.Windows.MessageBox.Show(UIStrings.INVALID_CREDENTIALS, UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
+                textBoxPassword.SelectAll();
+                _ = textBoxPassword.Focus();
+            }
+            //If Rest call is invalid
+            catch (InvalidRestApiCallException ex)
+            {
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_ERROR), ex.Message, string.Empty, Convert.ToBoolean(GenericResources.CONSOLE_OUT_GUI));
+                _ = System.Windows.MessageBox.Show(UIStrings.SERVER_ERROR, UIStrings.ERROR_WINDOWTITLE, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -465,7 +517,7 @@ namespace FeaturesOverlayPresentation.XAML
         }
 
         /// <summary> 
-        /// If 'employee radio button' changes...
+        /// If 'employee' radio button changes...
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -480,7 +532,7 @@ namespace FeaturesOverlayPresentation.XAML
         }
 
         /// <summary> 
-        /// If 'employee radio button' changes...
+        /// If 'employee' radio button changes...
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -495,7 +547,7 @@ namespace FeaturesOverlayPresentation.XAML
         }
 
         /// <summary> 
-        /// If 'format/maintenance radio button changes...
+        /// If 'format/maintenance' radio button changes...
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -509,7 +561,7 @@ namespace FeaturesOverlayPresentation.XAML
         }
 
         /// <summary> 
-        /// If 'format/maintenance radio button changes...
+        /// If 'format/maintenance' radio button changes...
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

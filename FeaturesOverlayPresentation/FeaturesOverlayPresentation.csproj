@@ -78,17 +78,14 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="INIFileParser, Version=2.5.2.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
-      <HintPath>..\packages\ini-parser.2.5.2\lib\net20\INIFileParser.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.77\lib\net462\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Octokit, Version=6.0.0.0, Culture=neutral, PublicKeyToken=0be8860aee462442, processorArchitecture=MSIL">
-      <HintPath>..\packages\Octokit.6.0.0\lib\netstandard2.0\Octokit.dll</HintPath>
+    <Reference Include="Octokit, Version=9.0.0.0, Culture=neutral, PublicKeyToken=0be8860aee462442, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.9.0.0\lib\netstandard2.0\Octokit.dll</HintPath>
     </Reference>
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
@@ -127,15 +124,15 @@
       <DependentUpon>UpdaterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Misc\BlurBackgroundBehavior.cs" />
-    <Compile Include="Properties\Strings.Designer.cs">
+    <Compile Include="Properties\FopStrings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.resx</DependentUpon>
+      <DependentUpon>FopStrings.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Strings.pt.Designer.cs">
+    <Compile Include="Properties\FopStrings.pt.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Strings.pt.resx</DependentUpon>
+      <DependentUpon>FopStrings.pt.resx</DependentUpon>
     </Compile>
     <Compile Include="Updater\UpdateChecker.cs" />
     <Compile Include="XAML\ReinstallError.xaml.cs">
@@ -170,11 +167,6 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -196,18 +188,13 @@
     <EmbeddedResource Include="Forms\UpdaterForm.resx">
       <DependentUpon>UpdaterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Strings.pt.resx">
+    <EmbeddedResource Include="Properties\FopStrings.pt.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.pt.Designer.cs</LastGenOutput>
+      <LastGenOutput>FopStrings.pt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Strings.resx">
+    <EmbeddedResource Include="Properties\FopStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <LastGenOutput>FopStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
     <None Include="packages.config" />
@@ -237,17 +224,14 @@
       <Project>{b26141c5-c9a5-4729-9300-62c9af4777b0}</Project>
       <Name>ConstantsDLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Dependencies\JsonFileReaderDLL\JsonFileReaderDLL.csproj">
-      <Project>{a325c892-1ffe-4102-bd42-e8f299af2710}</Project>
-      <Name>JsonFileReaderDLL</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Dependencies\LogGeneratorDLL\LogGeneratorDLL.csproj">
       <Project>{b1c36277-8ec3-4cd8-bfbb-6a48f0c703a0}</Project>
       <Name>LogGeneratorDLL</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
+    <ProjectReference Include="..\..\Dependencies\RestApiDLL\RestApiDLL.csproj">
+      <Project>{a325c892-1ffe-4102-bd42-e8f299af2710}</Project>
+      <Name>RestApiDLL</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icon.ico" />

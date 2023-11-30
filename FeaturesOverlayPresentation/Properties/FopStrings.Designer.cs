@@ -22,14 +22,14 @@ namespace FeaturesOverlayPresentation.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Strings {
+    public class FopStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Strings() {
+        internal FopStrings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace FeaturesOverlayPresentation.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FeaturesOverlayPresentation.Properties.Strings", typeof(Strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FeaturesOverlayPresentation.Properties.FopStrings", typeof(FopStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -344,204 +344,6 @@ namespace FeaturesOverlayPresentation.Properties {
         public static string lblFixedServiceTypeText {
             get {
                 return ResourceManager.GetString("lblFixedServiceTypeText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Adding registry keys.
-        /// </summary>
-        public static string LOG_ADDING_REG {
-            get {
-                return ResourceManager.GetString("LOG_ADDING_REG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Closing program.
-        /// </summary>
-        public static string LOG_CLOSING {
-            get {
-                return ResourceManager.GetString("LOG_CLOSING", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Detecting operating system.
-        /// </summary>
-        public static string LOG_DETECTING_OS {
-            get {
-                return ResourceManager.GetString("LOG_DETECTING_OS", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Do not run on boot.
-        /// </summary>
-        public static string LOG_DISABLE_BOOT {
-            get {
-                return ResourceManager.GetString("LOG_DISABLE_BOOT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Absent employee.
-        /// </summary>
-        public static string LOG_EMPLOYEEAWAY {
-            get {
-                return ResourceManager.GetString("LOG_EMPLOYEEAWAY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Employee present.
-        /// </summary>
-        public static string LOG_EMPLOYEEPRESENT {
-            get {
-                return ResourceManager.GetString("LOG_EMPLOYEEPRESENT", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Gathering image files.
-        /// </summary>
-        public static string LOG_ENUM_FILES {
-            get {
-                return ResourceManager.GetString("LOG_ENUM_FILES", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Formatting.
-        /// </summary>
-        public static string LOG_FORMAT_SERVICE {
-            get {
-                return ResourceManager.GetString("LOG_FORMAT_SERVICE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Found image directory.
-        /// </summary>
-        public static string LOG_IMG_FOUND {
-            get {
-                return ResourceManager.GetString("LOG_IMG_FOUND", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Image directory not found.
-        /// </summary>
-        public static string LOG_IMG_NOTFOUND {
-            get {
-                return ResourceManager.GetString("LOG_IMG_NOTFOUND", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Maintenance.
-        /// </summary>
-        public static string LOG_MAINTENANCE_SERVICE {
-            get {
-                return ResourceManager.GetString("LOG_MAINTENANCE_SERVICE", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Not adding registry keys.
-        /// </summary>
-        public static string LOG_NOT_ADDING_REG {
-            get {
-                return ResourceManager.GetString("LOG_NOT_ADDING_REG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Deleting a record in the database.
-        /// </summary>
-        public static string LOG_NOTSCHEDULING {
-            get {
-                return ResourceManager.GetString("LOG_NOTSCHEDULING", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Asset number.
-        /// </summary>
-        public static string LOG_PATR_NUM {
-            get {
-                return ResourceManager.GetString("LOG_PATR_NUM", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Registering delivery.
-        /// </summary>
-        public static string LOG_REGISTERING_DELIVERY {
-            get {
-                return ResourceManager.GetString("LOG_REGISTERING_DELIVERY", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Undoing registry keys.
-        /// </summary>
-        public static string LOG_REMOVING_REG {
-            get {
-                return ResourceManager.GetString("LOG_REMOVING_REG", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Resolution error.
-        /// </summary>
-        public static string LOG_RESOLUTION_ERROR {
-            get {
-                return ResourceManager.GetString("LOG_RESOLUTION_ERROR", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Resolution below requirement.
-        /// </summary>
-        public static string LOG_RESOLUTION_FAILED {
-            get {
-                return ResourceManager.GetString("LOG_RESOLUTION_FAILED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Suitable display resolution.
-        /// </summary>
-        public static string LOG_RESOLUTION_PASSED {
-            get {
-                return ResourceManager.GetString("LOG_RESOLUTION_PASSED", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Running main window.
-        /// </summary>
-        public static string LOG_RUNNING {
-            get {
-                return ResourceManager.GetString("LOG_RUNNING", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Creating boot entry.
-        /// </summary>
-        public static string LOG_SCHEDULING {
-            get {
-                return ResourceManager.GetString("LOG_SCHEDULING", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Service type.
-        /// </summary>
-        public static string LOG_SERVICE_TYPE {
-            get {
-                return ResourceManager.GetString("LOG_SERVICE_TYPE", resourceCulture);
             }
         }
     }
