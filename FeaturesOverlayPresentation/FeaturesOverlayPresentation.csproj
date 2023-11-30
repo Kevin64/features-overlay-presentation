@@ -256,6 +256,6 @@
     $(PostBuildEventDependsOn);
     PostBuildMacros;
   </PostBuildEventDependsOn>
-    <PostBuildEvent>xcopy /Y "$(TargetDir)..\localized-settings\definitions.ini" &amp; rmdir /S /Q "$(TargetDir)resources\img" &amp; xcopy /E /Y "$(TargetDir)..\localized-settings\resources\*.*" "$(TargetDir)resources\" &amp; xcopy /E /Y "$(TargetDir)..\localized-settings\FOP.lnk" $(TargetDir) &amp; if $(ConfigurationName) == Release del /F /Q *.xml &amp; del /F /Q *.pdb &amp; iscc $(TargetDir)..\localized-installer\installerInno.iss"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetDir)..\localized-settings\config.json" &amp; rmdir /S /Q "$(TargetDir)resources\img" &amp; xcopy /E /Y "$(TargetDir)..\localized-settings\resources\*.*" "$(TargetDir)resources\" &amp; xcopy /E /Y "$(TargetDir)..\localized-settings\FOP.lnk" $(TargetDir) &amp; if $(ConfigurationName) == Release del /F /Q *.xml &amp; del /F /Q *.pdb &amp; iscc $(TargetDir)..\localized-installer\installerInno.iss"</PostBuildEvent>
   </PropertyGroup>
 </Project>
