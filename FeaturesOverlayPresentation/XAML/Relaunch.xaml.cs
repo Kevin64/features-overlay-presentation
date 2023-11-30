@@ -3,7 +3,6 @@ using ConstantsDLL.Properties;
 using LogGeneratorDLL;
 using Microsoft.Win32;
 using Newtonsoft.Json;
-using Octokit;
 using RestApiDLL;
 using System;
 using System.Collections.Generic;
@@ -32,12 +31,11 @@ namespace FeaturesOverlayPresentation.XAML
         private static Agent agent;
         private static Asset existingAsset, newAsset;
         private static location newLocation;
-        private static ConfigurationOptions configOptions;
         private static Definitions definitions;
-        private static readonly GitHubClient ghc;
         private static HttpClient client;
         private static LogGenerator log;
         private static StreamReader fileC;
+        private static ServerParam serverParam;
 
         public class ConfigurationOptions
         {
@@ -88,11 +86,6 @@ namespace FeaturesOverlayPresentation.XAML
                     Logo1URL = jsonParse.Definitions.Logo1URL,
                     Logo2URL = jsonParse.Definitions.Logo2URL,
                     Logo3URL = jsonParse.Definitions.Logo3URL
-                };
-                //Creates general JSON structure object
-                configOptions = new ConfigurationOptions()
-                {
-                    Definitions = definitions
                 };
 
                 comboBoxServerIP.ItemsSource = definitions.ServerIP;
@@ -248,7 +241,7 @@ namespace FeaturesOverlayPresentation.XAML
                 {
                     try
                     {
-                        existingAsset = await AssetHandler.GetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_ASSET_URL + textBoxAssetNumber.Text);
+                        existingAsset = await AssetHandler.GetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_ASSET_NUMBER_URL + textBoxAssetNumber.Text);
 
                         if (existingAsset.discarded == "1")
                         {
@@ -258,13 +251,13 @@ namespace FeaturesOverlayPresentation.XAML
                         else
                         {
                             newAsset.assetNumber = textBoxAssetNumber.Text;
-                            newAsset.location.lastDeliveryDate = dateAndTime.ToString(ConstantsDLL.Properties.GenericResources.DATE_FORMAT).Substring(0, 10);
-                            newAsset.location.lastDeliveryMadeBy = agent.id;
+                            newAsset.location.locLastDeliveryDate = dateAndTime.ToString(ConstantsDLL.Properties.GenericResources.DATE_FORMAT).Substring(0, 10);
+                            newAsset.location.locLastDeliveryMadeBy = agent.id;
 
                             log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_PATR_NUM, textBoxAssetNumber.Text, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                             if (present == false) //If employee is not present
                             {
-                                newAsset.location.deliveredToRegistrationNumber = UIStrings.ABSENT;
+                                newAsset.location.locDeliveredToRegistrationNumber = UIStrings.ABSENT;
                                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_EMPLOYEEAWAY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                                 System.Net.HttpStatusCode v = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_DELIVERY_URL, newAsset);
@@ -272,7 +265,7 @@ namespace FeaturesOverlayPresentation.XAML
                             }
                             else if (textBoxRegistrationNumber.Text != string.Empty) //If employee is present and registration number textbox is not empty
                             {
-                                newAsset.location.deliveredToRegistrationNumber = textBoxRegistrationNumber.Text;
+                                newAsset.location.locDeliveredToRegistrationNumber = textBoxRegistrationNumber.Text;
                                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_EMPLOYEEPRESENT, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_REGISTERING_DELIVERY, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                                 System.Net.HttpStatusCode v = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_DELIVERY_URL, newAsset);
@@ -319,9 +312,9 @@ namespace FeaturesOverlayPresentation.XAML
                 {
                     log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_NOTSCHEDULING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
 
-                    newLocation.deliveredToRegistrationNumber = null;
-                    newLocation.lastDeliveryDate = null;
-                    newLocation.lastDeliveryMadeBy = null;
+                    newLocation.locDeliveredToRegistrationNumber = null;
+                    newLocation.locLastDeliveryDate = null;
+                    newLocation.locLastDeliveryMadeBy = null;
                     _ = await AssetHandler.SetAssetAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_DELIVERY_URL, newAsset);
                     check = true;
                     if (resPass)
@@ -441,7 +434,9 @@ namespace FeaturesOverlayPresentation.XAML
 
                     client = RestApiDLL.MiscMethods.SetHttpClient(comboBoxServerIP.Text, comboBoxServerPort.Text, GenericResources.HTTP_CONTENT_TYPE_JSON, textBoxUsername.Text, textBoxPassword.Password);
 
-                    agent = await AuthenticationHandler.GetAgentAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_AGENT_URL + textBoxUsername.Text);
+                    serverParam = await ParameterHandler.GetParameterAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_PARAMETERS_URL);
+
+                    agent = await AuthenticationHandler.GetAgentAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_AGENT_ID_URL + textBoxUsername.Text);
 
                     log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.LogStrings.LOG_LOGIN_SUCCESS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                     lblFixedAssetNumber.IsEnabled = true;
@@ -455,6 +450,7 @@ namespace FeaturesOverlayPresentation.XAML
                     textBoxUsername.IsEnabled = false;
                     lblFixedPassword.IsEnabled = false;
                     textBoxPassword.IsEnabled = false;
+                    textBoxAssetNumber.MaxLength = serverParam.Parameters.AssetNumberDigitLimit;
                     lblFixedAssetNumber.IsEnabled = true;
                     lblFixedServiceType.IsEnabled = true;
                     lblFixedEmployeePresent.IsEnabled = true;
@@ -463,6 +459,7 @@ namespace FeaturesOverlayPresentation.XAML
                     radioButtonFormatting.IsEnabled = true;
                     radioButtonMaintenance.IsEnabled = true;
                     lblFixedRegistrationNumber.IsEnabled = true;
+                    textBoxRegistrationNumber.MaxLength = serverParam.Parameters.DeliveryRegistrationNumberDigitLimit;
                     AuthButton.IsEnabled = false;
                 }
             }
