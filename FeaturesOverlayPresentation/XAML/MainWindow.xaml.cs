@@ -18,6 +18,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using static FeaturesOverlayPresentation.XAML.Relaunch;
 
 namespace FeaturesOverlayPresentation.XAML
 {
@@ -32,7 +33,7 @@ namespace FeaturesOverlayPresentation.XAML
         private bool empty = false;
         private string newFilePath;
         private List<string> imgList, labelList;
-        private readonly List<string[]> parametersList;
+        private readonly Definitions definitions;
         private readonly BlurEffect blurEffect1;
         private ReinstallError e;
         private DispatcherTimer timer;
@@ -50,8 +51,8 @@ namespace FeaturesOverlayPresentation.XAML
         /// Main Window constructor
         /// </summary>
         /// <param name="log">Log file object</param>
-        /// <param name="parametersList">List containing data from [Parameters]</param>
-        public MainWindow(LogGenerator log, List<string[]> parametersList)
+        /// <param name="definitions">Definition object</param>
+        public MainWindow(LogGenerator log, Definitions definitions)
         {
             this.log = log;
             InitializeComponent();
@@ -69,7 +70,7 @@ namespace FeaturesOverlayPresentation.XAML
             MiscMethods.RegRecreate(empty);
             ghc = new Octokit.GitHubClient(new Octokit.ProductHeaderValue(ConstantsDLL.Properties.GenericResources.GITHUB_REPO_FOP));
 
-            this.parametersList = parametersList;
+            this.definitions = definitions;
 
             try
             {
@@ -378,7 +379,7 @@ namespace FeaturesOverlayPresentation.XAML
         /// <param name="e"></param>
         private void Logo2_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            _ = Process.Start(parametersList[2][0]);
+            _ = Process.Start(definitions.Logo2URL);
         }
 
         /// <summary> 
@@ -388,7 +389,7 @@ namespace FeaturesOverlayPresentation.XAML
         /// <param name="e"></param>
         private void Logo1_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            _ = Process.Start(parametersList[1][0]);
+            _ = Process.Start(definitions.Logo1URL);
         }
 
         /// <summary> 
@@ -398,7 +399,7 @@ namespace FeaturesOverlayPresentation.XAML
         /// <param name="e"></param>
         private void Logo3_MouseLeftButtonUp(object sender, RoutedEventArgs e)
         {
-            _ = Process.Start(parametersList[3][0]);
+            _ = Process.Start(definitions.Logo3URL);
         }
 
         /// <summary> 

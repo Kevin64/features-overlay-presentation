@@ -23,8 +23,6 @@ namespace FeaturesOverlayPresentation.XAML
         private bool pressed = false;
         private bool present, isFormat;
         private readonly bool resPass = true;
-        private static readonly List<string[]> parametersListSection;
-        private static readonly string logLocationStr;
         private static string jsonFile;
         private MainWindow m;
 
@@ -94,15 +92,15 @@ namespace FeaturesOverlayPresentation.XAML
                 bool logFileExists = bool.Parse(Misc.MiscMethods.CheckIfLogExists(definitions.LogLocation));
 #if DEBUG
                 //Create a new log file (or append to an existing one)
-                log = new LogGenerator(System.Windows.Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + System.Windows.Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + GenericResources.DEV_STATUS_BETA, logLocationStr, ConstantsDLL.Properties.GenericResources.LOG_FILENAME_FOP + "-v" + System.Windows.Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + GenericResources.DEV_STATUS_BETA + ConstantsDLL.Properties.GenericResources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_CLI));
+                log = new LogGenerator(System.Windows.Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + System.Windows.Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + GenericResources.DEV_STATUS_BETA, definitions.LogLocation, ConstantsDLL.Properties.GenericResources.LOG_FILENAME_FOP + "-v" + System.Windows.Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + GenericResources.DEV_STATUS_BETA + ConstantsDLL.Properties.GenericResources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_CLI));
                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.LogStrings.LOG_DEBUG_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_CLI));
 
                 comboBoxServerIP.SelectedIndex = 1;
                 comboBoxServerPort.SelectedIndex = 0;
 #else
                 //Create a new log file (or append to a existing one)
-                log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version, logLocationStr, ConstantsDLL.Properties.Resources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + ConstantsDLL.Properties.Resources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_CLI));
-                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.Strings.LOG_RELEASE_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.Resources.CONSOLE_OUT_CLI));
+                log = new LogGenerator(Application.Current.MainWindow.GetType().Assembly.GetName().Name + " - v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version, definitions.LogLocation, ConstantsDLL.Properties.GenericResources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + ConstantsDLL.Properties.GenericResources.LOG_FILE_EXT, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_CLI));
+                log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.LogStrings.LOG_RELEASE_MODE, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_CLI));
 
                 comboBoxServerIP.SelectedIndex = 0;
                 comboBoxServerPort.SelectedIndex = 0;
@@ -129,7 +127,7 @@ namespace FeaturesOverlayPresentation.XAML
                     if (!Misc.MiscMethods.RegCheck())
                     {
                         resPass = Misc.MiscMethods.ResolutionError(true);
-                        m = new MainWindow(log, parametersListSection);
+                        m = new MainWindow(log, definitions);
                         m.Show();
                         Hide();
                         ShowInTaskbar = false;
@@ -203,7 +201,7 @@ namespace FeaturesOverlayPresentation.XAML
             try
             {
                 log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), LogStrings.LOG_RUNNING, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
-                m = new MainWindow(log, parametersListSection);
+                m = new MainWindow(log, definitions);
                 m.Show();
                 Hide();
             }
