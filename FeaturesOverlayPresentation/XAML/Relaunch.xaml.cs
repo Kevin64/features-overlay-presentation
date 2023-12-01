@@ -434,7 +434,7 @@ namespace FeaturesOverlayPresentation.XAML
 
                     serverParam = await ParameterHandler.GetParameterAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_PARAMETERS_URL);
 
-                    agent = await AuthenticationHandler.GetAgentAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_AGENT_ID_URL + textBoxUsername.Text);
+                    agent = await AuthenticationHandler.GetAgentAsync(client, GenericResources.HTTP + comboBoxServerIP.Text + ":" + comboBoxServerPort.Text + GenericResources.APCS_V1_API_AGENT_USERNAME_URL + textBoxUsername.Text);
 
                     log.LogWrite(Convert.ToInt32(LogGenerator.LOG_SEVERITY.LOG_INFO), ConstantsDLL.Properties.LogStrings.LOG_LOGIN_SUCCESS, string.Empty, Convert.ToBoolean(ConstantsDLL.Properties.GenericResources.CONSOLE_OUT_GUI));
                     lblFixedAssetNumber.IsEnabled = true;
