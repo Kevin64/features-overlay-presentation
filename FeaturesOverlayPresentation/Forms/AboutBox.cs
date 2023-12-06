@@ -1,5 +1,4 @@
-﻿using ConstantsDLL.Properties;
-using FeaturesOverlayPresentation.Properties;
+﻿using FeaturesOverlayPresentation.Properties;
 using FeaturesOverlayPresentation.Updater;
 using LogGeneratorDLL;
 using System;
@@ -29,7 +28,7 @@ namespace FeaturesOverlayPresentation.Forms
             Text = string.Format("{0} {1}", labelFormTitle.Text, AssemblyTitle);
             labelProductName.Text = AssemblyProduct;
 #if DEBUG
-            labelVersion.Text = string.Format("Versão {0}-{1}", AssemblyVersion, GenericResources.DEV_STATUS_BETA);
+            labelVersion.Text = string.Format("Versão {0}-{1}", AssemblyVersion, ConstantsDLL.Properties.GenericResources.DEV_STATUS_BETA);
 #else
             labelVersion.Text = string.Format("Versão {0}", AssemblyVersion);
 #endif

@@ -1,5 +1,4 @@
-﻿using ConstantsDLL.Properties;
-using FeaturesOverlayPresentation.Updater;
+﻿using FeaturesOverlayPresentation.Updater;
 using Microsoft.Win32;
 using System;
 using System.IO;
@@ -172,7 +171,7 @@ namespace FeaturesOverlayPresentation.Misc
             {
 #if DEBUG
                 //Checks if log directory exists
-                b = File.Exists(path + ConstantsDLL.Properties.GenericResources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + GenericResources.DEV_STATUS_BETA + ConstantsDLL.Properties.GenericResources.LOG_FILE_EXT);
+                b = File.Exists(path + ConstantsDLL.Properties.GenericResources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + "-" + ConstantsDLL.Properties.GenericResources.DEV_STATUS_BETA + ConstantsDLL.Properties.GenericResources.LOG_FILE_EXT);
 #else
                 //Checks if log file exists
                 b = File.Exists(path + ConstantsDLL.Properties.GenericResources.LOG_FILENAME_FOP + "-v" + Application.Current.MainWindow.GetType().Assembly.GetName().Version + ConstantsDLL.Properties.GenericResources.LOG_FILE_EXT);
