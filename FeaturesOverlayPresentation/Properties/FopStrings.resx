@@ -127,53 +127,51 @@
     • Copyright © 2023 Kevin Vinícius Teixeira Costa
     • Repository (GitHub): https://github.com/Kevin64/features-overlay-presentation
     • Dependencies repository (GitHub): https://github.com/Kevin64/Dependencies
-    • License: (MIT) https://github.com/Kevin64/features-overlay-presentation/blob/master/LICENSE
+    • License (MIT): https://github.com/Kevin64/features-overlay-presentation/blob/master/LICENSE
 
 This software must be used in conjunction with APCS system and AIR software to work properly.
 
 ► Asset and Personnel Control System - APCS
     • Copyright © 2023 Kevin Vinícius Teixeira Costa
     • Repository (GitHub): https://github.com/Kevin64/asset-and-personnel-control-system
-    • License: (MIT) https://github.com/Kevin64/asset-and-personnel-control-system/blob/master/LICENSE
+    • License (MIT): https://github.com/Kevin64/asset-and-personnel-control-system/blob/master/LICENSE
 
 ► Asset Information and Registration - AIR
     • Copyright © 2023 Kevin Vinícius Teixeira Costa
     • Repository (GitHub): https://github.com/Kevin64/asset-information-and-registration
-    • License: (MIT) https://github.com/Kevin64/asset-information-and-registration/blob/master/LICENSE
+    • License (MIT): https://github.com/Kevin64/asset-information-and-registration/blob/master/LICENSE
 
 This software and its libraries (DLLs) use arts, Open Source libraries and loose codes from third parties. All credits go to their respective creators and maintainers. These components are listed below and in the README on the repository's GitHub page.
+
+► Microsoft.AspNet.WebApi.Client
+    • Copyright © Microsoft Corporation. All rights reserved.
+    • URL: https://dotnet.microsoft.com/pt-br/apps/aspnet/apis
+    • License: https://www.nuget.org/packages/Microsoft.AspNet.WebApi.Client/6.0.0/license
 
 ► Microsoft.Xaml.Behaviors.Wpf
     • Copyright © 2015 Microsoft
     • Repository (GitHub): https://github.com/Microsoft/XamlBehaviorsWpf
-    • License: (MIT) https://github.com/microsoft/XamlBehaviorsWpf/blob/master/LICENSE
-
-► System.Buffers, System.Memory, System.Numerics.Vectors, System.Runtime.CompilerServices.Unsafe
-    • Copyright © .NET Foundation and Contributors
-    • URL: https://dot.net/
-    • License: (MIT) https://github.com/dotnet/corefx/blob/master/LICENSE.TXT
-
-► ini parser
-    • Copyright © 2008 Ricardo Amores Hernández
-    • Repository (GitHub): https://github.com/rickyah/ini-parser
-    • License: (MIT) https://github.com/rickyah/ini-parser/blob/master/LICENSE
+    • License (MIT): https://github.com/microsoft/XamlBehaviorsWpf/blob/master/LICENSE
 
 ► Newtonsoft.Json
     • Copyright © 2007 James Newton-King
     • Repository (GitHub): https://github.com/JamesNK/Newtonsoft.Json
-    • License: (MIT) https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
+    • License (MIT): https://github.com/JamesNK/Newtonsoft.Json/blob/master/LICENSE.md
 
-► BCrypt.Net-Next
-    • Copyright © 2006 Damien Miller djm@mindrot.org (jBCrypt)
-    • Copyright © 2013 Ryan D. Emerle (.Net port)
-    • Copyright © 2016/2021 Chris McKee (.Net-core port / patches)
-    • Repository (GitHub): https://github.com/BcryptNet/bcrypt.net
-    • License: (MIT) https://github.com/BcryptNet/bcrypt.net/blob/main/licence.txt
+► Newtonsoft.Json.Bson
+    • Copyright © 2017 James Newton-King
+    • Repositório (GitHub): https://github.com/JamesNK/Newtonsoft.Json.Bson
+    • License (MIT): https://github.com/JamesNK/Newtonsoft.Json.Bson/blob/master/LICENSE.md
 
 ► Octokit
     • Copyright © 2017 GitHub, Inc.
     • Repository (GitHub): https://github.com/octokit/octokit.net
-    • License: (MIT) https://github.com/octokit/octokit.net/blob/main/LICENSE.txt</value>
+    • License (MIT): https://github.com/octokit/octokit.net/blob/main/LICENSE.txt
+
+► System.Buffers, System.Memory, System.Numerics.Vectors, System.Runtime.CompilerServices.Unsafe, System.Threading.Tasks.Extensions
+    • Copyright © .NET Foundation and Contributors
+    • URL: https://dot.net/
+    • License (MIT): https://github.com/dotnet/corefx/blob/master/LICENSE.TXT</value>
   </data>
   <data name="lblFixedAdvancedOptionsText" xml:space="preserve">
     <value>Advanced options</value>

@@ -75,7 +75,7 @@ namespace FeaturesOverlayPresentation.Properties {
         ///    • Copyright © 2023 Kevin Vinícius Teixeira Costa
         ///    • Repository (GitHub): https://github.com/Kevin64/features-overlay-presentation
         ///    • Dependencies repository (GitHub): https://github.com/Kevin64/Dependencies
-        ///    • License: (MIT) https://github.com/Kevin64/features-overlay-presentation/blob/master/LICENSE
+        ///    • License (MIT): https://github.com/Kevin64/features-overlay-presentation/blob/master/LICENSE
         ///
         ///This software must be used in conjunction wit [o restante da cadeia de caracteres foi truncado]&quot;;.
         /// </summary>
