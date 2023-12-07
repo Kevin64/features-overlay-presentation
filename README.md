@@ -10,15 +10,15 @@ For IT admins: FOP allows to register in [APCS](https://github.com/Kevin64/asset
 
 ### Relaunch window:
 
-![Screenshot 2023-06-06 132146](https://github.com/Kevin64/features-overlay-presentation/assets/1903028/36e53bbb-a157-483f-a3d0-e1abda7a7595)
+![fop-relaunch](https://github.com/Kevin64/features-overlay-presentation/assets/1903028/4a970955-7194-4b57-850f-02d42dd8f838)
 
 ### Main window:
 
-![Screenshot (2)](https://github.com/Kevin64/features-overlay-presentation/assets/1903028/41fa7471-5f48-4ed0-a9ac-1e0c9aeffc4b)
+![fop-main-window](https://github.com/Kevin64/features-overlay-presentation/assets/1903028/acd347eb-5cc4-4991-ae87-94005ff49a78)
 
 ### Output in APCS
 
-![firefox_T2CDYRNzh1](https://github.com/Kevin64/features-overlay-presentation/assets/1903028/e41ebc19-fe98-4721-b123-77f16d7dc138)
+![Firefox_Screenshot_2023-12-07T18-32-59 888Z](https://github.com/Kevin64/features-overlay-presentation/assets/1903028/6af9df12-fbf9-464f-93da-bbc681afc0f1)
 
 ## Creating a custom installer
 
