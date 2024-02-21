@@ -28,7 +28,7 @@ To customize a FOP installation, you have to:
 3. Download the [zip file](https://github.com/Kevin64/features-overlay-presentation/releases/latest) containing the compiled FOP files.
 4. Create a folder somewhere and copy the downloaded installer script (`installerInno.iss`) file to it.
 5. Extract the zip file into the recently created directory (folder structure must be `Newly-created-folder\Release\...`) and then put your custom PNG slides and assets inside `Release\resources`, replacing the existing ones (make sure you keep the same file names). PNG images inside `Release\resources\img\` must have a prefix number before their file names (e.g. 00 - filename0, 01 - filename1, etc), which will serve as a parameter to sort the picture presentation inside FOP. The latter string (e.g. filename0, filename1, etc) will show up as the slide title, helping users to navigate and view a specific image.
-6. Modify all URLs inside the `definitions.ini` file present in `Release\`.
+6. Modify the desired details inside the `config.json` file present in `Release\`.
 7. Finally, open `installerInno.iss`, customize the branding and other settings if necessary, and then select Build -> Compile. The final installation executable should show up inside your newly created folder.
 8. Deploy FOP in your machines.
 
